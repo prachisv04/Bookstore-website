@@ -1,0 +1,94 @@
+.bg-img{
+    background-image: url('../Images/home.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+html{
+    font-family: 'Dancing Script', cursive;
+font-family: 'Montserrat', sans-serif;
+font-family: 'Mukta', sans-serif;
+font-family: 'Playfair Display', serif;
+}
+
+.navbar{
+    background: transparent;
+}
+.text-brown{
+    color: #9C7F5B;
+    font-weight: 500;
+}
+.bg-brown{
+    background-color:  #90795e;
+}
+.col{
+    height: 65vh;
+}
+.card{
+    position: relative;
+    z-index: 1000;
+}
+.navbar{
+    background-color: #1F0F08;
+}
+.nav-item  .active{
+    background-color: #9C7F5B;
+    color: #1F0F08;
+    border-radius: 5px;
+}
+.nav-link:hover{
+    background-color: #9C7F5B;
+    color: #1F0F08;
+    border-radius: 5px;
+}
+.card{
+    backdrop-filter: blur(10px);
+    border: none;
+    width: 50%;
+}
+.card-title{
+  
+    color: white;
+}
+.loginpage::before{
+    content: "";
+    background-image: url('../Images/peakpx.jpg');
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.9;
+    border-top-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+#email , #pass{
+    border: none;
+    background: transparent;
+    color: white;
+    border-bottom: 2px solid white;
+    width: 20vw;
+}
+#email::placeholder , #pass::placeholder{
+    color: white;
+}
+#email:focus ,#pass:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.btn:hover{
+    background-color: #9C7F5B;
+}
+.login{
+    background-color:#9C7F5B;
+    color: #1F0F08;
+}
+.social .btn{
+    width: 20vw;
+    border: none;
+}
+.social .btn:hover{
+    background-color: #1F0F08;
+}
