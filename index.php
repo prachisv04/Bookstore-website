@@ -1,10 +1,18 @@
+<?php
+    $isloggedin = false;
+    if(isset($_SESSION) && $_SESSION['user']!=""){
+        $isloggedin = true;
+    }
+   
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- title -->
-    <title>Sahitya | Login</title>
+    <title>Sahitya | Home</title>
     <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
 
     <!-- bootstrap -->
@@ -29,6 +37,7 @@
 
         <?php
             require '__navbar.php';
+
         ?>
 
 <!-- javascript -->

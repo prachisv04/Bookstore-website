@@ -30,16 +30,14 @@
     background-size: cover;
     font-family: 'playfair display';
 }
-.form-decor{
-    background: linear-gradient(to right bottom, #9C7F5B, #55331C);
-}
+
 /* login-form */
 .gradient-custom-2 {
     /* fallback for old browsers */
     background: #fccb90;
     
     /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right bottom, #9c8569, #55331C);
+    /* background: -webkit-linear-gradient(to right bottom, #9c8569, #55331C); */
     
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     /* background: linear-gradient(to right bottom, #9C7F5B, #55331C); */
@@ -76,24 +74,43 @@
     border-top: 1px solid #1F0F08;
     padding-top: 10px;
 }
+.bg-bdark{
+    background-color: #29150c;
+    color: white;
+}
+
+.bg-brown{
+    background-color: #9C7F5B;
+    color: white;
+}
 .text-brown{
     color: #9C7F5B;
 }
 .form-control{
     background: transparent; 
     border: none;
-    border-bottom: 1px solid white;  
-    color: white;
+    border-bottom: 1px solid rgb(12, 12, 12);  
+    color: rgb(10, 10, 10);
 }
 
 .form-control::placeholder{
-    color: white;
+    color: rgb(7, 7, 7);
 }
 .form-control:focus{
   background: transparent;
   box-shadow: none;
+  border-bottom: 1px solid rgb(12, 12, 12);  
 }
-
 #success{
     display: none;
+}
+#signup:hover ,
+#login:hover
+{
+    background-color: #9C7F5B;
+    color: #1F0F08;
+}
+
+.gradient-form{
+    backdrop-filter: blur(5px);
 }
