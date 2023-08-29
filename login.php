@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    
     require '__dbconnect.php';
     
     if ($_SERVER['REQUEST_METHOD'] == 'POST' and isset($_POST['login']) and !empty($_POST["pass"]))
@@ -13,7 +13,7 @@
           $row = mysqli_fetch_assoc($result);
           if (password_verify($pass, $row['Password'])) {
             $success = true;
-            
+            session_start();
             $_SESSION['user'] = $row['Name'];
             $_SESSION['usermail'] = $email;
 

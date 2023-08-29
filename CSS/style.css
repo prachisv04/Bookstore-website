@@ -9,7 +9,7 @@
 .nav-link{
     color: #9C7F5B;
     font-size: large;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .nav-link .active{
@@ -60,6 +60,9 @@
     border-bottom-right-radius: .3rem;
     }
 }
+.box{
+    box-sizing: border-box;
+}
 .card{
     border-top-left-radius: 6rem;
     border-bottom-right-radius: 6rem;
@@ -80,11 +83,16 @@
 }
 
 .bg-brown{
-    background-color: #9C7F5B;
+    background-color: #503523;
     color: white;
+    width: 10vw;
 }
 .text-brown{
     color: #9C7F5B;
+}
+.shop-now:hover{
+    background-color: #1F0F08;
+    color: aliceblue;
 }
 .form-control{
     background: transparent; 
@@ -113,4 +121,79 @@
 
 .gradient-form{
     backdrop-filter: blur(5px);
+}
+
+/* index page */
+.rectangle{
+    background-image: url('../img/rectbg.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 60vh;
+    border-bottom-left-radius: 100px;
+    border-top-right-radius: 100px;
+}
+
+.transbox{
+    border-bottom-left-radius: 100px;
+    border-top-right-radius: 100px;
+    background-color: rgba(0,0,0,0.4);
+}
+.vert-rect{
+    position: relative;
+    height: 30vh;
+    width: 10vw;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 30px;  
+}
+
+.carousel {
+    position: relative;
+ }           
+ .carousel-control-prev , .carousel-control-next {
+    position: absolute;  
+    top: 100%;
+ }
+ .vert-img{
+    height: 100%;
+    width: 100%;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 30px;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+.hor-rect{
+    position: relative;
+    height: 22vh;
+    /* width: 22vw; */
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 30px;  
+    background-color: #9C7F5B;
+}
+
+.card , .card-title , .card-body{
+    border: none;
+    box-sizing: border-box;
+}
+/* test */
+.navbar-toggler{
+    display: inline;
+    width: 10vw;
+}
+
+.navbar-brand{
+    display: inline;
+}
+#leftnav{
+    border :2px solid red;
+}
+#rightnav{
+    border: 2px solid blue;
+}
+.nav-brand{
+    width: 30vw;
+    margin-right: 10vw;
 }
