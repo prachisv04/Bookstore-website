@@ -1,10 +1,10 @@
 <?php
- session_start();
+    error_reporting (E_ALL ^ E_NOTICE);
+    session_start();
     $isloggedin = false;
-    if((isset($_SESSION['user'])) || ($_SESSION['user']!="")){
+    if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
         $isloggedin = true;
     }
-   
    
 
 ?>
@@ -49,7 +49,7 @@
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid border">
 
-               
+
                 <!-- left subnav -->
                 <button class="navbar-toggler" type="btn btn-secondary" data-bs-toggle="collapse"
                     data-bs-target="#leftnav" aria-controls="leftnav" aria-expanded="false"
@@ -73,14 +73,46 @@
 
                 <!-- brand in middle -->
                 <div class="d-flex nav-brand nav-item align-items-center justify-content-center">
-                    <a class="nav-link text-center"> <img src="img/logo.png" alt="LOGO" class="logo" > </a>
+                    <a class="nav-link text-center"> <img src="img/logo.png" alt="LOGO" class="logo"> </a>
                 </div>
 
                 <!-- right navbar -->
-                
-               <div id="rightnav">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        
+                <div class="rightmenu">
+                    <ul class="d-flex flex-row">
+                        <li class="nav-item menu-item">
+                            <a class="nav-link" aria-current="page" href="#">
+                                <i class="bi bi-search fs-3 mx-3"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown menu-item" id="menu">
+
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical  fs-3 mx-3"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"> <i class="bi bi-person-fill mx-1"></i> My
+                                        Profile</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-heart-fill mx-1 text-danger"></i>
+                                        Wishlist</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-cart mx-1 "></i>
+                                        cart</a></li>
+
+                                <li>
+                                    <hr class="dropdown-divider mt-2">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!--  -->
+
+                <div id="rightnav" class="rightnavmenu">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">
                                 <i class="bi bi-search fs-3 mx-3"></i>
@@ -100,10 +132,40 @@
                                 <i class="bi bi-cart fs-3 mx-3"></i>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/Bookstore/login.php">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <i class="bi bi-person-circle fs-3 mx-3"></i>
                             </a>
+                            <ul class="dropdown-menu ">
+
+                                <li>
+                                    <a class="dropdown-item text-primary fs-5 lh-1" href="#">
+                                        <?php echo $_SESSION['user'] ?>
+                                    </a>
+                                    <a class="dropdown-item text-dark lh-1" href="#">
+                                        <?php echo $_SESSION['usermail'] ?>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <hr class="dropdown-divider mb-2">
+                                </li>
+                                <li><a class="dropdown-item" href="#"> <i class="bi bi-person-fill mx-1"></i> My
+                                        Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-bag-heart-fill mx-1"></i>
+                                        Orders</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-info-circle-fill mx-1"></i> About
+                                        us</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-telephone-fill mx-1"></i> Contact
+                                        Us</a></li>
+
+                                <li>
+                                    <hr class="dropdown-divider mt-2">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                                </li>
+                            </ul>
                         </li>
                         <?php
                             }
@@ -144,8 +206,9 @@
                         <i class="bi bi-truck  mx-2"></i> Shipping Options:
                     </div>
                     <div class="card-body text-start">
-                        <p> 
-                            Offers various shipping methods , including local & national delivery , to cater customer nationwide.
+                        <p>
+                            Offers various shipping methods , including local & national delivery , to cater customer
+                            nationwide.
                         </p>
                     </div>
                 </div>
@@ -156,7 +219,7 @@
                         <i class="bi bi-geo-alt mx-2"></i> Order Tracking:
                     </div>
                     <div class="card-body text-start">
-                            Enable customer to track their orders in real time using Tracking numbers ensuring transperancy.
+                        Enable customer to track their orders in real time using Tracking numbers ensuring transperancy.
                     </div>
                 </div>
             </div>
@@ -208,9 +271,11 @@
 
                 }
             });
-        }); 
+        });
+
+
     </script>
-  
+
 </body>
 
 </html>

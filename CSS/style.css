@@ -178,14 +178,15 @@ html{
     border: none;
     box-sizing: border-box;
 }
-/* test */
-.navbar-toggler{
-    display: inline;
-    width: 10vw;
-}
 
-.navbar-brand{
-    display: inline;
+.nav-brand{
+    width: 30vw;
+    margin-right: 10vw;
+}
+/* test */
+
+.dropdown-toggle::after {
+    content: none;
 }
 #leftnav{
     border :2px solid red;
@@ -193,7 +194,27 @@ html{
 #rightnav{
     border: 2px solid blue;
 }
-.nav-brand{
-    width: 30vw;
-    margin-right: 10vw;
+
+.dropdown-menu{
+    min-width: inherit;
+}
+.menu-item{
+    list-style: none;
+}
+@media screen and (min-width:1000px){
+    .rightmenu{
+        display: none;
+    }
+    #rightnav{
+        display: inline;
+    }
+}
+
+@media screen and (max-width:1001px){
+    .rightmenu{
+        display: inline;
+    }
+    #rightnav{
+        display: none;
+    }
 }
