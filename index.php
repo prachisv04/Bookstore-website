@@ -47,16 +47,33 @@
     <!-- navbar -->
     <div class="container" id="navbar_top">
         <nav class="navbar navbar-expand-lg ">
-            <div class="container-fluid border">
+            <div class="container-fluid ">
 
 
                 <!-- left subnav -->
-                <button class="navbar-toggler" type="btn btn-secondary" data-bs-toggle="collapse"
-                    data-bs-target="#leftnav" aria-controls="leftnav" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse " id="leftnav">
+                
+                
+
+                <!-- testing leftnavbar to work as navbar -->
+                
+                <div class="leftmenu ">
+                    <ul class="d-flex flex-row">
+                        
+                        <li class="nav-item dropdown menu-item" id="lmenu">
+
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical  fs-3 mx-1"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item mx-2" href="#"><i class="bi bi-house mx-2"></i> Home</a></li>
+                                <li><a class="dropdown-item mx-2" href="#"><i class="bi bi-shop-window mx-2"></i> Shop</a></li>
+                                <li><a class="dropdown-item mx-2" href="#"><i class="bi bi-file-earmark-post mx-2"></i> Blogs</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div id="leftnav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row">
                         <li class="nav-item mx-3">
                             <a class="nav-link active" aria-current="page" href="/Bookstore/index.php">Home</a>
@@ -69,26 +86,25 @@
                         </li>
                     </ul>
 
-                </div>
-
+                </div> 
                 <!-- brand in middle -->
                 <div class="d-flex nav-brand nav-item align-items-center justify-content-center">
                     <a class="nav-link text-center"> <img src="img/logo.png" alt="LOGO" class="logo"> </a>
                 </div>
 
                 <!-- right navbar -->
-                <div class="rightmenu">
+                <div class="rightmenu mr-2">
                     <ul class="d-flex flex-row">
-                        <li class="nav-item menu-item">
+                        <li class="nav-item menu-item ">
                             <a class="nav-link" aria-current="page" href="#">
-                                <i class="bi bi-search fs-3 mx-3"></i>
+                                <i class="bi bi-search fs-3 mx-2"></i>
                             </a>
                         </li>
-                        <li class="nav-item dropdown menu-item" id="menu">
+                        <li class="nav-item dropdown menu-item  dropleft" id="menu">
 
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <i class="bi bi-three-dots-vertical  fs-3 mx-3"></i>
+                                <i class="bi bi-three-dots-vertical  fs-3 mx-2"></i>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#"> <i class="bi bi-person-fill mx-1"></i> My
@@ -113,7 +129,7 @@
                 <div id="rightnav" class="rightnavmenu">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
 
-                        <li class="nav-item">
+                        <li class="nav-item ">
                             <a class="nav-link" aria-current="page" href="#">
                                 <i class="bi bi-search fs-3 mx-3"></i>
                             </a>
@@ -132,7 +148,7 @@
                                 <i class="bi bi-cart fs-3 mx-3"></i>
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown ">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <i class="bi bi-person-circle fs-3 mx-3"></i>
@@ -200,30 +216,27 @@
     <div class="container">
 
         <div class="row d-flex align-items-center justify-content-between mx-5">
-            <div class="col col-md-3 col-sm-8 hor-rect">
-                <div class="card  bg-transparent text-light text-center">
-                    <div class="card-title mt-2">
-                        <i class="bi bi-truck  mx-2"></i> Shipping Options:
-                    </div>
-                    <div class="card-body text-start">
-                        <p>
-                            Offers various shipping methods , including local & national delivery , to cater customer
-                            nationwide.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col col-md-3 col-sm-8 hor-rect">
+            <div class="col hor-rect mx-1">
                 <div class="card bg-transparent text-light text-center">
-                    <div class="card-title mt-2">
-                        <i class="bi bi-geo-alt mx-2"></i> Order Tracking:
+                    <div class="card-title mt-2 mx-2">
+                        <i class="bi bi-telephone-inbound"></i> Customer Support:
                     </div>
                     <div class="card-body text-start">
-                        Enable customer to track their orders in real time using Tracking numbers ensuring transperancy.
+                        live chat , email or ticketing system to provide customer support and address issues properly.
                     </div>
                 </div>
             </div>
-            <div class="col col-md-3 col-sm-8 hor-rect">
+            <div class="col hor-rect mx-1">
+                <div class="card bg-transparent text-light text-center">
+                    <div class="card-title mt-2 mx-2">
+                        <i class="bi bi-telephone-inbound"></i> Customer Support:
+                    </div>
+                    <div class="card-body text-start">
+                        live chat , email or ticketing system to provide customer support and address issues properly.
+                    </div>
+                </div>
+            </div>
+            <div class="col hor-rect mx-1">
                 <div class="card bg-transparent text-light text-center">
                     <div class="card-title mt-2 mx-2">
                         <i class="bi bi-telephone-inbound"></i> Customer Support:

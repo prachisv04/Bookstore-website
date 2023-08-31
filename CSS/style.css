@@ -133,7 +133,9 @@
     border-bottom-left-radius: 100px;
     border-top-right-radius: 100px;
 }
-
+.nav-brand{
+    border: 2px solid green;
+}
 .transbox{
     border-bottom-left-radius: 100px;
     border-top-right-radius: 100px;
@@ -167,54 +169,101 @@ html{
 
 .hor-rect{
     position: relative;
-    height: 22vh;
-    /* width: 22vw; */
     border-bottom-right-radius: 30px;
     border-top-left-radius: 30px;  
     background-color: #9C7F5B;
+   
+}
+
+/* on screen with width lseese than 992 - tablet */
+@media screen and (min-width:768px ) and (max-width:992px){
+    .hor-rect{
+        height: fit-content;
+        width: 25vw !important;
+    }
+}
+
+/* laptop */
+@media screen and (min-width:992px){
+    .hor-rect{
+        height: fit-content;
+        width: 22vw;
+        padding: 20px;
+    }
+}
+
+/*on screen where screen is less or equal to 1001 - mobile */
+@media screen and (max-width:768px){
+    .hor-rect{
+        height: fit-content;
+    }
 }
 
 .card , .card-title , .card-body{
     border: none;
-    box-sizing: border-box;
+    box-sizing: border-box;  
 }
 
-.nav-brand{
-    width: 30vw;
-    margin-right: 10vw;
+@media screen and (max-width:992px){
+    .rightmenu{
+        display: inline;
+    }
+    #rightnav{
+        display: none;
+    }
+    .leftmenu{
+        display: inline;
+    }
+    #leftnav{
+        display: none;
+    }
 }
-/* test */
+
+@media screen and (min-width:992px){
+    .rightmenu{
+        display: none;
+    }
+    #rightnav{
+        display: inline;
+    }
+    .leftmenu{
+        display: none;
+    }
+    #leftnav{
+        display: inline;
+    }
+}
 
 .dropdown-toggle::after {
+    /* to remove dropdown arrow */
     content: none;
 }
-#leftnav{
-    border :2px solid red;
-}
-#rightnav{
-    border: 2px solid blue;
+
+.dropleft &::before {
+    margin-right: 0;
+  }
+  
+  .dropleft {
+    position: relative;
+  }
+  
+  .dropleft {
+    .dropdown-menu {
+      top: 0;
+      right: 0;
+      left: auto;
+      margin-top: 6vh;
+    }
+  
+    .dropdown-toggle {
+      @include caret(left);
+      &::before {
+        vertical-align: 0;
+      }
+    }
 }
 
-.dropdown-menu{
-    min-width: inherit;
-}
 .menu-item{
-    list-style: none;
+    list-style: none; 
 }
-@media screen and (min-width:1000px){
-    .rightmenu{
-        display: none;
-    }
-    #rightnav{
-        display: inline;
-    }
-}
-
-@media screen and (max-width:1001px){
-    .rightmenu{
-        display: inline;
-    }
-    #rightnav{
-        display: none;
-    }
-}
+/* test */
