@@ -1,26 +1,96 @@
+
 /* Navbar */
 .navbar{
     background: transparent;
-}
-.logo{
-    height: auto;
-    width: 10vw;
 }
 .nav-link{
     color: #9C7F5B;
     font-size: large;
     font-weight: 500;
 }
-
+.logo{
+    width: 10vw;
+    height: auto;
+    margin-bottom: 20px;
+}
 .nav-link .active{
     color: #1F0F08;
 }
-
 .btn-brown{
     background-color: #9C7F5B;
     color: #1f1f08;
     border-radius: 5px;
-    width: 5vw;
+    width: 10vw;
+}
+@media screen and (max-width:992px){
+    .rightmenu{
+        display: inline;
+    }
+    #rightnav{
+        display: none;
+    }
+    .leftmenu{
+        display: block;  
+    }
+    #leftnav{
+        display: none;
+    }
+}
+
+.leftmenu ul{
+    margin-left: -30px;
+}
+
+.rightmenu ul{
+    margin-left: -30px;
+}
+@media screen and (min-width:992px){
+    .rightmenu{
+        display: none;
+    }
+    #rightnav{
+        display: inline;
+    }
+    .leftmenu{
+        display: none;
+    }
+    #leftnav{
+        display: inline;
+    }
+}
+
+.dropdown-toggle::after {
+    /* to remove dropdown arrow */
+    content: none;
+}
+
+.dropleft &::before {
+    margin-right: 0;
+  }
+  
+  .dropleft {
+    position: relative;
+  }
+  
+  .dropleft {
+    .dropdown-menu {
+      top: 0;
+      right: 0;
+      left: auto;
+      margin-top: 6vh;
+    }
+  
+    .dropdown-toggle {
+        
+      @include caret(left);
+      &::before {
+        vertical-align: 0;
+      }
+    }
+}
+
+.menu-item{
+    list-style: none; 
 }
 
 /* body */
@@ -35,12 +105,6 @@
 .gradient-custom-2 {
     /* fallback for old browsers */
     background: #fccb90;
-    
-    /* Chrome 10-25, Safari 5.1-6 */
-    /* background: -webkit-linear-gradient(to right bottom, #9c8569, #55331C); */
-    
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    /* background: linear-gradient(to right bottom, #9C7F5B, #55331C); */
 
     background-image: url("../img/peakpx.jpg");
     background-repeat: no-repeat;
@@ -60,6 +124,7 @@
     border-bottom-right-radius: .3rem;
     }
 }
+
 .box{
     box-sizing: border-box;
 }
@@ -67,6 +132,7 @@
     border-top-left-radius: 6rem;
     border-bottom-right-radius: 6rem;
 }
+
 .r-rad{
     border-bottom-right-radius: 6rem;
 }
@@ -123,63 +189,26 @@
     backdrop-filter: blur(5px);
 }
 
-/* index page */
-.rectangle{
-    background-image: url('../img/rectbg.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    height: 60vh;
-    border-bottom-left-radius: 100px;
-    border-top-right-radius: 100px;
-}
-.nav-brand{
-    border: 2px solid green;
-}
-.transbox{
-    border-bottom-left-radius: 100px;
-    border-top-right-radius: 100px;
-    background-color: rgba(0,0,0,0.4);
-}
-.vert-rect{
-    position: relative;
-    height: 30vh;
-    width: 10vw;
-    border-bottom-right-radius: 30px;
-    border-top-left-radius: 30px;  
-}
-
-.carousel {
-    position: relative;
- }           
- .carousel-control-prev , .carousel-control-next {
-    position: absolute;  
-    top: 100%;
- }
- .vert-img{
-    height: 100%;
-    width: 100%;
-    border-bottom-right-radius: 30px;
-    border-top-left-radius: 30px;
-}
-
 html{
     scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
 }
 
 .hor-rect{
     position: relative;
     border-bottom-right-radius: 30px;
     border-top-left-radius: 30px;  
-    background-color: #9C7F5B;
-   
+    background-color: #9C7F5B;   
 }
+
 
 /* on screen with width lseese than 992 - tablet */
 @media screen and (min-width:768px ) and (max-width:992px){
     .hor-rect{
         height: fit-content;
-        width: 25vw !important;
+        width: 25vw;
+        margin-top: 10px;
     }
 }
 
@@ -195,7 +224,8 @@ html{
 /*on screen where screen is less or equal to 1001 - mobile */
 @media screen and (max-width:768px){
     .hor-rect{
-        height: fit-content;
+        height: fit-content;   
+        margin-top: 10px;
     }
 }
 
@@ -204,66 +234,86 @@ html{
     box-sizing: border-box;  
 }
 
-@media screen and (max-width:992px){
-    .rightmenu{
-        display: inline;
+.vert-img{
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+/* on screen with width lseese than 992 - tablet */
+@media screen and (min-width:768px ) and (max-width:992px){
+    .rectangle ,.transbox {
+        height: fit-content;
+        border-top-right-radius: 60px;
+        border-bottom-left-radius: 60px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
-    #rightnav{
-        display: none;
-    }
-    .leftmenu{
-        display: inline;
-    }
-    #leftnav{
-        display: none;
+    .vert-img , .carousel-item{
+        height: 220px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        margin-left: 15px;
     }
 }
 
+/* laptop */
 @media screen and (min-width:992px){
-    .rightmenu{
-        display: none;
-    }
-    #rightnav{
-        display: inline;
-    }
-    .leftmenu{
-        display: none;
-    }
-    #leftnav{
-        display: inline;
-    }
+   .rectangle ,.transbox{
+    height: fit-content;
+    border-top-right-radius: 80px;
+    border-bottom-left-radius: 80px;
+   }
+   .vert-img , .carousel-item{
+    height: 40vh;
+    margin-bottom: 10px;
+    margin-left: 15px;
+   }
 }
 
-.dropdown-toggle::after {
-    /* to remove dropdown arrow */
-    content: none;
+
+/*on screen where screen is less or equal to 1001 - mobile */
+@media screen and (max-width:768px){
+    .rectangle , .transbox{
+        height:fit-content;
+        border-top-right-radius: 40x;
+        border-bottom-left-radius: 40px;
+    }
+    .vert-img , .carousel-item {
+        height: 200px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 5px;
+    }
+    .row{
+        flex-direction: column;
+    }
+
 }
 
-.dropleft &::before {
-    margin-right: 0;
+.rectangle{
+    background: url('../img/rectbg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.8;
+}
+
+.transbox {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    margin-left: -12px;
+    margin-right: -12px;
+}
+
+.tabs{
+    height: 60vh;
+    border: 5px solid red;
+}
+.nav-pills .nav-item .nav-link.active {
+    background-color: transparent;
+    border: none;
+    color: #1F0F08;
+    text-decoration: underline;
   }
-  
-  .dropleft {
-    position: relative;
-  }
-  
-  .dropleft {
-    .dropdown-menu {
-      top: 0;
-      right: 0;
-      left: auto;
-      margin-top: 6vh;
-    }
-  
-    .dropdown-toggle {
-      @include caret(left);
-      &::before {
-        vertical-align: 0;
-      }
-    }
-}
-
-.menu-item{
-    list-style: none; 
-}
 /* test */
+

@@ -48,33 +48,27 @@
     <div class="container" id="navbar_top">
         <nav class="navbar navbar-expand-lg ">
             <div class="container-fluid ">
-
-
-                <!-- left subnav -->
-                
-                
-
-                <!-- testing leftnavbar to work as navbar -->
-                
-                <div class="leftmenu ">
-                    <ul class="d-flex flex-row">
-                        
+                <div class="leftmenu">
+                    <ul>
                         <li class="nav-item dropdown menu-item" id="lmenu">
 
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <i class="bi bi-three-dots-vertical  fs-3 mx-1"></i>
+                                <i class="bi bi-list fs-3 mx-1"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item mx-2" href="#"><i class="bi bi-house mx-2"></i> Home</a></li>
-                                <li><a class="dropdown-item mx-2" href="#"><i class="bi bi-shop-window mx-2"></i> Shop</a></li>
-                                <li><a class="dropdown-item mx-2" href="#"><i class="bi bi-file-earmark-post mx-2"></i> Blogs</a></li>
+                                <li><a class="dropdown-item mx-2" href="#"><i class="bi bi-house mx-2"></i> Home</a>
+                                </li>
+                                <li><a class="dropdown-item mx-2" href="#"><i class="bi bi-shop-window mx-2"></i>
+                                        Shop</a></li>
+                                <li><a class="dropdown-item mx-2" href="#"><i class="bi bi-file-earmark-post mx-2"></i>
+                                        Blogs</a></li>
                             </ul>
                         </li>
                     </ul>
                 </div>
                 <div id="leftnav">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row">
+                    <ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row">
                         <li class="nav-item mx-3">
                             <a class="nav-link active" aria-current="page" href="/Bookstore/index.php">Home</a>
                         </li>
@@ -86,14 +80,14 @@
                         </li>
                     </ul>
 
-                </div> 
+                </div>
                 <!-- brand in middle -->
-                <div class="d-flex nav-brand nav-item align-items-center justify-content-center">
+                <div class="d-flex nav-brand nav-item align-items-center ">
                     <a class="nav-link text-center"> <img src="img/logo.png" alt="LOGO" class="logo"> </a>
                 </div>
 
                 <!-- right navbar -->
-                <div class="rightmenu mr-2">
+                <div class="rightmenu">
                     <ul class="d-flex flex-row">
                         <li class="nav-item menu-item ">
                             <a class="nav-link" aria-current="page" href="#">
@@ -209,12 +203,76 @@
 
     <!-- center container -->
 
-    <!-- container -->
+    <div class="container mt-3 mb-5 w-75 rectangle">
+        <div class="  transbox text-center">
 
+            <div class="row  text-center d-flex justify-content-center align-items-center">
+                <div class="col">
+                    <h1>Discover the World </h1>
+                    <h1>of Words.</h1>
+
+                    <h6 class="mt-3">
+                        Journey Through Pages of Adventure , knowledge ,
+                    </h6>
+                    <h6>
+                        and Inspiration. Find Your Next favourite Book Here.
+                    </h6>
+
+                    <button class="btn btn-light mt-3 mb-3">Shop Now</button>
+
+                </div>
+                <div class="col">
+
+                    <div class="col">
+                        <h3 class="mt-3 mb-3">Best Sellers</h3>
+                    </div>
+                    <div class="col ">
+                        <div id="carouselExample"
+                            class="carousel slide d-flex align-items-center justify-content-center mb-2 ml-4">
+
+                            <div class="carousel-inner w-50">
+                                <div class="carousel-item active">
+                                    <img src="img/last-hope.jpg" class="vert-img d-block w-75" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="img/million.jpg" class="vert-img d-block w-75" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="img/vav.jpg" class="vert-img d-block w-75" alt="...">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-4 mx-5 d-flex align-items-center justify-content-around  ">
+                        <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <span class="bi bi-arrow-left fs-3 text-dark" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <span class="bi bi-arrow-right fs-3 text-light" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button> -->
+                        <button class="btn">
+                            <i class="bi bi-arrow-left fs-3 text-light"></i>
+                        </button>
+                        <button class="btn">
+                            <i class="bi bi-arrow-right fs-3 text-light"></i>
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- container -->
     <!-- for services -->
 
-    <div class="container">
-
+    <div class="container mb-5">
         <div class="row d-flex align-items-center justify-content-between mx-5">
             <div class="col hor-rect mx-1">
                 <div class="card bg-transparent text-light text-center">
@@ -249,14 +307,28 @@
         </div>
 
     </div>
-    <!-- service container -->
 
-    <div class="text-dark" id="shop">
-        shop here
+    <!-- tabs -->
+    <!-- will do later -->
+    <div class="container container-fluid tabs mb-5">
+        <ul class="nav nav-pills">
+            <li class="nav-item active w-50 text-end text-nowrap fs-4"><a class="nav-link" href="#trend" data-toggle="tab">Trending Now</a></li>
+            <li class="nav-item w-50 text-nowrap fs-4" ><a class="nav-link" href="#release" data-toggle="tab">New Releases</a></li>
+        </ul>
+        
+        <div id='content' class="tab-content">
+            <div class="tab-pane active" id="trend">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet aspernatur, tempora praesentium in illum ullam eum reprehenderit. Quod ducimus animi nam earum cum omnis praesentium libero quo fuga tenetur aliquid, repellat necessitatibus nostrum ipsa.
+            </div>
+            <div class="tab-pane" id="release">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa officiis in odit animi! Numquam dicta quidem vel, obcaecati nulla quam tenetur. Laborum ea saepe nisi at alias exercitationem corrupti fugit, numquam illo reprehenderit architecto.
+            </div>
+           
+        </div>
     </div>
-
-
+    
     <!-- javascript -->
+    <!-- bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -266,28 +338,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            window.addEventListener('scroll', function () {
-                if (window.scrollY > 50) {
-                    document.getElementById('navbar_top').classList.add('fixed-top');
-                    // add padding top to show content behind navbar
-                    navbar_height = document.querySelector('.navbar').offsetHeight;
-                    document.body.style.paddingTop = navbar_height + 'px';
-                    document.getElementById('navbar_top').style.backgroundColor = "white";
-
-                } else {
-                    document.getElementById('navbar_top').classList.remove('fixed-top');
-                    document.getElementById('navbar_top').style.background = "transparent";
-                    // remove padding top from body
-                    document.body.style.paddingTop = '0';
-
-                }
-            });
-        });
-
-
-    </script>
+    <!-- site-custom -->
+    <script src="JS/customs.js"></script>
 
 </body>
 

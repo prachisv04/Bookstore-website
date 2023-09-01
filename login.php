@@ -85,6 +85,11 @@
           <div class="card text-dark form-decor">
             <div class="row g-0">
               <div class="col-lg-6">
+                <div class="card-title mx-5 mt-5">
+                <button type="button" class="btn btn-outline-dark bi bi-arrow-left" id="back" aria-label="Close">
+                  Back
+                </button>
+                </div>
                 <div class="card-body p-md-5 mx-md-5 l-rad">
                   <form action="/Bookstore/login.php" onsubmit="return validateLoginForm(this)" method="POST"
                     autocomplete="off">
@@ -125,7 +130,9 @@
                 </div>
               </div>
               <div class="col-lg-6 d-flex align-items-center gradient-custom-2 r-rad">
+               
                 <div class="mx-auto text-center align-items-center justify-content-center pb-4">
+                  
                   <p class="mb-0 me-2 d-block text-center over-img">Don't have an acoount</p>
                   <a href="/Bookstore/signup.php" class="btn btn-light">Signup</a>
                 </div>
@@ -182,6 +189,10 @@
           return false;
         return true;
       }
+      
+      document.getElementById("back").addEventListener("click",()=>{
+        window.history.back();
+      })
 
     </script>
 </body>

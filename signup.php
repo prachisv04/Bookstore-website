@@ -24,10 +24,6 @@
             }
             else{
                 $success=true;
-                // header("Content-Type: text/html");
-               
-                
-               
               
                 header('Refresh:1; url=http://localhost/Bookstore/login.php');
                 
@@ -85,7 +81,12 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 form-decor r-rad">
-                                <div class="card-body p-md-5 mx-md-4 ">
+                                <div class="card-title mx-1 mt-2 ">
+                                    <button type="button" class="btn btn-outline-dark bi bi-arrow-left" id="back2" aria-label="Close">
+                                      Back
+                                    </button>
+                                    </div>
+                                <div class="card-body p-md-4 mx-md-4 ">
 
                                     <form action="/Bookstore/signup.php" onsubmit="return validateSignupForm(this)"
                                         method="POST" autocomplete="off">

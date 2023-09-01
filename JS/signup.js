@@ -101,3 +101,7 @@ function validateSignupForm(form){
     return true;
 return false;
 }
+
+document.getElementById("back2").addEventListener("click",()=>{
+    window.history.back();
+  })
