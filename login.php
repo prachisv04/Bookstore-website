@@ -80,68 +80,70 @@
   <!-- login-form -->
   <section class="h-100 gradient-form">
     <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100 ">
-        <div class="col-xl-9">
-          <div class="card text-dark form-decor">
-            <div class="row g-0">
-              <div class="col-lg-6">
-                <div class="card-title mx-5 mt-5">
-                <button type="button" class="btn btn-outline-dark bi bi-arrow-left" id="back" aria-label="Close">
-                  Back
-                </button>
-                </div>
-                <div class="card-body p-md-5 mx-md-5 l-rad">
-                  <form action="/Bookstore/login.php" onsubmit="return validateLoginForm(this)" method="POST"
-                    autocomplete="off">
-                    <p id="warn"></p>
-                    <div class="form-outline my-4">
-                      <input type="email" class="form-control" id="email" name="email" placeholder="Email address" />
-                    </div>
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-10">
+                <div class="card rounded-3 text-black">
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                            <div class="card-title mx-3 mt-3">
+                                <button type="button" class="btn btn-outline-dark bi bi-arrow-left" id="back" aria-label="Close">
+                                  Back
+                                </button>
+                                </div>
+                            <div class="card-body p-md-5 mx-md-4">
 
-                    <div class="form-outline mb-4">
-                      <input type="password" id="pass" name="pass" placeholder="Password" class="form-control" />
-                    </div>
+                                <div class="text-center">
+                                    <img src="img/logo.png" style="width: 185px;" alt="logo">
+                                    <h4 class="mt-1 mb-5 pb-1">We are Bookworms</h4>
+                                </div>
 
-                    <div class="form-outline mb-4">
-                      <p id="warn"> </p>
-                    </div>
+                                <form action="/Bookstore/login.php" onsubmit="return validateLoginForm(this)"
+                                    method="POST" autocomplete="off">
 
-                    <div class=" pt-1 mb-3 pb-1  d-flex justify-content-center">
-                      <button class="btn bg-bdark py-3 fa-lg mb-2" id="login" name="login" type="submit">Login</button>
+                                    <div class="form-outline my-4">
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            placeholder="Email address" />
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="password" id="pass" name="pass" placeholder="Password"
+                                            class="form-control" />
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <p id="warn"> </p>
+                                    </div>
+
+
+                                    <div class="pt-1 mb-3 pb-1 d-flex flex-column">
+                                        <a class="text-muted float-left" href="#!">Forgot password?</a>
+                                        <button class="btn btn-dark fa-lg mb-2 py-3 "
+                                            type="submit" id="login" name="login">Login</button>
+                                        
+                                    </div>
+                                    <div class="d-flex justify-content-center text-center mt-2 pb-4 top-line">
+                                        <p class="text-dark fs-6 mx-2"> Sign In With </p>
+                                        <a href="#!" class="text-danger"><i class="fa fa-google fs-3 mx-2"></i></a>
+                                        <a href="#!" class="text-primary"><i class="fa fa-linkedin fs-3 mx-2 px-2"></i></a>
+                                        <a href="#!" class="text-dark"><i class="fa fa-github fs-3 mx-2"></i></a>
+                                      </div>
+                                    </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 d-flex align-items-center justify-content-center gradient-custom-2">
+                            <div class="transbox text-white px-3 py-4 p-md-5 ">
+                                <div class="d-flex flex-column align-items-center justify-content-center pb-4 text-center ">
+                                    <p>Don't have an account?</p>
+                                    <a href="/Bookstore/signup.php" type="button" class="btn btn-light">Create new</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-flex align-items-left">
-                      <a class=" fs-6 text-dark" href="#!">
-                        <i class="bi bi-phone"></i> Login with OTP
-                      </a>
-                    </div>
-                    <div class="d-flex align-items-left">
-                      <a class=" fs-6 text-primary" href="#!">
-                        <i class="bi bi-info"></i> Forgot Password?
-                      </a>
-                    </div>
-                    <br>
-                    <div class="d-flex justify-content-center text-center mt-3 pb-4 top-line">
-                      <p class="text-dark fs-6 mx-2"> Sign In With </p>
-                      <a href="#!" class="text-danger"><i class="fa fa-google fs-3 mx-2"></i></a>
-                      <a href="#!" class="text-primary"><i class="fa fa-linkedin fs-3 mx-2 px-2"></i></a>
-                      <a href="#!" class="text-dark"><i class="fa fa-github fs-3 mx-2"></i></a>
-                    </div>
-                  </form>
                 </div>
-              </div>
-              <div class="col-lg-6 d-flex align-items-center gradient-custom-2 r-rad">
-               
-                <div class="mx-auto text-center align-items-center justify-content-center pb-4">
-                  
-                  <p class="mb-0 me-2 d-block text-center over-img">Don't have an acoount</p>
-                  <a href="/Bookstore/signup.php" class="btn btn-light">Signup</a>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
+</section>
     <!-- javascript -->
     <script>
       document.getElementById("email").addEventListener("keyup", () => {
