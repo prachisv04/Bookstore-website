@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    /* outline: 1px solid #f00 !important; */
 }
 
 /* Navbar */
@@ -39,7 +40,7 @@
 
 
 
-@media screen and (min-width:768px) and (max-width:992px)  {
+@media screen and  (max-width:992px)  {
     .rightmenu {
         display: inline;
     }
@@ -53,6 +54,9 @@
     }
 
     #leftnav {
+        display: none;
+    }
+    .laptopsearch{
         display: none;
     }
 }
@@ -80,6 +84,9 @@
 
     #leftnav {
         display: inline;
+    }
+    .mobilesearch{
+        display: none;
     }
 }
 
@@ -373,16 +380,24 @@ html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.input-group .form-control {
+.input-group input[type=email] {
     background-color: #9C7F5B;
     border: none;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
 }
 
+.input-group input[type=search] {
+    background-color: white;
+    border: 1px solid black;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius:8px;
+    box-shadow: 1px 1px 10px #9C7F5B;
+}
 .btn-dbrown {
     background-color: #1F0F08;
-    color: #9C7F5B;
+    color: #fccb90;
+    font-weight: bold;
     border-bottom-right-radius: 20px;
     border-top-left-radius: 20px;
     border-top-right-radius: 0px;
@@ -395,36 +410,6 @@ html {
     color: #503523;
 }
 
-/* test */
-
-
-.tabs {
-    height: 60vh;
-    border: 5px solid red;
-}
-
-.offer {
-    background: url('../img/offer.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-@media screen and (max-width:768px) {
-    .offer {   
-        border-top-right-radius: 40px;
-        border-bottom-left-radius: 40px;
-        border: 2px solid red;
-        height: 40vh;
-    }
-}
-
-@media screen and (min-width:768px) {
-    .offer {
-        border-top-right-radius: 100px;
-        border-bottom-left-radius: 100px;
-    }
-}
 
 .about-img {
     height: 60vh;
@@ -473,4 +458,40 @@ html {
         border-bottom-left-radius: 0px;
         width: 25%;
     }
+}
+
+.tabs {
+    height: 60vh;
+    border: 5px solid red;
+}
+
+.offer {
+    background: url('../img/offer.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media screen and (max-width:768px) {
+    .offer {   
+        border-top-right-radius: 40px;
+        border-bottom-left-radius: 40px;
+        border: 2px solid red;
+        height: 40vh;
+    }
+}
+
+@media screen and (min-width:768px) {
+    .offer {
+        border-top-right-radius: 100px;
+        border-bottom-left-radius: 100px;
+    }
+}
+/* test */
+
+.social{
+    padding: 10px;
+    border-radius: 50px;
+    background-color: black;
+    color: white;
 }
