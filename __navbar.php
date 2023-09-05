@@ -88,9 +88,15 @@ session_start();
                 <div class="rightmenu">
                     <ul class="d-flex flex-row">
                         <li class="nav-item menu-item laptopsearch">
-                            <a class="nav-link" aria-current="page" href="#">
-                                <i class="bi bi-search fs-3 mx-2"></i>
-                            </a>
+                            <div class="input-group">
+                                <div class="form-outline">
+                                    <input id="search-input" type="search" id="form1" class="form-control" />
+                                    <label class="form-label" for="form1">Search</label>
+                                </div>
+                                <button id="search-button" type="button" class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
                         </li>
                         <li class="nav-item dropdown menu-item  dropleft" id="menu">
 
@@ -110,7 +116,8 @@ session_start();
                                 <li>
                                     <hr class="dropdown-divider mt-2">
                                 </li>
-                                <li><a class="dropdown-item" href="/Bookstore/logout.php"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                                <li><a class="dropdown-item" href="/Bookstore/logout.php"><i
+                                            class="bi bi-box-arrow-right"></i> Logout</a>
                                 </li>
                             </ul>
                         </li>
@@ -122,9 +129,15 @@ session_start();
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
 
                         <li class="nav-item laptopsearch">
-                            <a class="nav-link" aria-current="page" href="#">
-                                <i class="bi bi-search fs-3 mx-3"></i>
-                            </a>
+                            <div class="input-group ">
+                                <div class="form-outline">
+                                  <input id="search-input " type="search" id="form1" class="form-control" placeholder="Search" />
+                                  
+                                </div>
+                                <button id="search-button" type="button" class="btn btn-dbrown ">
+                                  <i class="bi bi-search fa-lg"></i>
+                                </button>
+                              </div>
                         </li>
                         <?php
                             if($isloggedin){
@@ -171,7 +184,8 @@ session_start();
                                 <li>
                                     <hr class="dropdown-divider mt-2">
                                 </li>
-                                <li><a class="dropdown-item" href="/Bookstore/logout.php"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                                <li><a class="dropdown-item" href="/Bookstore/logout.php"><i
+                                            class="bi bi-box-arrow-right"></i> Logout</a>
                                 </li>
                             </ul>
                         </li>

@@ -52,22 +52,15 @@
 
       <div class="col-lg-3 col-md-4 col-xl-3 filters">
 
-        <div class="dropdown">
-          <a class="btn btn-outline-dark  w-100 dropdown-toggle" href="#" role="button" id="sortbtn" data-bs-toggle="dropdown" aria-expanded="false">
-            <div class="d-flex justify-content-between">
-              <h6>Sort By</h6>
-              <i class="bi bi-caret-right"></i>
-            </div>
-          </a>
-        
-          <ul class="dropdown-menu ">
-            <li><a class="dropdown-item" href="#">Recommended</a></li>
-            <li><a class="dropdown-item" href="#">Pricing:Low to High</a></li>
-            <li><a class="dropdown-item" href="#">Pricing:High to Low</a></li>
-            <li><a class="dropdown-item" href="#">Customer Rating</a></li>
-            <li><a class="dropdown-item" href="#">Popularity</a></li>
-          </ul>
-        </div>
+        <select class="form-select" aria-label="Default select example">
+          <option selected disabled>Sort By</option>
+          <option value="1">Recommended</option>
+          <option value="2">Pricing:High to Low</option>
+          <option value="3">Pricing:Low to High</option>
+          <option value="3">Customer Rating</option>
+          <option value="3">Popularity</option>   
+        </select>
+       
         <ul class="leftfilter mt-3">
 
           <li type="button" class="collapsible border-bottom">
@@ -182,41 +175,53 @@
 
 
       </div>
-      <div class="col-lg-9 col-md-7 col-xl-9  products">
+      <div class="col-lg-9 col-md-8 col-xl-9  products">
         <div class="container ">
-            <div class="row d-flex justify-content-around g-3" id="allProducts">
-              
+            <div class="row" id="allProducts">         
               <?php
-
                 require '__dbconnect.php';
 
-                $sql = "select * from `book`";
-
+                $sql = "select book.Book_id , book.Title , book.PageNums , book.Category , author.Author_name, price_details.Price , languages.Language_name , book_pictures.CoverPage from book INNER JOIN author on book.Author_id = author.Author_id INNER JOIN price_details on book.Book_id = price_details.Book_id  INNER JOIN languages on languages.Language_id = price_details.language_id INNER JOIN book_pictures on book_pictures.Book_id = book.Book_id";
                 $books = mysqli_query($conn,$sql);
                 $no=1;
+               
                 while($book=mysqli_fetch_assoc($books)){
                   echo" 
-                    <div class='col py-3 my-5'>
+                    <div class='col mx-1 py-3 '>
                       <div class='card'>
                         <div class='card-title py-3 d-flex text-dbrown'>
-                        <div class='w-75 border'>
-                        <h6 class='text-start px-3'>".$book['Title']."</h6>
-                          <h6 class='card-subtitle mb-2 text-body-secondary text-brown'>- Author</h6>
+                        <div class='w-75' >
+                        <h6 class='text-start text-truncate px-3 fs-5' data-bs-toggle='tooltip' data-bs-placement='top' data-bs-custom-class='custom-tooltip' title='".$book['Title']."' >".$book['Title']."</h6>
+                          <h6 class='card-subtitle text-body-secondary text-brown text-end'>- ".$book['Author_name']."</h6>
                         </div>
                         <div class='w-25'>
                         <button class='wishlist btn text-danger'><i class='bi bi-heart fa-lg'></i></button>
                         </div>
                         </div>
   
-                        <div class='card-body  text-nowrap'>
-                        <h5>isbn : ".$book['isbn']."</h5>
-                        <h5>Category : ".$book['Category']."</h5>
-                        <h5>PageNums : ".$book['PageNums']."</h5>    
+                        <div class='card-body text-nowrap d-flex flex-column ' >
+                        
+                     
+                        <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($book['CoverPage'])."' class='bookcover'/> 
+                     
+                        <div class='details mb-3 d-flex flex-column'>
+                        <input class='border-0 text-left px-3 mt-3 fs-6 ' type='text' readonly value='".$book['Category']."' >
+                        <input class='border-0 text-left px-3 fs-6 ' type='text' readonly value='".$book['Language_name']."' >
+
                         </div>
-  
-                        <div class='card-footer d-block'>
+                        <div class='price-box text-center '>
+                          <div class='d-flex justify-content-between'>
+                          <h6 class='fs-5'><i class='bi bi-star-fill text-success'></i> 5 | ".$book['PageNums']."</h6>
+                            <h5 class='fs-5'>&#x20B9;".$book['Price']."</h5>
+                          </div>
+                        </div>
+                        
+                        </div>
+
+                        <div class='card-footer'>
                           
-                          <button class='btn btn-dbrown '>Add to Cart</button>
+                          <button class='addToCart btn btn-dbrown p-2'>Add to Cart <i class='bi bi-bag fa-lg mx-2'></i></button>
+
                         </div>
                       </div>
                     </div>                 
@@ -250,14 +255,15 @@
         crossorigin="anonymous"></script>
 
     <!-- site-custom -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="JS/customs.js"></script>
       <script>
-        $(document).ready(function () {
-          $('#allProducts').DataTable();
+        // $(document).ready(function () {
+        //   $('#allProducts').DataTable();
 
-        });
+        // });
       </script>
-  <script src="JS/customs.js"></script>
   <script>
     document.getElementById("shop").classList.add("active");
 
@@ -282,23 +288,11 @@
       });
     }
 
-    document.getElementById("sortbtn").addEventListener("click",()=>{
-      if( document.getElementById("sortbtn").classList.contains("show")){
-        document.getElementById("sortbtn").firstElementChild.lastElementChild.classList.remove("bi-caret-right");
-        document.getElementById("sortbtn").firstElementChild.lastElementChild.classList.add("bi-caret-down");
-      }
-      else{
-        document.getElementById("sortbtn").firstElementChild.lastElementChild.classList.remove("bi-caret-down");
-        document.getElementById("sortbtn").firstElementChild.lastElementChild.classList.add("bi-caret-right");
-      }
-    });
-
+  
 
     let wish = document.getElementsByClassName("wishlist");
-    console.log(wish);
-    let itr;
-
-    for (itr = 0; itr < wish.length; itr++) {
+    
+    for (let itr = 0; itr < wish.length; itr++) {
 
       wish[itr].addEventListener("click", function () {
     
@@ -313,6 +307,63 @@
       });
     }
 
+
+    let carts = document.getElementsByClassName("addToCart");
+ 
+    for (let itrc = 0; itrc < carts.length; itrc++) {
+
+      carts[itrc].addEventListener("click", function () {
+        
+        this.style.display="none";
+        let counter = document.createElement("div");
+
+        counter.classList.add("input-group");
+       
+        let btnplus = "<button class='btn  plus ' type='button'><i class='bi bi-plus text-light fa-lg'></i></button>";
+        let btnminus = "<button class='btn  minus ' type='button'><i class='bi bi-dash text-light fa-lg'></i></button>";
+        let getnum = "<input type='text' class='form-control count text-center fs-5 bg-light' value='1' aria-label='Example text with two button addons'>";
+
+        counter.innerHTML = btnminus+getnum+btnplus;
+        counter.style.width="75%";
+        counter.style.backgroundColor="#9C7F5B";
+        counter.style.borderTopLeftRadius="15px";
+        counter.style.borderBottomRightRadius="15px";
+
+        let plus = counter.getElementsByClassName("plus");
+    
+        for (let itrp = 0; itrp < plus.length; itrp++) {
+        
+          plus[itrp].addEventListener("click", function () {
+            val = this.previousSibling.value;
+            this.previousSibling.value=++val;
+
+          });
+        }
+        let istrue = false;
+        let minus = counter.getElementsByClassName("minus");
+    
+        for (let itrm = 0; itrm < minus.length; itrm++) {
+        
+          minus[itrm].addEventListener("click", function () {
+            val = this.nextSibling.value;
+            this.nextSibling.value=--val;
+
+            if(val <=0){
+              this.nextSibling.value=1;
+              counter.style.display="none";
+              carts[itrc].style.display="flex";
+              carts[itrc].style.marginLeft="10px";
+            }
+          });
+        }
+     
+        this.parentNode.appendChild(counter);
+      });
+    }
+
+    
+   
+  
   </script>
 </body>
 
