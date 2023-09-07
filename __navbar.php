@@ -90,8 +90,8 @@ session_start();
                         <li class="nav-item menu-item laptopsearch">
                             <div class="input-group">
                                 <div class="form-outline">
-                                    <input id="search-input" type="search" id="form1" class="form-control" />
-                                    <label class="form-label" for="form1">Search</label>
+                                    <input id="search-inputmenu" type="search" id="form1" class="form-control" />
+                                  
                                 </div>
                                 <button id="search-button" type="button" class="btn btn-primary">
                                     <i class="fas fa-search"></i>
@@ -131,7 +131,7 @@ session_start();
                         <li class="nav-item laptopsearch">
                             <div class="input-group ">
                                 <div class="form-outline">
-                                  <input id="search-input " type="search" id="form1" class="form-control" placeholder="Search" />
+                                  <input id="search-inputnav" type="search" id="form1" class="form-control bg-transparent" placeholder="Search" />
                                   
                                 </div>
                                 <button id="search-button" type="button" class="btn btn-dbrown ">
@@ -176,9 +176,9 @@ session_start();
                                         Profile</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-bag-heart-fill mx-1"></i>
                                         Orders</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-info-circle-fill mx-1"></i> About
+                                <li><a class="dropdown-item" href="http://localhost/Bookstore/index.php#about"><i class="bi bi-info-circle-fill mx-1"></i> About
                                         us</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-telephone-fill mx-1"></i> Contact
+                                <li><a class="dropdown-item" href="http://localhost/Bookstore/index.php#footer"><i class="bi bi-telephone-fill mx-1"></i> Contact
                                         Us</a></li>
 
                                 <li>

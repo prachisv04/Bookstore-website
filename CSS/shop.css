@@ -1,8 +1,9 @@
 /* on laptop */
-/* *
+*
 {
-  outline: 1px solid red;
-} */
+  /* outline: 1px solid red; */
+ 
+}
 
 
 @media screen and (min-width:768px) {
@@ -17,10 +18,17 @@
     border-radius: 10px;
   }
 
+  
+  .leftfilter {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
   .card-body .bookcover{
 
     height: 220px;
-    width: 150px;
+    width: 70%;
     border-top-left-radius: 30px;
     border-bottom-right-radius: 30px;
     /* background-color: #422d1f; */
@@ -44,16 +52,9 @@
 
   }
  
-  .leftfilter {
-    background-color: white;
-    border-radius: 10px;
-    padding: 10px;
-  }
-
 
   .products .card{
     border-radius: 10px;
-    width: 280px;
     
   }
 
@@ -84,6 +85,7 @@
     border: none;
     outline: none;
   }
+
   .collapsible {
     background-color: white;
     color: black;
@@ -93,6 +95,13 @@
     border: none;
     text-align: left;
     font-size: 15px;
+  }
+
+  .products{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 
   .products .btn-dbrown:hover{
@@ -109,35 +118,140 @@
     background-color: white;
   }
 
+  
   .list-group .list-group-item {
     border: none;
   }
 
-  /* scrollbar */
-
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  /* Track */
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
-    border-radius: 10px;
-  }
-
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: rgb(186, 182, 182);
-    border-radius: 10px;
-  }
-
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #e1dada;
-  }
 }
 
+  /* scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(186, 182, 182);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #e1dada;
+}
 
 /* on mobile */
-@media screen and (max-width:768px) {}
+@media screen and (max-width:768px) {
+  .filters , .leftfilter{
+    display: none;
+  }
+
+  .card-body .bookcover{
+
+    height: 220px;
+    width: 70%;
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    /* background-color: #422d1f; */
+
+    margin:0 auto;
+  }
+
+  .card-body .bookcover:hover{
+       scale: 1.2;
+   }
+
+
+  .card-body .price-box:before{
+
+      content: "";
+      width: 70px;
+      height: 2px;
+      background-color: #9C7F5B;
+      display: block;
+      margin: 0 auto 10px;
+
+  }
+ 
+
+  .products .card{
+    border-radius: 10px;
+  }
+
+  .products .card-footer{
+    border: none;
+    background-color: white;
+    padding-left: 50px;
+  }
+
+  .products .card-footer{
+    border: none;
+    background-color: white;
+    padding-left: 50px;
+  }
+  
+  .products .card:hover{
+      box-shadow: 5px 5px 10px #9C7F5B;
+  }
+
+  .card-title .wishlist:hover{
+    outline: none;
+    background-color: white;
+    cursor: pointer;
+  }
+
+  .card-title .wishlist:focus{
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+
+  .collapsible {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    font-size: 15px;
+  }
+
+  .products{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .products .btn-dbrown:hover{
+        background-color: #422d1f;
+        color: white;
+        box-shadow: 2px 2px 5px #69503f;
+  }
+
+  .content {
+    padding: 0 18px;
+    display: none;
+    height: 250px;
+    overflow-y: auto;
+    background-color: white;
+  }
+
+  
+  .list-group .list-group-item {
+    border: none;
+  }
+
+  #allProducts{
+    border: 4px solid green;
+  }
+}

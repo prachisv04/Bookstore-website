@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,11 +24,11 @@
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
 
     <!--  style sheets -->
     <link rel="stylesheet" href="CSS/style.css">
-
+    <link rel="stylesheet" href="CSS/shop.css">
 </head>
 
 <body class="bg">
@@ -41,7 +40,7 @@
     <!-- center container -->
 
     <div class="container mt-3 mb-5 w-75 rectangle">
-        <div class="  transbox text-center">
+        <div class=" transbox text-center">
 
             <div class="row  text-center d-flex justify-content-center align-items-center">
                 <div class="col">
@@ -107,7 +106,7 @@
             <div class="col hor-rect mx-1">
                 <div class="card bg-transparent text-light text-center">
                     <div class="card-title mt-2 mx-2">
-                        <i class="bi bi-telephone-inbound"></i> Customer Support:
+                        <i class="bi bi-truck"></i> Shipping Options:
                     </div>
                     <div class="card-body text-start">
                         live chat , email or ticketing system to provide customer support and address issues properly.
@@ -117,7 +116,7 @@
             <div class="col hor-rect mx-1">
                 <div class="card bg-transparent text-light text-center">
                     <div class="card-title mt-2 mx-2">
-                        <i class="bi bi-telephone-inbound"></i> Customer Support:
+                        <i class="bi bi-pin-map"></i> Order Tracking:
                     </div>
                     <div class="card-body text-start">
                         live chat , email or ticketing system to provide customer support and address issues properly.
@@ -127,7 +126,7 @@
             <div class="col hor-rect mx-1">
                 <div class="card bg-transparent text-light text-center">
                     <div class="card-title mt-2 mx-2">
-                        <i class="bi bi-telephone-inbound"></i> Customer Support:
+                        <i class="bi bi-telephone"></i> Customer Support:
                     </div>
                     <div class="card-body text-start">
                         live chat , email or ticketing system to provide customer support and address issues properly.
@@ -139,58 +138,153 @@
     </div>
 
     <!-- tabs -->
-    <!-- will do later -->
     <div class="container container-fluid tabs mb-5">
         <ul class="nav nav-pills">
-            <li class="nav-item active w-50 text-nowrap text-end mr-1"><a class="nav-link fs-3 font-weight-bold"
-                    href="#trend" data-toggle="tab">Trending Now</a></li>
-            <li class="nav-item w-50 text-nowrap"><a class="nav-link fs-3 font-weight-bold" href="#release"
-                    data-toggle="tab">New Releases</a></li>
+            <li class="nav-item w-50 text-nowrap text-end mr-1"><a class="nav-link fs-3 active font-weight-bold"
+                    data-bs-toggle="tab" data-bs-target="#trend">Trending Now</a></li>
+            <li class="nav-item w-50 text-nowrap"><a class="nav-link fs-3 font-weight-bold" data-bs-target="#release"
+                    data-bs-toggle="tab">New Releases</a></li>
         </ul>
 
         <div id='content' class="tab-content">
             <div class="tab-pane active" id="trend">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet aspernatur, tempora praesentium in illum
-                ullam eum reprehenderit. Quod ducimus animi nam earum cum omnis praesentium libero quo fuga tenetur
-                aliquid, repellat necessitatibus nostrum ipsa.
+                <div class="container product-line">
+                    <div class="menu-wrapper">
+                        <ul class="menu">
+                            <?php
+                        require '__dbconnect.php';
+
+                        $sql = "select book.Book_id , book.Title , book.PageNums , book.Category , author.Author_name, price_details.Price , languages.Language_name , book_pictures.CoverPage from book INNER JOIN author on book.Author_id = author.Author_id INNER JOIN price_details on book.Book_id = price_details.Book_id  INNER JOIN languages on languages.Language_id = price_details.language_id INNER JOIN book_pictures on book_pictures.Book_id = book.Book_id ";
+                        $books = mysqli_query($conn,$sql);
+                        $no=1;
+                    
+                        while($book=mysqli_fetch_assoc($books)){
+                        echo" 
+                    <li class='item'>
+                      <div class='card'>
+                        <div class='card-title d-flex text-dbrown'>
+                        <div class='w-75' >
+                        <h6 class='text-start text-truncate px-3 fs-5' data-bs-toggle='tooltip' data-bs-placement='top' data-bs-custom-class='custom-tooltip' title='".$book['Title']."' >".$book['Title']."</h6>
+                          <h6 class='card-subtitle text-body-secondary text-brown text-end'>- ".$book['Author_name']."</h6>
+                        </div>
+                        
+                        </div>
+  
+                        <div class='card-body text-nowrap d-flex flex-column ' >
+                        
+                     
+                        <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($book['CoverPage'])."' class='bookcover'/> 
+                     
+                        <div class='details mb-3 d-flex flex-column'>
+                        <input class='border-0 text-left px-3 mt-3 fs-6 ' type='text' readonly value='".$book['Category']."' >
+                        <input class='border-0 text-left px-3 fs-6 ' type='text' readonly value='".$book['Language_name']."' >
+
+                        </div>
+                        <div class='price-box text-center '>
+                          <div class='d-flex justify-content-between'>
+                          <h6 class='fs-5'><i class='bi bi-star-fill text-success'></i> 5 | ".$book['PageNums']."</h6>
+                            <h5 class='fs-5'>&#x20B9;".$book['Price']."</h5>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                    </li>                 
+                    ";
+                        }
+                    
+                        ?>
+
+                        </ul>
+
+                        <div class="paddles">
+                            <button class="left-paddle paddle"> <i class="bi bi-arrow-left fs-4"></i>
+                            </button>
+                            <button class="right-paddle paddle"><i class="bi bi-arrow-right fs-4"></i>
+
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
             <div class="tab-pane" id="release">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa officiis in odit animi! Numquam dicta
-                quidem vel, obcaecati nulla quam tenetur. Laborum ea saepe nisi at alias exercitationem corrupti fugit,
-                numquam illo reprehenderit architecto.
+                <div class="container product-line">
+                    <div class="menu-wrapper">
+                        <ul class="menu">
+                            <?php
+                        require '__dbconnect.php';
+
+                        $sql = "select book.Book_id , book.Title , book.PageNums , book.Category , author.Author_name, price_details.Price , languages.Language_name , book_pictures.CoverPage from book INNER JOIN author on book.Author_id = author.Author_id INNER JOIN price_details on book.Book_id = price_details.Book_id  INNER JOIN languages on languages.Language_id = price_details.language_id INNER JOIN book_pictures on book_pictures.Book_id = book.Book_id Where YEAR(book.PublicationDate) = YEAR(NOW()) ";
+                        $books = mysqli_query($conn,$sql);
+                        $no=1;
+                    
+                        while($book=mysqli_fetch_assoc($books)){
+                        echo" 
+                    <li class='item'>
+                      <div class='card'>
+                        <div class='card-title d-flex text-dbrown'>
+                        <div class='w-75' >
+                        <h6 class='text-start text-truncate px-3 fs-5' data-bs-toggle='tooltip' data-bs-placement='top' data-bs-custom-class='custom-tooltip' title='".$book['Title']."' >".$book['Title']."</h6>
+                          <h6 class='card-subtitle text-body-secondary text-brown text-end'>- ".$book['Author_name']."</h6>
+                        </div>
+                        
+                        </div>
+  
+                        <div class='card-body text-nowrap d-flex flex-column ' >
+                        
+                     
+                        <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($book['CoverPage'])."' class='bookcover'/> 
+                     
+                        <div class='details mb-3 d-flex flex-column'>
+                        <input class='border-0 text-left px-3 mt-3 fs-6 ' type='text' readonly value='".$book['Category']."' >
+                        <input class='border-0 text-left px-3 fs-6 ' type='text' readonly value='".$book['Language_name']."' >
+
+                        </div>
+                        <div class='price-box text-center '>
+                          <div class='d-flex justify-content-between'>
+                          <h6 class='fs-5'><i class='bi bi-star-fill text-success'></i> 5 | ".$book['PageNums']."</h6>
+                            <h5 class='fs-5'>&#x20B9;".$book['Price']."</h5>
+                          </div>
+                        </div>
+                        
+                        </div>
+
+                      
+                      </div>
+                    </li>                 
+                    ";
+              }
+              
+              ?>
+
+                        </ul>
+
+                        <div class="paddles">
+                            <button class="left-paddle paddle"> <i class="bi bi-arrow-left fs-4"></i>
+                            </button>
+                            <button class="right-paddle paddle"><i class="bi bi-arrow-right fs-4"></i>
+
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
 
+        </div>
+
+        <div class="text-center my-3">
+            <a href="http://localhost/Bookstore/shop.php" class="btn btn-dbrown">View All -></a>
         </div>
     </div>
 
     <!-- categories -->
+    <?php
+        include("__categories.php");
+    ?>
 
-    <div class="container container-fluid tabs mb-5 text-center">
-        <h3>Categories</h3>
-        <ul class="nav nav-pills d-flex align-items-center justify-content-center">
-            <li class="nav-item active text-nowrap"><a class="nav-link fs-4" href="" data-toggle="tab">All</a></li>
-            <li class="nav-item text-nowrap "><a class="nav-link fs-4" href="" data-toggle="tab">Fantasy</a></li>
-            <li class="nav-item text-nowrap "><a class="nav-link fs-4" href="" data-toggle="tab">Romance</a></li>
-            <li class="nav-item text-nowrap "><a class="nav-link fs-4" href="" data-toggle="tab">History</a></li>
-            <li class="nav-item text-nowrap "><a class="nav-link fs-4" href="" data-toggle="tab">Psychology</a></li>
-            <li class="nav-item text-nowrap "><a class="nav-link fs-4" href="" data-toggle="tab">Kids</a></li>
-            <li class="nav-item text-nowrap "><a class="nav-link fs-4" href="" data-toggle="tab">Art</a></li>
-        </ul>
-
-        <div id='content' class="tab-content">
-            <div class="tab-pane active" id="trend">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet aspernatur, tempora praesentium in illum
-                ullam eum reprehenderit. Quod ducimus animi nam earum cum omnis praesentium libero quo fuga tenetur
-                aliquid, repellat necessitatibus nostrum ipsa.
-            </div>
-            <div class="tab-pane" id="release">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa officiis in odit animi! Numquam dicta
-                quidem vel, obcaecati nulla quam tenetur. Laborum ea saepe nisi at alias exercitationem corrupti fugit,
-                numquam illo reprehenderit architecto.
-            </div>
-
-        </div>
-    </div>
 
     <div class="container text-center mb-5 mt-1">
         <h3 class="font-weight-bold fs-2"> Special Offers </h3>
@@ -253,10 +347,13 @@
         crossorigin="anonymous"></script>
 
     <!-- site-custom -->
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="JS/customs.js"></script>
     <script>
-
         document.getElementById("home").classList.add("active");
+
 
     </script>
 </body>
