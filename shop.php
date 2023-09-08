@@ -120,7 +120,7 @@
               <?php
 
                   foreach($category as $cat){
-                    echo "<li class='list-group-item' id='lf".$cat."'><input class='form-check-input me-1' type='checkbox' value=".$cat.">".$cat."</li>";
+                    echo "<li class='list-group-item' id='lf".$cat."'><input class='form-check-input me-1' type='checkbox' name='catlist' value=".$cat.">".$cat."</li>";
                   }
             ?>
 
@@ -137,7 +137,7 @@
             <ul class="list-group .list-group-flush text-start">
               <?php
                foreach($languages as $lang){
-                echo "<li class='list-group-item' id='lf".$lang."'><input class='form-check-input me-1' type='checkbox' value=".$lang.">".$lang."</li>";
+                echo "<li class='list-group-item' id='lf".$lang."'><input class='form-check-input me-1' type='checkbox' name='langlist' value=".$lang.">".$lang."</li>";
               }
             ?>
             </ul>
@@ -152,7 +152,7 @@
             <ul class="list-group .list-group-flush text-start">
               <?php
               foreach($authors as $author){
-                echo "<li class='list-group-item' id='lf".$author."'><input class='form-check-input me-1' type='checkbox' value=".$author.">".$author."</li>";
+                echo "<li class='list-group-item' id='lf".$author."'><input class='form-check-input me-1' type='checkbox' name='authlist' value=".$author.">".$author."</li>";
               }
              
             ?>
@@ -166,14 +166,14 @@
           </li>
           <div class="content">
             <ul class="list-group .list-group-flush text-start">
-              <li class='list-group-item' id="p0"><input class='form-check-input me-1' type='checkbox' value="500">0-500
+              <li class='list-group-item' id="p0"><input class='form-check-input me-1' type='checkbox' name='pricelist' value="0">0-500
               </li>
-              <li class='list-group-item' id="p500"><input class='form-check-input me-1' type='checkbox'
+              <li class='list-group-item' id="p500"><input class='form-check-input me-1' name='pricelist' type='checkbox'
                   value="500">500-1000</li>
-              <li class='list-group-item' id="p1000"><input class='form-check-input me-1' type='checkbox'
-                  value="500">1000-2000</li>
-              <li class='list-group-item' id="p2000"><input class='form-check-input me-1' type='checkbox'
-                  value="500">2000 & up</li>
+              <li class='list-group-item' id="p1000"><input class='form-check-input me-1' name='pricelist' type='checkbox'
+                  value="1000">1000-2000</li>
+              <li class='list-group-item' id="p2000"><input class='form-check-input me-1' name='pricelist' type='checkbox'
+                  value="2000">2000 & up</li>
             </ul>
 
           </div>
@@ -186,7 +186,7 @@
           <div class="content">
             <ul class="list-group .list-group-flush text-start">
 
-              <li class='list-group-item' id="p500"><input class='form-check-input me-1' type='checkbox' value="4star">
+              <li class='list-group-item' id="p500"><input class='form-check-input me-1' name="ratelist" type='checkbox' value="4star">
                 <span class="bi bi-star-fill text-warning"></span>
                 <span class="bi bi-star-fill text-warning"></span>
                 <span class="bi bi-star-fill text-warning"></span>
@@ -194,7 +194,7 @@
                 <span>& up</span>
               </li>
 
-              <li class='list-group-item' id="p500"><input class='form-check-input me-1' type='checkbox' value="3star">
+              <li class='list-group-item' id="p500"><input class='form-check-input me-1' name="ratelist" type='checkbox' value="3star">
                 <span class="bi bi-star-fill text-warning"></span>
                 <span class="bi bi-star-fill text-warning"></span>
                 <span class="bi bi-star-fill text-warning"></span>
@@ -271,7 +271,7 @@
         require '__footer.html';
   ?>
 
-    <div class=" fixed-bottom bg-dark footerbar" id="filterbar">
+<div class=" fixed-bottom bg-dark footerbar" id="filterbar">
       <div class="row border d-flex flex-row py-2 text-center">
 
         <div class="col-6 col-sm-6 text-light fs-5 border-right ">
@@ -300,10 +300,9 @@
 
           <div class="offcanvas offcanvas-bottom h-75 " tabindex="-1" id="offcanvasBottom"
             aria-labelledby="offcanvasBottomLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasBottomLabel">Filters</h5>
-              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                aria-label="Close"></button>
+            <div class="offcanvas-header ">
+              <h5 class="offcanvas-title fs-6" id="offcanvasBottomLabel">Filters</h5>
+              <button class="btn text-danger fs-6 border-0 text-underline" id="clearAll"><u>Clear All</u></button>
             </div>
             <div class="offcanvas-body">
               <div class="row d-flex flex-row justify-content-between h-100 m-0 ">
@@ -328,9 +327,9 @@
                       aria-labelledby="v-pills-link1-tab">
                       <ul class="list-group .list-group-flush text-start">
                         <?php
-
                             foreach($category as $cat){
-                              echo "<li class='list-group-item' id='bf".$cat."'><input class='form-check-input me-1' type='checkbox' value=".$cat.">".$cat."</li>";
+
+                              echo "<li class='list-group-item' id='bf".$cat."'><input type='checkbox' class='form-check-input me-1' name='catlist'  value=".$cat.">".$cat."</li>";
                             }
                       ?>
           
@@ -341,7 +340,7 @@
                         <?php
 
                         foreach($languages as $lang){
-                          echo "<li class='list-group-item' id='bf".$lang."'><input class='form-check-input me-1' type='checkbox' value=".$lang.">".$lang."</li>";
+                          echo "<li class='list-group-item' id='bf".$lang."'><input class='form-check-input me-1' name='langlist' type='checkbox' value=".$lang.">".$lang."</li>";
                         }
                       ?>
                       </ul>
@@ -351,27 +350,27 @@
                         <?php
 
                                 foreach($authors as $author){
-                                  echo "<li class='list-group-item' id='bf".$author."'><input class='form-check-input me-1' type='checkbox' value=".$author.">".$author."</li>";
+                                  echo "<li class='list-group-item' id='bf".$author."'><input class='form-check-input me-1' name='authlist' type='checkbox' value=".$author.">".$author."</li>";
                                 }
                       ?>
                       </ul>
                     </div>
                     <div class="tab-pane fade" id="v-pills-link4" role="tabpanel" aria-labelledby="v-pills-link4-tab">
                       <ul class="list-group .list-group-flush text-start">
-                        <li class='list-group-item' id="p0"><input class='form-check-input me-1' type='checkbox' value="500">0-500
+                        <li class='list-group-item' id="p0"><input class='form-check-input me-1' type='checkbox' name='pricelist' value="0">0-500
                         </li>
-                        <li class='list-group-item' id="p500"><input class='form-check-input me-1' type='checkbox'
+                        <li class='list-group-item' id="p500"><input class='form-check-input me-1' name='pricelist' type='checkbox'
                             value="500">500-1000</li>
-                        <li class='list-group-item' id="p1000"><input class='form-check-input me-1' type='checkbox'
-                            value="500">1000-2000</li>
-                        <li class='list-group-item' id="p2000"><input class='form-check-input me-1' type='checkbox'
-                            value="500">2000 & up</li>
+                        <li class='list-group-item' id="p1000"><input class='form-check-input me-1' name='pricelist' type='checkbox'
+                            value="1000">1000-2000</li>
+                        <li class='list-group-item' id="p2000"><input class='form-check-input me-1' name='pricelist' type='checkbox'
+                            value="2000">2000 & up</li>
                       </ul>          
                     </div>
                     <div class="tab-pane fade" id="v-pills-link5" role="tabpanel" aria-labelledby="v-pills-link5-tab">
                       <ul class="list-group .list-group-flush text-start">
 
-                        <li class='list-group-item' id="p500"><input class='form-check-input me-1' type='checkbox' value="4star">
+                        <li class='list-group-item' id="p500"><input class='form-check-input me-1' name='ratelist' type='checkbox' value="4star">
                           <span class="bi bi-star-fill text-warning"></span>
                           <span class="bi bi-star-fill text-warning"></span>
                           <span class="bi bi-star-fill text-warning"></span>
@@ -379,7 +378,7 @@
                           <span>& up</span>
                         </li>
           
-                        <li class='list-group-item' id="p500"><input class='form-check-input me-1' type='checkbox' value="3star">
+                        <li class='list-group-item' id="p500"><input class='form-check-input me-1' name='ratelist' type='checkbox' value="3star">
                           <span class="bi bi-star-fill text-warning"></span>
                           <span class="bi bi-star-fill text-warning"></span>
                           <span class="bi bi-star-fill text-warning"></span>
@@ -390,6 +389,21 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="offcanvas-footer">
+              <div class="row d-flex flex-row py-2">
+                <div class="col-6 col-sm-6 fs-6">
+                  <button class="btn w-100 text-secondary offcanvas-footer-btn" class="btn-close text-reset" data-bs-dismiss="offcanvas"> 
+                    CLOSE
+                  </button>
+                </div>
+                <div class="col-6 col-sm-6 fs-6">
+                  <button class="btn w-100 text-danger offcanvas-footer-btn" id="apply-filter">
+                    APPLY
+                  </button>
+                </div>
+              </div>
+             
             </div>
           </div>
         </div>
@@ -524,6 +538,88 @@
         });
       }
 
-    </script>
+    // filter by category 
+    let categoryfilter = document.getElementsByName("catlist");
+    for(let i =0;i< categoryfilter.length;i++){
+
+      categoryfilter[i].addEventListener("change",()=>{
+          if (categoryfilter[i].checked == true){
+              console.log(categoryfilter[i].value ,"is checked");
+                } 
+                else {
+                  console.log(categoryfilter[i].value ,"is unchecked");
+                }
+      });
+    }
+
+    // filter by language
+    let languagefilter = document.getElementsByName("langlist");
+    for(let i =0;i< languagefilter.length;i++){
+
+      languagefilter[i].addEventListener("change",()=>{
+          if (languagefilter[i].checked == true){
+              console.log(languagefilter[i].value ,"is checked");
+                } 
+                else {
+                  console.log(languagefilter[i].value ,"is unchecked");
+                }
+      });
+    }
+
+    // filter by author
+
+    let authorfilter = document.getElementsByName("authlist");
+    for(let i =0;i< authorfilter.length;i++){
+
+      authorfilter[i].addEventListener("change",()=>{
+          if (authorfilter[i].checked == true){
+              console.log(authorfilter[i].value ,"is checked");
+                } 
+                else {
+                  console.log(authorfilter[i].value ,"is unchecked");
+                }
+      });
+    }
+
+
+    // filter by price
+    let pricefilter = document.getElementsByName("pricelist");
+    for(let i =0;i< pricefilter.length;i++){
+
+      pricefilter[i].addEventListener("change",()=>{
+          if (pricefilter[i].checked == true){
+              console.log(pricefilter[i].value ,"is checked");
+                } 
+                else {
+                  console.log(pricefilter[i].value ,"is unchecked");
+                }
+      });
+    }
+
+    // filter by rate
+    let ratefilter = document.getElementsByName("ratelist");
+    for(let i =0;i< ratefilter.length;i++){
+
+      ratefilter[i].addEventListener("change",()=>{
+          if (ratefilter[i].checked == true){
+              console.log(ratefilter[i].value ,"is checked");
+                } 
+                else {
+                  console.log(ratefilter[i].value ,"is unchecked");
+                }
+      });
+    }
+
+    document.getElementById("apply-filter").addEventListener("click",()=>{
+     
+    });
+    
+    document.getElementById("clearAll").addEventListener("click",()=>{
+     
+      $('input[type=checkbox]').prop('checked',false); 
+      
+    });
+
+</script>
 </body>
 </html>
