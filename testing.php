@@ -26,13 +26,21 @@
   }   
    
     //get authors as array
-    $authors = array();
-    $sql = "SELECT Author_name FROM author ";
+    $authors_name = array();
+    $authors_id = array();
+    $sql = "SELECT Author_id ,Author_name FROM author";
     $writers = mysqli_query($conn,$sql);
     while($author=mysqli_fetch_assoc($writers)){
-      array_push($authors,$author['Author_name']);
+      array_push($authors_name,$author['Author_name']);
+      array_push($authors_id,$author['Author_id']);
     }
+
     
+
+   
+    
+    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -155,23 +163,23 @@
                     <div class="tab-pane fade" id="v-pills-link3" role="tabpanel" aria-labelledby="v-pills-link3-tab">
                       <ul class="list-group .list-group-flush text-start">
                         <?php
-
-                                foreach($authors as $author){
-                                  echo "<li class='list-group-item' id='bf".$author."'><input class='form-check-input me-1' name='authlist' type='checkbox' value=".$author.">".$author."</li>";
-                                }
+                        for($i = 0; $i < count($authors_name) ; $i++)
+                          {
+                            echo "<li class='list-group-item' id='bf".$authors_id[$i]."'><input class='form-check-input me-1' name='authlist' type='checkbox' value=".$authors_id[$i].">".$authors_name[$i]."</li>";
+                          }
                       ?>
                       </ul>
                     </div>
                     <div class="tab-pane fade" id="v-pills-link4" role="tabpanel" aria-labelledby="v-pills-link4-tab">
                       <ul class="list-group .list-group-flush text-start">
-                        <li class='list-group-item' id="p0"><input class='form-check-input me-1' type='checkbox' name='pricelist' value="500">0-500
+                        <li class='list-group-item' id="p0"><input class='form-check-input me-1' type='checkbox' name='pricelist' value="0">0-500
                         </li>
                         <li class='list-group-item' id="p500"><input class='form-check-input me-1' name='pricelist' type='checkbox'
                             value="500">500-1000</li>
                         <li class='list-group-item' id="p1000"><input class='form-check-input me-1' name='pricelist' type='checkbox'
-                            value="500">1000-2000</li>
+                            value="1000">1000-2000</li>
                         <li class='list-group-item' id="p2000"><input class='form-check-input me-1' name='pricelist' type='checkbox'
-                            value="500">2000 & up</li>
+                            value="2000">2000 & up</li>
                       </ul>          
                     </div>
                     <div class="tab-pane fade" id="v-pills-link5" role="tabpanel" aria-labelledby="v-pills-link5-tab">
@@ -231,30 +239,127 @@
     <script src="JS/customs.js"></script>
     <script>
 
-      
-      let checking = document.getElementsByName("catlist");
 
-      for(let i =0;i< checking.length;i++){
+//function to delete specified element from array 
+      function arrayRemove(arr, value) {
       
-        checking[i].addEventListener("change",()=>{
-            if (checking[i].checked == true){
-                console.log(checking[i].value ,"is checked");
-                  } 
-                  else {
-                    console.log(checking[i].value ,"is unchecked");
-                  }
+        return arr.filter(function (ele) {
+            return ele != value;
         });
+
       }
 
-      document.getElementById("apply-filter").addEventListener("click",()=>{
-     
+     // filter by category 
+    let categoryfilter = document.getElementsByName("catlist");
+    let categorylist = [];
+
+    for(let i =0;i< categoryfilter.length;i++){
+      categoryfilter[i].addEventListener("change",()=>{
+          if (categoryfilter[i].checked == true){
+            categorylist.push(categoryfilter[i].value);
+          } 
+          else {
+            categorylist= arrayRemove(categorylist,categoryfilter[i].value);
+          }
       });
+    }
+
+    // filter by language
+    let languagefilter = document.getElementsByName("langlist");
+    let languagelist = [];
+    for(let i =0;i< languagefilter.length;i++){
+      languagefilter[i].addEventListener("change",()=>{
+          if (languagefilter[i].checked == true){
+            languagelist.push(languagefilter[i].value);
+          } 
+          else {
+            languagelist= arrayRemove(languagelist,languagefilter[i].value);
+          }
+      });
+    }
+
+    // filter by author
+
+    let authorfilter = document.getElementsByName("authlist");
+    let authorlist = [];
+    for(let i =0;i< authorfilter.length;i++){
+
+      authorfilter[i].addEventListener("change",()=>{
+          if (authorfilter[i].checked == true){
+            authorlist.push(authorfilter[i].value);
+          } 
+          else {
+            authorlist =  arrayRemove(authorlist,authorfilter[i].value);
+          }
+      });
+    }
+
+
+    // filter by price
+    let pricefilter = document.getElementsByName("pricelist");
+    let pricelist = [];
+    for(let i =0;i< pricefilter.length;i++){
+
+      pricefilter[i].addEventListener("change",()=>{
+          if (pricefilter[i].checked == true){
+            pricelist.push(pricefilter[i].value);
+          } 
+          else {
+            pricelist =  arrayRemove(pricelist,pricefilter[i].value);
+          }         
+      });
+    }
+
+    // filter by rate
+    let ratefilter = document.getElementsByName("ratelist");
+    let ratelist= [];
+    for(let i =0;i< ratefilter.length;i++){
+
+      ratefilter[i].addEventListener("change",()=>{
+          if (ratefilter[i].checked == true){
+            ratelist.push(ratefilter[i].value);
+          } 
+          else {
+            ratelist =  arrayRemove(ratelist,ratefilter[i].value);
+          }
+      });
+    }
+
+    document.getElementById("apply-filter").addEventListener("click",()=>{
+      // console.log(ratelist);
+      // console.log(pricelist);
+      // console.log(authorlist);
+      // console.log(languagelist);
+      console.log(categorylist);
+
+      let catlist_str = categorylist.join(",");
+      // let pricelist_str = pricelist.join(",");
+      // let ratelist_str = ratelist.join(",");
+      // let langlist_str = languagelist.join(",");
+      // let authlist_str = authorlist.join(",");
+
+    $.ajax({
+           url: 'http://localhost/Bookstore/test.php',
+           type: 'POST',
+            data: {
+              extra :1,
+              categorylistdata: catlist_str          
+            },
+            success: function(response){
+              alert('response : ' +response);
+            }
+    });
+    
+  });
+    document.getElementById("clearAll").addEventListener("click",()=>{
+      categorylist = []
+      pricelist = []
+      authorlist = []
+      ratelist = []
+      languagelist = []
+      $('input[type=checkbox]').prop('checked',false); 
       
-      document.getElementById("clearAll").addEventListener("click",()=>{
-       
-        $('input[type=checkbox]').prop('checked',false); 
-        
-      });
+    });
 </script>
 </body>
 
