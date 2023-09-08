@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// scroll cards left and right
 
 let rightBtn = document.getElementsByClassName("right-paddle");
 let leftBtn = document.getElementsByClassName("left-paddle");

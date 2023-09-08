@@ -6,6 +6,33 @@
     if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
         $isloggedin = true;
     }
+
+    // get categories as array
+    $category = array();
+    $sql = "SELECT DISTINCT Category FROM book ";
+    $categories = mysqli_query($conn,$sql);
+
+    while($cat=mysqli_fetch_assoc($categories)){
+      array_push($category,$cat['Category']);
+    }    
+  
+   // get languages as array
+   $languages = array();
+   $sql = "SELECT Language_name FROM languages ";
+   $language = mysqli_query($conn,$sql);
+
+   while($lang=mysqli_fetch_assoc($language)){
+     array_push($languages,$lang['Language_name']);
+  }   
+   
+    //get authors as array
+    $authors = array();
+    $sql = "SELECT Author_name FROM author ";
+    $writers = mysqli_query($conn,$sql);
+    while($author=mysqli_fetch_assoc($writers)){
+      array_push($authors,$author['Author_name']);
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,18 +98,17 @@
 
   <div class="container">
     <div class="row  text-center d-flex justify-content-around">
-      <div class="col-3  filters">
-            <select class="form-select" aria-label="Default select example">
-              <option selected disabled>Sort By</option>
-              <option value="1">Recommended</option>
-              <option value="2">Pricing:High to Low</option>
-              <option value="3">Pricing:Low to High</option>
-              <option value="3">Customer Rating</option>
-              <option value="3">Popularity</option>
-            </select>
+      <div class="col-md-4 col-lg-3 col-xl-3 filters">
+        <select class="form-select" aria-label="Default select example">
+          <option selected disabled>Sort By</option>
+          <option value="1">Recommended</option>
+          <option value="2">Pricing:High to Low</option>
+          <option value="3">Pricing:Low to High</option>
+          <option value="3">Customer Rating</option>
+          <option value="3">Popularity</option>
+        </select>
 
         <ul class="leftfilter mt-3">
-
           <li type="button" class="collapsible border-bottom">
             <div class="d-flex justify-content-between">
               <h6>Category</h6>
@@ -92,14 +118,10 @@
           <div class="content">
             <ul class="list-group .list-group-flush text-start">
               <?php
-                 $sql = "SELECT DISTINCT Category FROM book ";
-                 $categories = mysqli_query($conn,$sql);
-                 $no=1;
-                
-                 while($cat=mysqli_fetch_assoc($categories)){
 
-                    echo "<li class='list-group-item' id='lf".$cat['Category']."'><input class='form-check-input me-1' type='checkbox' value=".$cat['Category'].">".$cat['Category']."</li>";
-                 }
+                  foreach($category as $cat){
+                    echo "<li class='list-group-item' id='lf".$cat."'><input class='form-check-input me-1' type='checkbox' value=".$cat.">".$cat."</li>";
+                  }
             ?>
 
             </ul>
@@ -114,14 +136,9 @@
           <div class="content">
             <ul class="list-group .list-group-flush text-start">
               <?php
-                 $sql = "SELECT Language_name FROM languages ";
-                 $langs = mysqli_query($conn,$sql);
-                 $no=1;
-                
-                 while($lang=mysqli_fetch_assoc($langs)){
-
-                    echo "<li class='list-group-item' id='lf".$lang['Language_name']."'><input class='form-check-input me-1' type='checkbox' value=".$lang['Language_name'].">".$lang['Language_name']."</li>";
-                 }
+               foreach($languages as $lang){
+                echo "<li class='list-group-item' id='lf".$lang."'><input class='form-check-input me-1' type='checkbox' value=".$lang.">".$lang."</li>";
+              }
             ?>
             </ul>
           </div>
@@ -134,14 +151,10 @@
           <div class="content">
             <ul class="list-group .list-group-flush text-start">
               <?php
-                 $sql = "SELECT Author_name FROM author ";
-                 $writers = mysqli_query($conn,$sql);
-                 $no=1;
-                
-                 while($author=mysqli_fetch_assoc($writers)){
-
-                    echo "<li class='list-group-item' id='lf".$author['Author_name']."'><input class='form-check-input me-1' type='checkbox' value=".$author['Author_name'].">".$author['Author_name']."</li>";
-                 }
+              foreach($authors as $author){
+                echo "<li class='list-group-item' id='lf".$author."'><input class='form-check-input me-1' type='checkbox' value=".$author.">".$author."</li>";
+              }
+             
             ?>
             </ul>
           </div>
@@ -193,10 +206,10 @@
 
 
       </div>
-      <div class=" col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 products">
+      <div class=" col-12 col-sm-12 col-md-8 col-lg-9 col-xl-9 products">
         <div class="container">
-        <div class="row d-flex flex-row align-items-left justify-content-left" id="allProducts">
-          <?php
+          <div class="row d-flex flex-row align-items-left justify-content-left" id="allProducts">
+            <?php
                 
                 $sql = "select book.Book_id , book.Title , book.PageNums , book.Category , author.Author_name, price_details.Price , languages.Language_name , book_pictures.CoverPage from book INNER JOIN author on book.Author_id = author.Author_id INNER JOIN price_details on book.Book_id = price_details.Book_id  INNER JOIN languages on languages.Language_id = price_details.language_id INNER JOIN book_pictures on book_pictures.Book_id = book.Book_id";
                 $books = mysqli_query($conn,$sql);
@@ -204,7 +217,7 @@
                
                 while($book=mysqli_fetch_assoc($books)){
                   echo" 
-                    <div class='col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 py-3 test'>
+                    <div class='col-10 col-sm-6 col-md-6 col-lg-4 col-xl-4 py-3  m-auto'>
                       <div class='card'>
                         <div class='card-title py-3 d-flex text-dbrown'>
                         <div class='w-75' >
@@ -243,159 +256,274 @@
               }
               
               ?>
-          <!-- card end  -->
-          
+            <!-- card end  -->
+
+          </div>
         </div>
       </div>
+
     </div>
-   
-  </div>
 
 
 
-  <!-- Footer -->
-  <?php
+    <!-- Footer -->
+    <?php
         require '__footer.html';
   ?>
 
-  <div class=" sticky-bottom bg-dark" id="filterbar">
-    <div class="row border d-flex flex-row py-2 text-center">
+    <div class=" fixed-bottom bg-dark footerbar" id="filterbar">
+      <div class="row border d-flex flex-row py-2 text-center">
 
-            <div class="col-6 col-sm-6 text-light fs-5 border-right">Sort By</div>
-            <div class="col-6 col-sm-6 text-light fs-5">Filters</div>
-              
+        <div class="col-6 col-sm-6 text-light fs-5 border-right ">
+
+          <div class="dropdown">
+            <a class="btn btn-dark border-0 w-100 dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Sort By <i class="mx-1 bi bi-arrow-down-up"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li class="dropdown-item">Recommended</li>
+              <li class="dropdown-item">Pricing:Low to High</li>
+              <li class="dropdown-item">Pricing:High to Low</li>
+              <li class="dropdown-item">Customer Rating</li>
+              <li class="dropdown-item">Popularity</li>
+            </ul>
+          </div>
+        </div>
+
+
+
+        <div class="col-6 col-sm-6 text-light fs-5">
+          <button class="btn btn-dark w-100 border-0" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Filters <i
+              class="mx-1 bi bi-funnel"></i></button>
+
+          <div class="offcanvas offcanvas-bottom h-75 " tabindex="-1" id="offcanvasBottom"
+            aria-labelledby="offcanvasBottomLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasBottomLabel">Filters</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div class="row d-flex flex-row justify-content-between h-100 m-0 ">
+                <div class="col-5 col-sm-5 fs-6 filtersidelist">
+                  <div class="nav flex-column text-center w-100" id="v-pills-tab" role="tablist"
+                    aria-orientation="vertical">
+                    <a class="nav-link active" id="v-pills-link1-tab" data-bs-toggle="pill"
+                      data-bs-target="#v-pills-link1" role="tab" aria-controls="v-pills-link1" aria-selected="true">Category</a>
+                    <a class="nav-link" id="v-pills-link2-tab" data-bs-toggle="pill" data-bs-target="#v-pills-link2"
+                      role="tab" aria-controls="v-pills-link2" aria-selected="false">Languages</a>
+                    <a class="nav-link" id="v-pills-link3-tab" data-bs-toggle="pill" data-bs-target="#v-pills-link3"
+                      role="tab" aria-controls="v-pills-link3" aria-selected="false">Authors</a>
+                    <a class="nav-link" id="v-pills-link4-tab" data-bs-toggle="pill" data-bs-target="#v-pills-link4"
+                      role="tab" aria-controls="v-pills-link4" aria-selected="false">Prices</a>
+                    <a class="nav-link" id="v-pills-link4-tab" data-bs-toggle="pill" data-bs-target="#v-pills-link5"
+                      role="tab" aria-controls="v-pills-link5" aria-selected="false">Ratings</a>
+                  </div>
+                </div>
+                <div class="col-7 col-sm-7 fs-6">
+                  <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-link1" role="tabpanel"
+                      aria-labelledby="v-pills-link1-tab">
+                      <ul class="list-group .list-group-flush text-start">
+                        <?php
+
+                            foreach($category as $cat){
+                              echo "<li class='list-group-item' id='bf".$cat."'><input class='form-check-input me-1' type='checkbox' value=".$cat.">".$cat."</li>";
+                            }
+                      ?>
+          
+                      </ul>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-link2" role="tabpanel" aria-labelledby="v-pills-link2-tab">
+                      <ul class="list-group .list-group-flush text-start">
+                        <?php
+
+                        foreach($languages as $lang){
+                          echo "<li class='list-group-item' id='bf".$lang."'><input class='form-check-input me-1' type='checkbox' value=".$lang.">".$lang."</li>";
+                        }
+                      ?>
+                      </ul>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-link3" role="tabpanel" aria-labelledby="v-pills-link3-tab">
+                      <ul class="list-group .list-group-flush text-start">
+                        <?php
+
+                                foreach($authors as $author){
+                                  echo "<li class='list-group-item' id='bf".$author."'><input class='form-check-input me-1' type='checkbox' value=".$author.">".$author."</li>";
+                                }
+                      ?>
+                      </ul>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-link4" role="tabpanel" aria-labelledby="v-pills-link4-tab">
+                      <ul class="list-group .list-group-flush text-start">
+                        <li class='list-group-item' id="p0"><input class='form-check-input me-1' type='checkbox' value="500">0-500
+                        </li>
+                        <li class='list-group-item' id="p500"><input class='form-check-input me-1' type='checkbox'
+                            value="500">500-1000</li>
+                        <li class='list-group-item' id="p1000"><input class='form-check-input me-1' type='checkbox'
+                            value="500">1000-2000</li>
+                        <li class='list-group-item' id="p2000"><input class='form-check-input me-1' type='checkbox'
+                            value="500">2000 & up</li>
+                      </ul>          
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-link5" role="tabpanel" aria-labelledby="v-pills-link5-tab">
+                      <ul class="list-group .list-group-flush text-start">
+
+                        <li class='list-group-item' id="p500"><input class='form-check-input me-1' type='checkbox' value="4star">
+                          <span class="bi bi-star-fill text-warning"></span>
+                          <span class="bi bi-star-fill text-warning"></span>
+                          <span class="bi bi-star-fill text-warning"></span>
+                          <span class="bi bi-star-fill text-warning"></span>
+                          <span>& up</span>
+                        </li>
+          
+                        <li class='list-group-item' id="p500"><input class='form-check-input me-1' type='checkbox' value="3star">
+                          <span class="bi bi-star-fill text-warning"></span>
+                          <span class="bi bi-star-fill text-warning"></span>
+                          <span class="bi bi-star-fill text-warning"></span>
+                          <span>& up</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <!-- javascript -->
-  <!-- bootstrap -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
-    integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
-    crossorigin="anonymous"></script>
+    <!-- javascript -->
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+      crossorigin="anonymous"></script>
 
-  <!-- site-custom -->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-  <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-  <script src="JS/customs.js"></script>
-  <script>
+    <!-- site-custom -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="JS/customs.js"></script>
+    <script>
         // $(document).ready(function () {
         //   $('#allProducts').DataTable();
 
         // });
-  </script>
-  <script>
+    </script>
+    <script>
 
-    document.getElementById("shop").classList.add("active");
+      document.getElementById("shop").classList.add("active");
 
-    let coll = document.getElementsByClassName("collapsible");
-    let i;
+      let coll = document.getElementsByClassName("collapsible");
+      let i;
 
-    for (i = 0; i < coll.length; i++) {
+      for (i = 0; i < coll.length; i++) {
 
-      coll[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-          content.style.display = "none";
-          this.firstElementChild.lastElementChild.classList.remove("bi-dash");
-          this.firstElementChild.lastElementChild.classList.add("bi-plus");
-        } else {
-          content.style.display = "block";
-          this.firstElementChild.lastElementChild.classList.remove("bi-plus");
-          this.firstElementChild.lastElementChild.classList.add("bi-dash");
+        coll[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          if (content.style.display === "block") {
+            content.style.display = "none";
+            this.firstElementChild.lastElementChild.classList.remove("bi-dash");
+            this.firstElementChild.lastElementChild.classList.add("bi-plus");
+          } else {
+            content.style.display = "block";
+            this.firstElementChild.lastElementChild.classList.remove("bi-plus");
+            this.firstElementChild.lastElementChild.classList.add("bi-dash");
 
-        }
-      });
-    }
+          }
+        });
+      }
 
-    let wish = document.getElementsByClassName("wishlist");
+      let wish = document.getElementsByClassName("wishlist");
 
-    for (let itr = 0; itr < wish.length; itr++) {
+      for (let itr = 0; itr < wish.length; itr++) {
 
-      wish[itr].addEventListener("click", function () {
+        wish[itr].addEventListener("click", function () {
     
         <?php
           if ($isloggedin) {
         ?>
 
-            let heart = this.firstElementChild;
-          if (heart.classList.contains("bi-heart")) {
-            heart.classList.remove("bi-heart");
-            heart.classList.add("bi-heart-fill");
-          } else {
-            heart.classList.remove("bi-heart-fill");
-            heart.classList.add("bi-heart");
-          }
+              let heart = this.firstElementChild;
+            if (heart.classList.contains("bi-heart")) {
+              heart.classList.remove("bi-heart");
+              heart.classList.add("bi-heart-fill");
+            } else {
+              heart.classList.remove("bi-heart-fill");
+              heart.classList.add("bi-heart");
+            }
         <?php
           }
-        else {
+          else {
             ?>
-            wish[itr].setAttribute("data-bs-toggle", "modal");
-          wish[itr].setAttribute("data-bs-target", "#exampleModal");
+              wish[itr].setAttribute("data-bs-toggle", "modal");
+            wish[itr].setAttribute("data-bs-target", "#exampleModal");
               
             <?php
           }   
         ?>
       });
-    }
+      }
 
 
-    let carts = document.getElementsByClassName("addToCart");
+      let carts = document.getElementsByClassName("addToCart");
 
-    for (let itrc = 0; itrc < carts.length; itrc++) {
+      for (let itrc = 0; itrc < carts.length; itrc++) {
 
-      carts[itrc].addEventListener("click", function () {
+        carts[itrc].addEventListener("click", function () {
 
-        this.style.display = "none";
-        let counter = document.createElement("div");
+          this.style.display = "none";
+          let counter = document.createElement("div");
 
-        counter.classList.add("input-group");
+          counter.classList.add("input-group");
 
-        let btnplus = "<button class='btn  plus ' type='button'><i class='bi bi-plus text-light fa-lg'></i></button>";
-        let btnminus = "<button class='btn  minus ' type='button'><i class='bi bi-dash text-light fa-lg'></i></button>";
-        let getnum = "<input type='text' class='form-control count text-center fs-5 bg-light' value='1' aria-label='Example text with two button addons'>";
+          let btnplus = "<button class='btn  plus ' type='button'><i class='bi bi-plus text-light fa-lg'></i></button>";
+          let btnminus = "<button class='btn  minus ' type='button'><i class='bi bi-dash text-light fa-lg'></i></button>";
+          let getnum = "<input type='text' class='form-control count text-center fs-5 bg-light' value='1' aria-label='Example text with two button addons'>";
 
-        counter.innerHTML = btnminus + getnum + btnplus;
-        counter.style.width = "75%";
-        counter.style.backgroundColor = "#9C7F5B";
-        counter.style.borderTopLeftRadius = "15px";
-        counter.style.borderBottomRightRadius = "15px";
+          counter.innerHTML = btnminus + getnum + btnplus;
+          counter.style.width = "75%";
+          counter.style.backgroundColor = "#9C7F5B";
+          counter.style.borderTopLeftRadius = "15px";
+          counter.style.borderBottomRightRadius = "15px";
 
-        let plus = counter.getElementsByClassName("plus");
+          let plus = counter.getElementsByClassName("plus");
 
-        for (let itrp = 0; itrp < plus.length; itrp++) {
+          for (let itrp = 0; itrp < plus.length; itrp++) {
 
-          plus[itrp].addEventListener("click", function () {
-            val = this.previousSibling.value;
-            this.previousSibling.value = ++val;
+            plus[itrp].addEventListener("click", function () {
+              val = this.previousSibling.value;
+              this.previousSibling.value = ++val;
 
-          });
-        }
-        let istrue = false;
-        let minus = counter.getElementsByClassName("minus");
+            });
+          }
+          let istrue = false;
+          let minus = counter.getElementsByClassName("minus");
 
-        for (let itrm = 0; itrm < minus.length; itrm++) {
+          for (let itrm = 0; itrm < minus.length; itrm++) {
 
-          minus[itrm].addEventListener("click", function () {
-            val = this.nextSibling.value;
-            this.nextSibling.value = --val;
+            minus[itrm].addEventListener("click", function () {
+              val = this.nextSibling.value;
+              this.nextSibling.value = --val;
 
-            if (val <= 0) {
-              this.nextSibling.value = 1;
-              counter.style.display = "none";
-              carts[itrc].style.display = "flex";
-              carts[itrc].style.marginLeft = "10px";
-            }
-          });
-        }
+              if (val <= 0) {
+                this.nextSibling.value = 1;
+                counter.style.display = "none";
+                carts[itrc].style.display = "flex";
+                carts[itrc].style.marginLeft = "10px";
+              }
+            });
+          }
 
-        this.parentNode.appendChild(counter);
-      });
-    }
+          this.parentNode.appendChild(counter);
+        });
+      }
 
-  </script>
+    </script>
 </body>
-
 </html>

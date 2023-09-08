@@ -1,8 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    /* outline: 1px solid #f00 !important; */
-    
+    /* outline: 1px solid #f00 !important; */    
 }
 
 /* Navbar */
@@ -419,6 +418,7 @@ html {
 /* Footer */
 .footer {
     background-color: rgba(208, 196, 168, 0.5);
+   
 }
 
 .text-dbrown {
@@ -590,4 +590,11 @@ html {
 	right: 0;
     border: none;
     background-color: transparent;
+}
+
+@media only screen and (max-width:768px){
+    .footerContact{
+        display: flex;
+        flex-direction: column;
+    }
 }
