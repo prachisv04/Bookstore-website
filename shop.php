@@ -26,11 +26,13 @@
   }   
    
     //get authors as array
-    $authors = array();
-    $sql = "SELECT Author_name FROM author ";
+    $authors_name = array();
+    $authors_id = array();
+    $sql = "SELECT Author_id ,Author_name FROM author";
     $writers = mysqli_query($conn,$sql);
     while($author=mysqli_fetch_assoc($writers)){
-      array_push($authors,$author['Author_name']);
+      array_push($authors_name,$author['Author_name']);
+      array_push($authors_id,$author['Author_id']);
     }
     
 ?>
@@ -99,16 +101,23 @@
   <div class="container">
     <div class="row  text-center d-flex justify-content-around">
       <div class="col-md-4 col-lg-3 col-xl-3 filters">
-        <select class="form-select" aria-label="Default select example">
+        <select class="form-select" aria-label="Default select example" id="sortMethod">
           <option selected disabled>Sort By</option>
-          <option value="1">Recommended</option>
-          <option value="2">Pricing:High to Low</option>
-          <option value="3">Pricing:Low to High</option>
-          <option value="3">Customer Rating</option>
-          <option value="3">Popularity</option>
+          <option value="Recommended">Recommended</option>
+          <option value="High">Pricing:High to Low</option>
+          <option value="Low">Pricing:Low to High</option>
+          <option value="Rating">Customer Rating</option>
+          <option value="Popular">Popularity</option>
         </select>
 
-        <ul class="leftfilter mt-3">
+        <div class="card my-3" >
+          <div class="card-header d-flex justify-content-between bg-transparent" >
+          
+              <button class="btn text-danger fs-6 border-0 text-underline clearAll" ><u>Clear All</u></button>
+              <button class="btn text-danger offcanvas-footer-btn apply-filter" >APPLY</button>
+          </div>
+          <div class="card-body">
+          <ul class="leftfilter mt-3">
           <li type="button" class="collapsible border-bottom">
             <div class="d-flex justify-content-between">
               <h6>Category</h6>
@@ -151,8 +160,9 @@
           <div class="content">
             <ul class="list-group .list-group-flush text-start">
               <?php
-              foreach($authors as $author){
-                echo "<li class='list-group-item' id='lf".$author."'><input class='form-check-input me-1' type='checkbox' name='authlist' value=".$author.">".$author."</li>";
+              for($i = 0; $i < count($authors_name) ; $i++)
+              {
+                echo "<li class='list-group-item' id='bf".$authors_id[$i]."'><input class='form-check-input me-1' name='authlist' type='checkbox' value=".$authors_id[$i].">".$authors_name[$i]."</li>";
               }
              
             ?>
@@ -165,16 +175,16 @@
             </div>
           </li>
           <div class="content">
-            <ul class="list-group .list-group-flush text-start">
-              <li class='list-group-item' id="p0"><input class='form-check-input me-1' type='checkbox' name='pricelist' value="0">0-500
-              </li>
-              <li class='list-group-item' id="p500"><input class='form-check-input me-1' name='pricelist' type='checkbox'
-                  value="500">500-1000</li>
-              <li class='list-group-item' id="p1000"><input class='form-check-input me-1' name='pricelist' type='checkbox'
-                  value="1000">1000-2000</li>
-              <li class='list-group-item' id="p2000"><input class='form-check-input me-1' name='pricelist' type='checkbox'
-                  value="2000">2000 & up</li>
-            </ul>
+          <ul class="list-group .list-group-flush text-start">
+            <li class='list-group-item' id="p0"><input class='form-check-input me-1' type='checkbox' name='pricelist' value="0-500">0-500
+            </li>
+            <li class='list-group-item' id="p500"><input class='form-check-input me-1' name='pricelist' type='checkbox'
+                value="500-1000">500-1000</li>
+            <li class='list-group-item' id="p1000"><input class='form-check-input me-1' name='pricelist' type='checkbox'
+                value="1000-2000">1000-2000</li>
+            <li class='list-group-item' id="p2000"><input class='form-check-input me-1' name='pricelist' type='checkbox'
+                value="2000-5000">2000</li>
+          </ul>  
 
           </div>
           <li type="button" class="collapsible border-bottom">
@@ -204,7 +214,11 @@
           </div>
         </ul>
 
+          </div>
+         
+        </div>
 
+        
       </div>
       <div class=" col-12 col-sm-12 col-md-8 col-lg-9 col-xl-9 products">
         <div class="container">
@@ -275,20 +289,40 @@
       <div class="row border d-flex flex-row py-2 text-center">
 
         <div class="col-6 col-sm-6 text-light fs-5 border-right ">
-
-          <div class="dropdown">
-            <a class="btn btn-dark border-0 w-100 dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              Sort By <i class="mx-1 bi bi-arrow-down-up"></i>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <li class="dropdown-item">Recommended</li>
-              <li class="dropdown-item">Pricing:Low to High</li>
-              <li class="dropdown-item">Pricing:High to Low</li>
-              <li class="dropdown-item">Customer Rating</li>
-              <li class="dropdown-item">Popularity</li>
-            </ul>
-          </div>
+        <button class="btn btn-dark w-100 border-0" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasBottomsort" aria-controls="offcanvasBottom">Sort By <i
+              class="mx-1 bi bi-funnel"></i></button>
+            
+            <div class="offcanvas offcanvas-bottom h-50" tabindex="-1" id="offcanvasBottomsort" aria-labelledby="offcanvasBottomLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasBottomLabel">Sort By</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" id="closesortbutton"></button>
+              </div>
+              <div class="offcanvas-body small lh-base text-start">
+              <div class="list-group">
+                <label class="list-group-item">
+                  <input class="form-check-input me-1" name="sortoption" type="radio" value="Recommended">
+                  Recommended
+                </label>
+                <label class="list-group-item">
+                  <input class="form-check-input me-1" name="sortoption" type="radio" value="Low">
+                  Pricing: Low to High
+                </label>
+                <label class="list-group-item">
+                  <input class="form-check-input me-1" name="sortoption" type="radio" value="High">
+                  Pricing : High to Low
+                </label>
+                <label class="list-group-item">
+                  <input class="form-check-input me-1" name="sortoption" type="radio" value="Rating">
+                  Customer Rating
+                </label>
+                <label class="list-group-item">
+                  <input class="form-check-input me-1" name="sortoption" type="radio" value="popular">
+                  Popularity
+                </label>
+              </div>
+              </div>
+            </div>
         </div>
 
 
@@ -302,7 +336,7 @@
             aria-labelledby="offcanvasBottomLabel">
             <div class="offcanvas-header ">
               <h5 class="offcanvas-title fs-6" id="offcanvasBottomLabel">Filters</h5>
-              <button class="btn text-danger fs-6 border-0 text-underline" id="clearAll"><u>Clear All</u></button>
+              <button class="btn text-danger fs-6 border-0 text-underline clearAll"><u>Clear All</u></button>
             </div>
             <div class="offcanvas-body">
               <div class="row d-flex flex-row justify-content-between h-100 m-0 ">
@@ -348,23 +382,23 @@
                     <div class="tab-pane fade" id="v-pills-link3" role="tabpanel" aria-labelledby="v-pills-link3-tab">
                       <ul class="list-group .list-group-flush text-start">
                         <?php
-
-                                foreach($authors as $author){
-                                  echo "<li class='list-group-item' id='bf".$author."'><input class='form-check-input me-1' name='authlist' type='checkbox' value=".$author.">".$author."</li>";
-                                }
+                        for($i = 0; $i < count($authors_name) ; $i++)
+                          {
+                            echo "<li class='list-group-item' id='bf".$authors_id[$i]."'><input class='form-check-input me-1' name='authlist' type='checkbox' value=".$authors_id[$i].">".$authors_name[$i]."</li>";
+                          }
                       ?>
                       </ul>
                     </div>
                     <div class="tab-pane fade" id="v-pills-link4" role="tabpanel" aria-labelledby="v-pills-link4-tab">
                       <ul class="list-group .list-group-flush text-start">
-                        <li class='list-group-item' id="p0"><input class='form-check-input me-1' type='checkbox' name='pricelist' value="0">0-500
+                        <li class='list-group-item' id="p0"><input class='form-check-input me-1' type='checkbox' name='pricelist' value="0-500">0-500
                         </li>
                         <li class='list-group-item' id="p500"><input class='form-check-input me-1' name='pricelist' type='checkbox'
-                            value="500">500-1000</li>
+                            value="500-1000">500-1000</li>
                         <li class='list-group-item' id="p1000"><input class='form-check-input me-1' name='pricelist' type='checkbox'
-                            value="1000">1000-2000</li>
+                            value="1000-2000">1000-2000</li>
                         <li class='list-group-item' id="p2000"><input class='form-check-input me-1' name='pricelist' type='checkbox'
-                            value="2000">2000 & up</li>
+                            value="2000-5000">2000</li>
                       </ul>          
                     </div>
                     <div class="tab-pane fade" id="v-pills-link5" role="tabpanel" aria-labelledby="v-pills-link5-tab">
@@ -393,12 +427,12 @@
             <div class="offcanvas-footer">
               <div class="row d-flex flex-row py-2">
                 <div class="col-6 col-sm-6 fs-6">
-                  <button class="btn w-100 text-secondary offcanvas-footer-btn" class="btn-close text-reset" data-bs-dismiss="offcanvas"> 
+                  <button class="btn w-100 text-secondary offcanvas-footer-btn" class="btn-close text-reset" data-bs-dismiss="offcanvas" id="closefilterbutton"> 
                     CLOSE
                   </button>
                 </div>
                 <div class="col-6 col-sm-6 fs-6">
-                  <button class="btn w-100 text-danger offcanvas-footer-btn" id="apply-filter">
+                  <button class="btn w-100 text-danger offcanvas-footer-btn apply-filter" >
                     APPLY
                   </button>
                 </div>
@@ -422,12 +456,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="JS/customs.js"></script>
-    <script>
-        // $(document).ready(function () {
-        //   $('#allProducts').DataTable();
-
-        // });
-    </script>
+    <script src="JS/filter.js"></script>
     <script>
 
       document.getElementById("shop").classList.add("active");
@@ -538,88 +567,7 @@
         });
       }
 
-    // filter by category 
-    let categoryfilter = document.getElementsByName("catlist");
-    for(let i =0;i< categoryfilter.length;i++){
-
-      categoryfilter[i].addEventListener("change",()=>{
-          if (categoryfilter[i].checked == true){
-              console.log(categoryfilter[i].value ,"is checked");
-                } 
-                else {
-                  console.log(categoryfilter[i].value ,"is unchecked");
-                }
-      });
-    }
-
-    // filter by language
-    let languagefilter = document.getElementsByName("langlist");
-    for(let i =0;i< languagefilter.length;i++){
-
-      languagefilter[i].addEventListener("change",()=>{
-          if (languagefilter[i].checked == true){
-              console.log(languagefilter[i].value ,"is checked");
-                } 
-                else {
-                  console.log(languagefilter[i].value ,"is unchecked");
-                }
-      });
-    }
-
-    // filter by author
-
-    let authorfilter = document.getElementsByName("authlist");
-    for(let i =0;i< authorfilter.length;i++){
-
-      authorfilter[i].addEventListener("change",()=>{
-          if (authorfilter[i].checked == true){
-              console.log(authorfilter[i].value ,"is checked");
-                } 
-                else {
-                  console.log(authorfilter[i].value ,"is unchecked");
-                }
-      });
-    }
-
-
-    // filter by price
-    let pricefilter = document.getElementsByName("pricelist");
-    for(let i =0;i< pricefilter.length;i++){
-
-      pricefilter[i].addEventListener("change",()=>{
-          if (pricefilter[i].checked == true){
-              console.log(pricefilter[i].value ,"is checked");
-                } 
-                else {
-                  console.log(pricefilter[i].value ,"is unchecked");
-                }
-      });
-    }
-
-    // filter by rate
-    let ratefilter = document.getElementsByName("ratelist");
-    for(let i =0;i< ratefilter.length;i++){
-
-      ratefilter[i].addEventListener("change",()=>{
-          if (ratefilter[i].checked == true){
-              console.log(ratefilter[i].value ,"is checked");
-                } 
-                else {
-                  console.log(ratefilter[i].value ,"is unchecked");
-                }
-      });
-    }
-
-    document.getElementById("apply-filter").addEventListener("click",()=>{
-     
-    });
-    
-    document.getElementById("clearAll").addEventListener("click",()=>{
-     
-      $('input[type=checkbox]').prop('checked',false); 
-      
-    });
-
+  
 </script>
 </body>
 </html>

@@ -188,8 +188,12 @@
     margin: 0 !important;
   }
   
+  
+
   .offcanvas-body{
     padding: 0 !important;
   }
-
+  .offcanvas-footer-btn{
+    border: none;
+  }
 }
