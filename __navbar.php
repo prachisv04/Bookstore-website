@@ -1,12 +1,33 @@
 <?php
 session_start();
-
+    require '__dbconnect.php';
     error_reporting (E_ALL ^ E_NOTICE);
     $isloggedin = false;
     if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
         $isloggedin = true;    
     }
     
+    class CartProduct{
+       private $bookid;
+       private $count;
+
+        function set_id($bid){
+            $this->bookid = $bid;
+        }
+
+        function get_id(){
+            return $this->bookid;
+        }
+
+        function set_count($c){
+            $this->count = $c;
+        }
+
+        function get_count(){
+            return $this->count;
+        }
+
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +57,7 @@ session_start();
 
     <!--  style sheets -->
     <link rel="stylesheet" href="CSS/style.css">
-
+    <link rel="stylesheet" href="CSS/custom.css">
 </head>
 
 <body>
@@ -105,12 +126,12 @@ session_start();
                                 <i class="bi bi-three-dots-vertical  fs-3 mx-2"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"> <i class="bi bi-person-fill mx-1"></i> My
+                                <li><a class="dropdown-item" href="profile.php"> <i class="bi bi-person-fill mx-1"></i> My
                                         Profile</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-heart-fill mx-1 text-danger"></i>
+                                <li><a class="dropdown-item" href="wishlist.php"><i class="bi bi-heart-fill mx-1 text-danger"></i>
                                         Wishlist</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-cart mx-1 "></i>
+                                <li><a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart"><i class="bi bi-cart mx-1 "></i>
                                         cart</a></li>
 
                                 <li>
@@ -149,7 +170,7 @@ session_start();
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                 <i class="bi bi-cart fs-3 mx-3"></i>
                             </a>
                         </li>
@@ -172,7 +193,7 @@ session_start();
                                 <li>
                                     <hr class="dropdown-divider mb-2">
                                 </li>
-                                <li><a class="dropdown-item" href="#"> <i class="bi bi-person-fill mx-1"></i> My
+                                <li><a class="dropdown-item" href="profile.php"> <i class="bi bi-person-fill mx-1"></i> My
                                         Profile</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-bag-heart-fill mx-1"></i>
                                         Orders</a></li>
@@ -195,7 +216,7 @@ session_start();
                                 ?>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                 <i class="bi bi-cart fs-3 mx-3"></i>
                             </a>
                         </li>
@@ -220,6 +241,89 @@ session_start();
         </div>
     </div>
 
+    <!-- <button class="btn btn-primary" type="button" >Toggle right offcanvas</button> -->
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasCartLabel">Your Bag</h5>
+    <div class="d-flex justify-content-right">
+        <a href="#" class="text-danger px-2">Clear Cart</a>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="offcanvas-body">
+    <div class="container h-100 w-100 border cartContainer" id="cartContainer">
+
+    <div class="d-flex flex-column">
+        <?php
+                if($isloggedin){
+                    // to fetch from database
+                    
+                }
+                else{
+                    //fetch from cart session variable 
+                    // temp adding data to cart For testing.
+                    $myCart = ['B1','B7'];  
+                    $cartDetails = [];
+                    // $_SESSION['TempCart'] = $myCart;
+                    
+                        $itemstr = implode("','",$myCart);
+                     //   echo $itemstr;
+                        $sql = "select book.book_id , book.Title , book_pictures.CoverPage ,Author.Author_name, Price_details.Price , Price_details.Quantity from book inner join book_pictures on book.book_id = book_pictures.book_id inner join Price_details on book.book_id = price_details.book_id inner join author on author.Author_id = book.Author_id where book.book_id IN ('".$itemstr."')";
+                      //  echo $sql;
+                      
+                        $items = mysqli_query($conn,$sql);
+                        while($item = mysqli_fetch_assoc($items)){
+                            $prod = new CartProduct();
+                            $prod->set_id($item['book_id']);
+                            $prod->set_count(1);
+                            array_push($cartDetails,$prod);
+                            echo "
+                            <div class='row w-100 mt-1 '>
+                            <div class='col-3 h-25'>
+                            
+                            <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' width='70px' height='100px'/>
+                                </div>
+                                <div class='col-5 h-25'>
+                                    <h6>".$item['Title']."</h6>
+                                    <p>-".$item['Author_name']."</p>
+                                </div>
+                                <div class='col-4 h-25'>
+                                <h5>&#x20B9;".$item['Price']."</h5>
+                                    <div class='input-group counter'>
+                                    <button class='btn btn-dark minus w-25 ' type='button'><i class='bi bi-dash text-light'>  </i>  </button>
+                                    <input type='text' name='bookcount' class='form-control count text-center bg-light' value='".$prod->get_count()."' aria-label='Example text with two button addons'>
+                                   
+                                    <button class='btn btn-dark plus w-25' type='button'><i class='bi bi-plus text-light'>  </i></button>
+                                    
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            ";
+                            
+                        }
+                        
+                    }
+
+                $_SESSION['cart'] = $cartDetails;
+            ?>
+            
+        </div>
+        
+    </div>
+  </div>
+  <div class="offcanvas-footer sticky-bottom d-flex flex-column justify-content-center align-items-center">
+        <a class="btn btn-outline-dark w-75 my-2" id="opencart" href="cart.php" >
+            View Cart
+        </a>
+        <button class="btn  w-75 my-2 mb-4" id="checkoutbtn">
+            Quick Checkout
+        </button>
+  </div>
+</div>
+
+
     <!-- Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -227,6 +331,34 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
         integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
         crossorigin="anonymous"></script>
+
+    <script>
+        let increase = document.getElementsByClassName("plus");
+        let count = document.getElementsByClassName("count");
+        let decrease = document.getElementsByClassName("minus");
+        for(let $itr = 0;$itr < increase.length;$itr++){
+            increase[$itr].addEventListener("click",()=>{
+                
+              val = count[$itr].value;
+              count[$itr].value = ++val;
+              
+           
+
+            });
+        }
+
+        for(let $itr = 0;$itr < decrease.length;$itr++){
+            decrease[$itr].addEventListener("click",()=>{
+                val = count[$itr].value;
+                count[$itr].value = --val;
+
+              
+
+            });
+        }
+
+    </script>
+
 </body>
 
 </html>

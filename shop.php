@@ -542,7 +542,7 @@
             plus[itrp].addEventListener("click", function () {
               val = this.previousSibling.value;
               this.previousSibling.value = ++val;
-
+              
             });
           }
           let istrue = false;

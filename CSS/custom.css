@@ -1,0 +1,14 @@
+.cartContainer{
+    /* background-color: blueviolet; */
+    border: 2px solid black;
+    overflow-y: auto;
+}
+
+#checkoutbtn{
+    background-color: blueviolet;
+    color: white;
+}
+
+.counter{
+    width: 100%;
+}
