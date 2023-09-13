@@ -1,33 +1,14 @@
 <?php
 session_start();
     require '__dbconnect.php';
-    error_reporting (E_ALL ^ E_NOTICE);
+    // error_reporting (E_ALL ^ E_NOTICE);
     $isloggedin = false;
     if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
         $isloggedin = true;    
     }
     
-    class CartProduct{
-       private $bookid;
-       private $count;
-
-        function set_id($bid){
-            $this->bookid = $bid;
-        }
-
-        function get_id(){
-            return $this->bookid;
-        }
-
-        function set_count($c){
-            $this->count = $c;
-        }
-
-        function get_count(){
-            return $this->count;
-        }
-
-    }
+    require 'Classes/cartProduct.php';
+   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -255,61 +236,9 @@ session_start();
     <div class="container h-100 w-100 border cartContainer" id="cartContainer">
 
     <div class="d-flex flex-column">
-        <?php
-                if($isloggedin){
-                    // to fetch from database
-                    
-                }
-                else{
-                    //fetch from cart session variable 
-                    // temp adding data to cart For testing.
-                    $myCart = ['B1','B7'];  
-                    $cartDetails = [];
-                    // $_SESSION['TempCart'] = $myCart;
-                    
-                        $itemstr = implode("','",$myCart);
-                     //   echo $itemstr;
-                        $sql = "select book.book_id , book.Title , book_pictures.CoverPage ,Author.Author_name, Price_details.Price , Price_details.Quantity from book inner join book_pictures on book.book_id = book_pictures.book_id inner join Price_details on book.book_id = price_details.book_id inner join author on author.Author_id = book.Author_id where book.book_id IN ('".$itemstr."')";
-                      //  echo $sql;
-                      
-                        $items = mysqli_query($conn,$sql);
-                        while($item = mysqli_fetch_assoc($items)){
-                            $prod = new CartProduct();
-                            $prod->set_id($item['book_id']);
-                            $prod->set_count(1);
-                            array_push($cartDetails,$prod);
-                            echo "
-                            <div class='row w-100 mt-1 '>
-                            <div class='col-3 h-25'>
-                            
-                            <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' width='70px' height='100px'/>
-                                </div>
-                                <div class='col-5 h-25'>
-                                    <h6>".$item['Title']."</h6>
-                                    <p>-".$item['Author_name']."</p>
-                                </div>
-                                <div class='col-4 h-25'>
-                                <h5>&#x20B9;".$item['Price']."</h5>
-                                    <div class='input-group counter'>
-                                    <button class='btn btn-dark minus w-25 ' type='button'><i class='bi bi-dash text-light'>  </i>  </button>
-                                    <input type='text' name='bookcount' class='form-control count text-center bg-light' value='".$prod->get_count()."' aria-label='Example text with two button addons'>
-                                   
-                                    <button class='btn btn-dark plus w-25' type='button'><i class='bi bi-plus text-light'>  </i></button>
-                                    
-                                    </div>
-                                   
-                                </div>
-                            </div>
-                            ";
-                            
-                        }
-                        
-                    }
-
-                $_SESSION['cart'] = $cartDetails;
-            ?>
-            
-        </div>
+       
+                            <!-- // cart products here -->
+    </div>
         
     </div>
   </div>
@@ -338,12 +267,8 @@ session_start();
         let decrease = document.getElementsByClassName("minus");
         for(let $itr = 0;$itr < increase.length;$itr++){
             increase[$itr].addEventListener("click",()=>{
-                
               val = count[$itr].value;
               count[$itr].value = ++val;
-              
-           
-
             });
         }
 
@@ -351,9 +276,6 @@ session_start();
             decrease[$itr].addEventListener("click",()=>{
                 val = count[$itr].value;
                 count[$itr].value = --val;
-
-              
-
             });
         }
 

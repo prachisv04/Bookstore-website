@@ -1,5 +1,5 @@
 <?php
-    error_reporting (E_ALL ^ E_NOTICE);
+    // error_reporting (E_ALL ^ E_NOTICE);
     session_start();
     require '__dbconnect.php';
     $isloggedin = false;
@@ -9,7 +9,7 @@
 
     // get categories as array
     $category = array();
-    $sql = "SELECT DISTINCT Category FROM book ";
+    $sql = "SELECT DISTINCT Category FROM books ";
     $categories = mysqli_query($conn,$sql);
 
     while($cat=mysqli_fetch_assoc($categories)){
@@ -18,7 +18,7 @@
   
    // get languages as array
    $languages = array();
-   $sql = "SELECT Language_name FROM languages ";
+   $sql = "SELECT Language_name FROM language_details ";
    $language = mysqli_query($conn,$sql);
 
    while($lang=mysqli_fetch_assoc($language)){
@@ -28,7 +28,7 @@
     //get authors as array
     $authors_name = array();
     $authors_id = array();
-    $sql = "SELECT Author_id ,Author_name FROM author";
+    $sql = "SELECT Author_id ,Author_name FROM authors";
     $writers = mysqli_query($conn,$sql);
     while($author=mysqli_fetch_assoc($writers)){
       array_push($authors_name,$author['Author_name']);
@@ -225,9 +225,8 @@
           <div class="row d-flex flex-row align-items-left justify-content-left" id="allProducts">
             <?php
                 
-                $sql = "select book.Book_id , book.Title , book.PageNums , book.Category , author.Author_name, price_details.Price , languages.Language_name , book_pictures.CoverPage from book INNER JOIN author on book.Author_id = author.Author_id INNER JOIN price_details on book.Book_id = price_details.Book_id  INNER JOIN languages on languages.Language_id = price_details.language_id INNER JOIN book_pictures on book_pictures.Book_id = book.Book_id";
+                $sql = "select books.Book_id , books.Title , books.PageNums , books.Category , authors.Author_name, price_detail.Price , language_details.Language_name , pictures.CoverPage from books INNER JOIN authors on books.Author_id = authors.Author_id INNER JOIN price_detail on books.Book_id = price_detail.Book_id  INNER JOIN language_details on language_details.Language_id = price_detail.language_id INNER JOIN pictures on pictures.Book_id = books.Book_id";
                 $books = mysqli_query($conn,$sql);
-                $no=1;
                
                 while($book=mysqli_fetch_assoc($books)){
                   echo" 

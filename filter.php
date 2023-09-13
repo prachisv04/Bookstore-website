@@ -3,26 +3,26 @@
 // get array process sql return echo statement to print on page
 // whatever we will echo on this page will be sent back to requesting page
 require '__dbconnect.php';
-$sql = "select book.Book_id , book.Title , book.PageNums , book.Category , author.Author_name, price_details.Price , languages.Language_name , book_pictures.CoverPage from book INNER JOIN author on book.Author_id = author.Author_id INNER JOIN price_details on book.Book_id = price_details.Book_id  INNER JOIN languages on languages.Language_id = price_details.language_id INNER JOIN book_pictures on book_pictures.Book_id = book.Book_id WHERE TRUE";
+$sql = "select books.Book_id , books.Title , books.PageNums , books.Category , authors.Author_name, price_detail.Price , language_Details.Language_name , pictures.CoverPage from books INNER JOIN authors on books.Author_id = authors.Author_id INNER JOIN price_detail on books.Book_id = price_detail.Book_id  INNER JOIN languages on language_details.Language_id = price_detail.language_id INNER JOIN pictures on pictures.Book_id = books.Book_id WHERE TRUE";
 if(isset($_POST['categorylistdata'])){   
     if( !empty( $_POST['categorylistdata'] )){
         $category = explode(",",$_POST['categorylistdata']);
         $cats = join("','",$category);   
-        $sql = $sql . " AND  book.Category IN ('$cats')";
+        $sql = $sql . " AND  books.Category IN ('$cats')";
     }
 }
 if(isset($_POST['languagelistdata'])){   
     if( !empty( $_POST['languagelistdata'] )){
         $languages = explode(",",$_POST['languagelistdata']);
         $langs = join("','",$languages);  
-        $sql = $sql . " AND  languages.Language_name IN ('$langs')"; 
+        $sql = $sql . " AND  language_details.Language_name IN ('$langs')"; 
     }
 }
 if(isset($_POST['authorlistdata'])){   
     if( !empty( $_POST['authorlistdata'] )){
         $authors = explode(",",$_POST['authorlistdata']);
         $auths = join("','",$authors);   
-        $sql = $sql . " AND author.Author_id IN ('$auths')"; 
+        $sql = $sql . " AND authors.Author_id IN ('$auths')"; 
     }
 }
 
@@ -35,7 +35,7 @@ if( !empty(  $_POST['pricelistdata'] )){
 
     $prices = explode("-",$prices);
     sort($prices);  
-    $sql = $sql . " AND price_details.Price BETWEEN ".$prices[0]." AND  ".$prices[count($prices)-1]; 
+    $sql = $sql . " AND price_detail.Price BETWEEN ".$prices[0]." AND  ".$prices[count($prices)-1]; 
     // echo "<br> ".$sql;
 }
 }

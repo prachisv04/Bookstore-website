@@ -6,7 +6,7 @@
     { 
       $email = $_POST["email"];
       $pass = $_POST["pass"];
-      $sql = "SELECT * FROM `Users` WHERE `Email` = '$email'";
+      $sql = "SELECT * FROM `customers` WHERE `Email` = '$email'";
       $result = mysqli_query($conn, $sql);
       if ($result)
       {

@@ -12,7 +12,7 @@
             $email = $_POST["semail"];
             $num = $_POST["mobile"];
             $pass = $_POST["spass"];
-            $sql = "INSERT INTO `users` (`Name`, `Email`, `MobileNum`, `Password`) VALUES ('$name', '$email', '$num','". password_hash( $pass , PASSWORD_DEFAULT)."')";
+            $sql = "INSERT INTO `customers` (`User_Name`, `Email`, `MobileNum`, `Password`) VALUES ('$name', '$email', '$num','". password_hash( $pass , PASSWORD_DEFAULT)."')";
             
             unset($_POST);
             $result = mysqli_query($conn,$sql);
