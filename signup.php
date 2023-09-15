@@ -6,15 +6,12 @@
         
         if($_SERVER['REQUEST_METHOD']=='POST' and isset($_POST['signup']) and !empty($_POST["spass"]))
         {
-            // var_dump($_POST);
            
             $name = $_POST["uname"];
             $email = $_POST["semail"];
             $num = $_POST["mobile"];
             $pass = $_POST["spass"];
             $sql = "INSERT INTO `customers` (`User_Name`, `Email`, `MobileNum`, `Password`) VALUES ('$name', '$email', '$num','". password_hash( $pass , PASSWORD_DEFAULT)."')";
-            
-            unset($_POST);
             $result = mysqli_query($conn,$sql);
             if(!$result){
                 echo '<div class="alert alert-danger alert-dismissible fade show "  role="alert">

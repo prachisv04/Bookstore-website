@@ -6,8 +6,6 @@ session_start();
     if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
         $isloggedin = true;    
     }
-    
-    require 'Classes/cartProduct.php';
    
 ?>
 <!DOCTYPE html>
@@ -236,8 +234,8 @@ session_start();
     <div class="container h-100 w-100 border cartContainer" id="cartContainer">
 
     <div class="d-flex flex-column">
-       
-                            <!-- // cart products here -->
+    
+                   
     </div>
         
     </div>

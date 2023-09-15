@@ -79,32 +79,7 @@
 
     ?>
 
-        <div class="container">
-            <?php
-                if( isset ($_SESSION['cart'])){
-                    
-                    foreach ($_SESSION['cart'] as $val) {
-                        
-                        echo"
-                        <div class='row'>
-                        <div class='col-4'>
-                        ".$val->get_id()."
-                        </div>
-                        <div class='col-6'>
-                        ".$val->get_count()."
-                        </div>
-                        </div>
-                    ";
-                    // var_dump($val);
-                    echo "<br>";
-                }
-
-                }
-        ?>
-
-        </div>
-
-
+  
 
 
 

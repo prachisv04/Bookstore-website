@@ -7,14 +7,15 @@
       $email = $_POST["email"];
       $pass = $_POST["pass"];
       $sql = "SELECT * FROM `customers` WHERE `Email` = '$email'";
+     echo $sql;
       $result = mysqli_query($conn, $sql);
       if ($result)
       {
           $row = mysqli_fetch_assoc($result);
-          if (password_verify($pass, $row['Password'])) {
-            $success = true;
+          if (password_verify($pass, $row["Password"])) {
+            $success = true;    
             session_start();
-            $_SESSION['user'] = $row['Name'];
+           $_SESSION['user'] = $row['User_Name'];
             $_SESSION['usermail'] = $email;
 
             header("location: http://localhost/Bookstore/index.php");

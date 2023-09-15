@@ -3,7 +3,7 @@
 // get array process sql return echo statement to print on page
 // whatever we will echo on this page will be sent back to requesting page
 require '__dbconnect.php';
-$sql = "select books.Book_id , books.Title , books.PageNums , books.Category , authors.Author_name, price_detail.Price , language_Details.Language_name , pictures.CoverPage from books INNER JOIN authors on books.Author_id = authors.Author_id INNER JOIN price_detail on books.Book_id = price_detail.Book_id  INNER JOIN languages on language_details.Language_id = price_detail.language_id INNER JOIN pictures on pictures.Book_id = books.Book_id WHERE TRUE";
+$sql = "select books.Book_id , books.Title , books.PageNums , books.Category , authors.Author_name, price_detail.Price , language_details.Language_name , pictures.CoverPage from books INNER JOIN authors on books.author_id = authors.Author_id INNER JOIN price_detail on books.Book_id = price_detail.Book_id  INNER JOIN language_details on language_details.Language_id = price_detail.language_id INNER JOIN pictures on pictures.Book_id = books.Book_id WHERE TRUE";
 if(isset($_POST['categorylistdata'])){   
     if( !empty( $_POST['categorylistdata'] )){
         $category = explode(",",$_POST['categorylistdata']);
@@ -49,9 +49,9 @@ if( !empty( $_POST['ratelistdata'] )){
 if(isset($_POST['sortmethod'])){  
   if( !empty( $_POST['sortmethod'] )){
       if($_POST['sortmethod']==="Low")
-      $sql = $sql." order by price_details.Price ";
+      $sql = $sql." order by price_detail.Price ";
       else if($_POST['sortmethod']==="High")
-      $sql = $sql." order by price_details.Price desc";
+      $sql = $sql." order by price_detail.Price desc";
   }
   }
                  $books = mysqli_query($conn,$sql);             
