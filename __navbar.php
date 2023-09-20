@@ -110,7 +110,7 @@ session_start();
                                 </li>
                                 <li><a class="dropdown-item" href="wishlist.php"><i class="bi bi-heart-fill mx-1 text-danger"></i>
                                         Wishlist</a></li>
-                                <li><a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart"><i class="bi bi-cart mx-1 "></i>
+                                <li><a class="dropdown-item" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasCart" aria-controls="offcanvasCart"><i class="bi bi-cart mx-1 "></i>
                                         cart</a></li>
 
                                 <li>
@@ -149,7 +149,7 @@ session_start();
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                            <a class="nav-link" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                 <i class="bi bi-cart fs-3 mx-3"></i>
                             </a>
                         </li>
@@ -195,7 +195,7 @@ session_start();
                                 ?>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                            <a class="nav-link" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                 <i class="bi bi-cart fs-3 mx-3"></i>
                             </a>
                         </li>
@@ -222,34 +222,89 @@ session_start();
 
     <!-- <button class="btn btn-primary" type="button" >Toggle right offcanvas</button> -->
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasCartLabel">Your Bag</h5>
-    <div class="d-flex justify-content-right">
-        <a href="#" class="text-danger px-2">Clear Cart</a>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-  </div>
-  <div class="offcanvas-body">
-    <div class="container h-100 w-100 border cartContainer" id="cartContainer">
+    <!-- offcanvas cart  here -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasCartLabel">Your Bag</h5>
+          <div class="d-flex justify-content-right">
+              <a href="#" class="text-danger px-2">Clear Cart</a>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="offcanvas-body">
+          <div class="container h-100 w-100 border cartContainer" id="cartContainer">
+      
+          <div class="d-flex flex-column">
+          
+            <table class="table">
+              
+                <tbody>
 
-    <div class="d-flex flex-column">
-    
+                <?php
+                if($isloggedin){
+
+                }
+                else{
                    
-    </div>
-        
-    </div>
-  </div>
-  <div class="offcanvas-footer sticky-bottom d-flex flex-column justify-content-center align-items-center">
-        <a class="btn btn-outline-dark w-75 my-2" id="opencart" href="cart.php" >
-            View Cart
-        </a>
-        <button class="btn  w-75 my-2 mb-4" id="checkoutbtn">
-            Quick Checkout
-        </button>
-  </div>
-</div>
+                    if(isset($_SESSION["cart_items"])){
+                        $in = implode("','",$_SESSION["cart_items"]);
+                    
+                        $sql = "select books.Book_id , books.Title , pictures.CoverPage , price_detail.Price from books INNER JOIN price_detail on books.book_id = price_detail.book_id INNER JOIN pictures on books.book_id = pictures.book_id where books.book_id in('$in')";
+                        $items = mysqli_query($conn,$sql);
+                        $item_total = 0;
+                        while($item=mysqli_fetch_assoc($items)){
+                            $item_total += $item['Price'];
+                            echo "
+                            <tr>
+                              <td > <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
+                            
+                              <td class='d-flex flex-column w-75'>
+                              
+                                   <div class='text-truncate'>".$item['Title']."</div>
+                                  
+                                   <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
+                                   <button class='btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
+                                   <input type='text' class='form-control count text-center fs-5 bg-light ' value='1' name='quan".$item['Book_id']."'>
+                                   <button class='btn  plus' type='button'><i class='bi bi-plus  fa-lg'></i></button>
+                              
+                                </div>
+                                
+                              </td>
+    
+                              <td>".$item['Price']."</td>
+                              
+                            </tr>";
+                        }     
+                    }   
+                    }
 
+                  
+                ?> 
+                
+                </tbody>
+                
+              </table>
+                         
+            </div>
+            
+           
+        </div>
+        </div>
+        <div class="offcanvas-footer sticky-bottom  ">
+            <div class="d-flex flex-row justify-content-around">
+                    <div>Cart Total:</div>
+                    <div> <?php echo $item_total ?> </div>
+            </div>
+            <div class="justify-content-center align-items-center d-flex flex-column">
+              <a class="btn btn-outline-dark w-75 my-2" id="opencart" href="cart.php" >
+                  View Cart
+              </a>
+              <button class="btn  w-75 my-2 mb-4" id="checkoutbtn">
+                  Quick Checkout
+              </button>
+            </div>
+        </div>
+      </div>
 
     <!-- Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -273,7 +328,7 @@ session_start();
         for(let $itr = 0;$itr < decrease.length;$itr++){
             decrease[$itr].addEventListener("click",()=>{
                 val = count[$itr].value;
-                count[$itr].value = --val;
+                count[$itr].value = --val; 
             });
         }
 

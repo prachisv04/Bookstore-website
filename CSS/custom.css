@@ -12,3 +12,12 @@
 .counter{
     width: 100%;
 }
+
+.cartimg{
+    height: 100px;
+    width: 70px;
+}
+
+.table tr , .table tr td{
+    border: none;
+}

@@ -77,11 +77,13 @@
   <?php
          require '__navbar.php';
 
-    ?>
+  ?>
 
+    <!-- offcanvas cart -->
   
 
 
+<!-- full body cart -->
 
     <!-- javascript -->
     <!-- bootstrap -->

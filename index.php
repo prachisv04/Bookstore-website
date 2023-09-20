@@ -154,7 +154,7 @@
                             <?php
                         require '__dbconnect.php';
 
-                        $sql = "select books.Book_id , books.Title , books.PageNums , books.Category , authors.Author_name, price_detail.Price , language_details.Language_name ,pictures.CoverPage from books INNER JOIN authors on books.author_id = authors.Author_id INNER JOIN price_detail on books.Book_id = price_detail.Book_id  INNER JOIN languages on language_details.Language_id = price_detail.Language_id INNER JOIN pictures on pictures.Book_id = books.Book_id ";
+                        $sql = "select books.Book_id , books.Title , books.PageNums , books.Category , authors.Author_name, price_detail.Price , language_details.Language_name ,pictures.CoverPage from books INNER JOIN authors on books.author_id = authors.Author_id INNER JOIN price_detail on books.Book_id = price_detail.Book_id  INNER JOIN language_details on language_details.Language_id = price_detail.Language_id INNER JOIN pictures on pictures.Book_id = books.Book_id ";
                         $books = mysqli_query($conn,$sql);
                         $no=1;
                     

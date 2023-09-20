@@ -6,7 +6,6 @@
     if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
         $isloggedin = true;
     }
-
     // get categories as array
     $category = array();
     $sql = "SELECT DISTINCT Category FROM books ";
@@ -261,7 +260,7 @@
                         </div>
 
                         <div class='card-footer'>
-                            <button class='addToCart btn btn-dbrown p-2'>Add to Cart <i class='bi bi-bag fa-lg mx-2'></i></button>
+                            <button id=".$book['Book_id']." class='addToCart btn btn-dbrown p-2'>Add to Cart <i class='bi bi-bag fa-lg mx-2'></i></button>
                         </div>
                       </div>
                     </div>                 
@@ -280,9 +279,7 @@
 
 
     <!-- Footer -->
-    <?php
-        require '__footer.html';
-  ?>
+    
 
 <div class=" fixed-bottom bg-dark footerbar" id="filterbar">
       <div class="row border d-flex flex-row py-2 text-center">
@@ -442,6 +439,10 @@
         </div>
       </div>
     </div>
+
+    <?php
+        require '__footer.html';
+    ?>
     <!-- javascript -->
     <!-- bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -518,7 +519,7 @@
       for (let itrc = 0; itrc < carts.length; itrc++) {
 
         carts[itrc].addEventListener("click", function () {
-
+      
           this.style.display = "none";
           let counter = document.createElement("div");
 
@@ -527,6 +528,7 @@
           let btnplus = "<button class='btn  plus ' type='button'><i class='bi bi-plus text-light fa-lg'></i></button>";
           let btnminus = "<button class='btn  minus ' type='button'><i class='bi bi-dash text-light fa-lg'></i></button>";
           let getnum = "<input type='text' class='form-control count text-center fs-5 bg-light' value='1' aria-label='Example text with two button addons'>";
+
 
           counter.innerHTML = btnminus + getnum + btnplus;
           counter.style.width = "75%";
@@ -562,8 +564,29 @@
             });
           }
 
+          cartid = carts[itrc].id;
           this.parentNode.appendChild(counter);
+    //       setTimeout(() => {
+    //         $.ajax({
+    //         url: 'http://localhost/Bookstore/addtocart.php',
+    //         type: 'POST',
+    //           data: {
+    //             extra :1,
+    //             id : cartid;
+    //             quantity : 1;
+    //         },
+    //         success: function(response){
+    //           alert(response);
+    //           // this.parentNode.appendChild(counter);
+    //     }
+       
+    // });
+    //       }, 1000);
+          
         });
+
+    //    
+      
       }
 
   
