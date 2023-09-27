@@ -249,7 +249,7 @@ session_start();
                     if(isset($_SESSION["cart_items"])){
                         $in = implode("','",$_SESSION["cart_items"]);
                     
-                        $sql = "select books.Book_id , books.Title , pictures.CoverPage , price_detail.Price from books INNER JOIN price_detail on books.book_id = price_detail.book_id INNER JOIN pictures on books.book_id = pictures.book_id where books.book_id in('$in')";
+                        $sql = "select books.Book_id , books.Title , pictures.CoverPage , price_detail.Price from books INNER JOIN price_detail on books.Book_id = price_detail.Book_id INNER JOIN pictures on books.Book_id = pictures.Book_id where books.Book_id in('$in')";
                         $items = mysqli_query($conn,$sql);
                         $item_total = 0;
                         while($item=mysqli_fetch_assoc($items)){

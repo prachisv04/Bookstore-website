@@ -1,5 +1,5 @@
 <?php
-    // error_reporting (E_ALL ^ E_NOTICE);
+    error_reporting (E_ALL ^ E_NOTICE);
     session_start();
     require '__dbconnect.php';
     $isloggedin = false;
@@ -17,7 +17,7 @@
   
    // get languages as array
    $languages = array();
-   $sql = "SELECT Language_name FROM language_details ";
+   $sql = "SELECT Language_name FROM languages ";
    $language = mysqli_query($conn,$sql);
 
    while($lang=mysqli_fetch_assoc($language)){
@@ -224,7 +224,7 @@
           <div class="row d-flex flex-row align-items-left justify-content-left" id="allProducts">
             <?php
                 
-                $sql = "select books.Book_id , books.Title , books.PageNums , books.Category , authors.Author_name, price_detail.Price , language_details.Language_name , pictures.CoverPage from books INNER JOIN authors on books.Author_id = authors.Author_id INNER JOIN price_detail on books.Book_id = price_detail.Book_id  INNER JOIN language_details on language_details.Language_id = price_detail.language_id INNER JOIN pictures on pictures.Book_id = books.Book_id";
+                $sql = "select books.Book_id , books.Title , books.PageNums , books.Category , authors.Author_name, price_detail.Price , languages.Language_name , pictures.CoverPage from books INNER JOIN authors on books.Author_id = authors.Author_id INNER JOIN price_detail on books.Book_id = price_detail.Book_id  INNER JOIN languages on languages.Language_id = price_detail.Language_id INNER JOIN pictures on pictures.Book_id = books.Book_id";
                 $books = mysqli_query($conn,$sql);
                
                 while($book=mysqli_fetch_assoc($books)){
@@ -260,11 +260,16 @@
                         </div>
 
                         <div class='card-footer'>
-                            <button id=".$book['Book_id']." class='addToCart btn btn-dbrown p-2'>Add to Cart <i class='bi bi-bag fa-lg mx-2'></i></button>
-                        </div>
+                      
+                            <button name='tocart' id=".$book['Book_id']." class='addToCart btn btn-dbrown p-2'>Add to Cart <i class='bi bi-bag fa-lg mx-2'></i></button>
+                        
+                      </div>
                       </div>
                     </div>                 
                     ";
+
+               
+
               }
               
               ?>
@@ -566,27 +571,9 @@
 
           cartid = carts[itrc].id;
           this.parentNode.appendChild(counter);
-    //       setTimeout(() => {
-    //         $.ajax({
-    //         url: 'http://localhost/Bookstore/addtocart.php',
-    //         type: 'POST',
-    //           data: {
-    //             extra :1,
-    //             id : cartid;
-    //             quantity : 1;
-    //         },
-    //         success: function(response){
-    //           alert(response);
-    //           // this.parentNode.appendChild(counter);
-    //     }
-       
-    // });
-    //       }, 1000);
           
         });
 
-    //    
-      
       }
 
   

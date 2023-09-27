@@ -3,7 +3,7 @@
 // get array process sql return echo statement to print on page
 // whatever we will echo on this page will be sent back to requesting page
 require '__dbconnect.php';
-$sql = "select books.Book_id , books.Title , books.PageNums , books.Category , authors.Author_name, price_detail.Price , language_details.Language_name , pictures.CoverPage from books INNER JOIN authors on books.author_id = authors.Author_id INNER JOIN price_detail on books.Book_id = price_detail.Book_id  INNER JOIN language_details on language_details.Language_id = price_detail.Language_id INNER JOIN pictures on pictures.Book_id = books.Book_id WHERE TRUE";
+$sql = "select books.Book_id , books.Title , books.PageNums , books.Category , authors.Author_name, price_detail.Price , languages.Language_name , pictures.CoverPage from books INNER JOIN authors on books.author_id = authors.Author_id INNER JOIN price_detail on books.Book_id = price_detail.Book_id  INNER JOIN languages on languages.Language_id = price_detail.Language_id INNER JOIN pictures on pictures.Book_id = books.Book_id WHERE TRUE";
 if(isset($_POST['categorylistdata'])){   
     if( !empty( $_POST['categorylistdata'] )){
         $category = explode(",",$_POST['categorylistdata']);
@@ -15,7 +15,7 @@ if(isset($_POST['languagelistdata'])){
     if( !empty( $_POST['languagelistdata'] )){
         $languages = explode(",",$_POST['languagelistdata']);
         $langs = join("','",$languages);  
-        $sql = $sql . " AND  language_details.Language_name IN ('$langs')"; 
+        $sql = $sql . " AND  languages.Language_name IN ('$langs')"; 
     }
 }
 if(isset($_POST['authorlistdata'])){   
