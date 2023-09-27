@@ -68,6 +68,7 @@
   <link rel="stylesheet" href="CSS/shop.css">
   <link rel="stylesheet" href="CSS/style.css">
 
+  <link rel="stylesheet" href="CSS/custom.css">
 </head>
 
 <body class="bg">
@@ -261,8 +262,13 @@
 
                         <div class='card-footer'>
                       
-                            <button name='tocart' id=".$book['Book_id']." class='addToCart btn btn-dbrown p-2'>Add to Cart <i class='bi bi-bag fa-lg mx-2'></i></button>
+                            <button name='tocart'  class='addToCart btn btn-dbrown p-2'>Add to Cart <i class='bi bi-bag fa-lg mx-2'></i></button>
                         
+                            <div class='counter input-group d-none' id=".$book['Book_id'].">
+                              <button class='btn  minus w-25' type='button'><i class='bi bi-dash text-light fa-lg'></i></button>
+                              <input readonly type='text' class='form-control count text-center fs-5 bg-light w-50' value='1' aria-label='Example text with two button addons'>
+                              <button class='btn  plus w-25' type='button'><i class='bi bi-plus text-light fa-lg'></i></button>
+                            </div>
                       </div>
                       </div>
                     </div>                 
@@ -445,6 +451,14 @@
       </div>
     </div>
 
+        <div class="toast align-items-center text-bg-success border-0 m-auto" id="successToast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+        Product added in Bag.
+      </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
     <?php
         require '__footer.html';
     ?>
@@ -520,63 +534,107 @@
 
 
       let carts = document.getElementsByClassName("addToCart");
+      let counters = document.getElementsByClassName("counter");
+      let plus = document.getElementsByClassName("plus");
+      let counts = document.getElementsByClassName("count");
+      let minus = document.getElementsByClassName("minus");
 
       for (let itrc = 0; itrc < carts.length; itrc++) {
 
-        carts[itrc].addEventListener("click", function () {
-      
-          this.style.display = "none";
-          let counter = document.createElement("div");
-
-          counter.classList.add("input-group");
-
-          let btnplus = "<button class='btn  plus ' type='button'><i class='bi bi-plus text-light fa-lg'></i></button>";
-          let btnminus = "<button class='btn  minus ' type='button'><i class='bi bi-dash text-light fa-lg'></i></button>";
-          let getnum = "<input type='text' class='form-control count text-center fs-5 bg-light' value='1' aria-label='Example text with two button addons'>";
-
-
-          counter.innerHTML = btnminus + getnum + btnplus;
-          counter.style.width = "75%";
-          counter.style.backgroundColor = "#9C7F5B";
-          counter.style.borderTopLeftRadius = "15px";
-          counter.style.borderBottomRightRadius = "15px";
-
-          let plus = counter.getElementsByClassName("plus");
-
-          for (let itrp = 0; itrp < plus.length; itrp++) {
-
-            plus[itrp].addEventListener("click", function () {
-              val = this.previousSibling.value;
-              this.previousSibling.value = ++val;
-              
-            });
-          }
-          let istrue = false;
-          let minus = counter.getElementsByClassName("minus");
-
-          for (let itrm = 0; itrm < minus.length; itrm++) {
-
-            minus[itrm].addEventListener("click", function () {
-              val = this.nextSibling.value;
-              this.nextSibling.value = --val;
-
-              if (val <= 0) {
-                this.nextSibling.value = 1;
-                counter.style.display = "none";
-                carts[itrc].style.display = "flex";
-                carts[itrc].style.marginLeft = "10px";
-              }
-            });
-          }
-
-          cartid = carts[itrc].id;
-          this.parentNode.appendChild(counter);
+          carts[itrc].addEventListener("click", function () {    
           
+     
+        $.ajax({
+          url: 'http://localhost/Bookstore/addtocart.php',
+          type: 'POST',
+          data: {
+          quantity :1,
+          bookid : counters[itrc].id,
+          action : "add"
+          },
+          success: function(response){
+            carts[itrc].style.display = "none";
+            counters[itrc].classList.remove("d-none");
+            counters[itrc].classList.add("d-flex");
+
+            $('.toast').toast('show');
+            
+            setTimeout(() => {
+              $('.toast').toast('hide');
+            }, 2000);
+        }
+      });
+
+
         });
 
-      }
 
-  
+      }
+          for (let itrp = 0; itrp < plus.length; itrp++) {
+           plus[itrp].addEventListener("click", function () {
+              val = counts[itrp].value;
+              counts[itrp].value = ++val;
+             
+          $.ajax({
+              url: 'http://localhost/Bookstore/addtocart.php',
+              type: 'POST',
+              data: {
+              quantity :val,
+              bookid : counters[itrp].id,
+              action : "update"
+              },
+              success: function(response){
+                alert("quantity increased");
+            }
+         });
+            });
+          }
+
+    
+
+    for (let itrm = 0; itrm < minus.length; itrm++) {
+
+        minus[itrm].addEventListener("click", function () {
+              val = counts[itrm].value;
+              counts[itrm].value = --val;
+              console.log("product quantity descreased  with id ",counters[itrm].id);
+                if (val <= 0) {
+                  counts[itrm].value = 1;
+                      carts[itrm].style.display = "flex";
+                      carts[itrm].classList.add("m-auto");
+                      counters[itrm].classList.remove("d-flex");
+                      counters[itrm].classList.add("d-none");
+                      $.ajax({
+                            url: 'http://localhost/Bookstore/addtocart.php',
+                            type: 'POST',
+                            data: {
+                            quantity :0,
+                            bookid : counters[itrm].id,
+                            action : "remove"
+                            },
+                            success: function(response){
+                               
+                          }
+                       });
+                }
+                else{
+                        
+          $.ajax({
+              url: 'http://localhost/Bookstore/addtocart.php',
+              type: 'POST',
+              data: {
+              quantity :val,
+              bookid : counters[itrm].id,
+              action : "update"
+              },
+              success: function(response){
+               
+            }
+      });
+                }
+  });
+}
+
 </script>
 </body>
 </html>

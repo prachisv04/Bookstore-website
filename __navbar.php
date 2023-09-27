@@ -227,7 +227,7 @@ session_start();
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasCartLabel">Your Bag</h5>
           <div class="d-flex justify-content-right">
-              <a href="#" class="text-danger px-2">Clear Cart</a>
+              <button  class="text-danger px-2" id="clearcart">Clear Cart</button>
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
         </div>
@@ -241,43 +241,40 @@ session_start();
                 <tbody>
 
                 <?php
-                if($isloggedin){
-
-                }
-                else{
-                   
-                    if(isset($_SESSION["cart_items"])){
-                        $in = implode("','",$_SESSION["cart_items"]);
-                    
-                        $sql = "select books.Book_id , books.Title , pictures.CoverPage , price_detail.Price from books INNER JOIN price_detail on books.Book_id = price_detail.Book_id INNER JOIN pictures on books.Book_id = pictures.Book_id where books.Book_id in('$in')";
-                        $items = mysqli_query($conn,$sql);
-                        $item_total = 0;
-                        while($item=mysqli_fetch_assoc($items)){
-                            $item_total += $item['Price'];
-                            echo "
-                            <tr>
-                              <td > <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
+              
+                    if(isset($_SESSION["cartProducts"])){
+                    //    echo print_r( $_SESSION["cartProducts"]);
+                        foreach($samplearr as $key => $val) {
+                          $in += $key;
+                       }
+                       echo $in;
+                        // $sql = "select books.Book_id , books.Title , pictures.CoverPage , price_detail.Price from books INNER JOIN price_detail on books.Book_id = price_detail.Book_id INNER JOIN pictures on books.Book_id = pictures.Book_id where books.Book_id in('$in')";
+                        // $items = mysqli_query($conn,$sql);
+                        // $item_total = 0;
+                        // while($item=mysqli_fetch_assoc($items)){
+                        //     $item_total += $item['Price'];
+                        //     echo "
+                        //     <tr>
+                        //       <td > <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
                             
-                              <td class='d-flex flex-column w-75'>
+                        //       <td class='d-flex flex-column w-75'>
                               
-                                   <div class='text-truncate'>".$item['Title']."</div>
+                        //            <div class='text-truncate'>".$item['Title']."</div>
                                   
-                                   <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
-                                   <button class='btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
-                                   <input type='text' class='form-control count text-center fs-5 bg-light ' value='1' name='quan".$item['Book_id']."'>
-                                   <button class='btn  plus' type='button'><i class='bi bi-plus  fa-lg'></i></button>
+                        //            <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
+                        //            <button class='btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
+                        //            <input type='text' class='form-control count text-center fs-5 bg-light ' value='1' name='quan".$item['Book_id']."'>
+                        //            <button class='btn  plus' type='button'><i class='bi bi-plus  fa-lg'></i></button>
                               
-                                </div>
+                        //         </div>
                                 
-                              </td>
+                        //       </td>
     
-                              <td>".$item['Price']."</td>
+                        //       <td>".$item['Price']."</td>
                               
-                            </tr>";
-                        }     
-                    }   
+                        //     </tr>";
+                      //  }     
                     }
-
                   
                 ?> 
                 
@@ -331,6 +328,10 @@ session_start();
                 count[$itr].value = --val; 
             });
         }
+
+        document.getElementById("clearcart").addEventListener("click",()=>{
+            document.getElementById("cartContainer").innerText="";
+        });
 
     </script>
 
