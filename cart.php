@@ -239,10 +239,14 @@
         </div>
     </div>
 
+
+
+
     <div class="container">
 
-    
-    <div class="col-6">
+    <div class="row">
+        
+    <div class="col-7">
     <table class="table">
               
               <tbody>
@@ -256,14 +260,14 @@
                       $items = mysqli_query($conn,$sql);
                       $item_total = 0;
                       while($item=mysqli_fetch_assoc($items)){
-                          $item_total += $item['Price'];
+                          $item_total += $item['Price'] * $_SESSION["cartProducts"][$item['Book_id']] ;
                           echo "
                           <tr > 
                             <td class='w-25 m-auto'> <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
                           
                             <td class='d-flex flex-column w-75 '>
                             
-                                 <div class='text-truncate'>".$item['Title']."</div>
+                                 <div class='bookids text-truncate' id=".$item['Book_id'].">".$item['Title']."</div>
                                 
                                  <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
                                  <button class='btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
@@ -274,7 +278,7 @@
                               
                             </td>
   
-                            <td class='w-25'>
+                            <td class='w-25 fs-5'>
                             
                             <div class='d-flex flex-column'>
                           <div> ".$item['Price']."</div>
@@ -294,7 +298,16 @@
               
             </table>
     </div>
+
+    <div class="col-4 border " id="OrderSummary">
+        Order Summary
+    
+        
+
     </div>
+    
+    </div>
+    </div>  <!-- container -->
     <!-- offcanvas cart -->
   
     
@@ -317,6 +330,7 @@
     <script src="JS/customs.js"></script>
   
     <script>
+        let bookids = document.getElementsByClassName("bookids");
   let increase = document.getElementsByClassName("plus");
         let count = document.getElementsByClassName("count");
         let decrease = document.getElementsByClassName("minus");
@@ -324,6 +338,20 @@
             increase[$itr].addEventListener("click",()=>{
               val = count[$itr].value;
               count[$itr].value = ++val;
+
+              $.ajax({
+              url: 'http://localhost/Bookstore/addtocart.php',
+              type: 'POST',
+              data: {
+              quantity :val,
+              bookid : bookids[$itr].id,
+              action : "ordersummary"
+              },
+              success: function(response){
+                alert(response);
+              $("#OrderSummary").html(response);
+            }
+      });
             });
         }
 
@@ -331,8 +359,26 @@
             decrease[$itr].addEventListener("click",()=>{
                 val = count[$itr].value;
                 count[$itr].value = --val; 
+
+                $.ajax({
+              url: 'http://localhost/Bookstore/addtocart.php',
+              type: 'POST',
+              data: {
+              quantity :val,
+              bookid : bookids[$itr].id,
+              action : "ordersummary"
+              
+              },
+              success: function(response){
+                alert(response);
+              $("#OrderSummary").html(response);
+            }
+      });
             });
         }
+
+      
+   
       </script>
 </body>
 </html>
