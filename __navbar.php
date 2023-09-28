@@ -7,6 +7,7 @@ session_start();
         $isloggedin = true;    
     }
    
+   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,7 +92,7 @@ session_start();
                             <div class="input-group">
                                 <div class="form-outline">
                                     <input id="search-inputmenu" type="search" id="form1" class="form-control" />
-                                  
+
                                 </div>
                                 <button id="search-button" type="button" class="btn btn-primary">
                                     <i class="fas fa-search"></i>
@@ -105,13 +106,17 @@ session_start();
                                 <i class="bi bi-three-dots-vertical  fs-3 mx-2"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="profile.php"> <i class="bi bi-person-fill mx-1"></i> My
+                                <li><a class="dropdown-item" href="profile.php"> <i class="bi bi-person-fill mx-1"></i>
+                                        My
                                         Profile</a>
                                 </li>
-                                <li><a class="dropdown-item" href="wishlist.php"><i class="bi bi-heart-fill mx-1 text-danger"></i>
+                                <li><a class="dropdown-item" href="wishlist.php"><i
+                                            class="bi bi-heart-fill mx-1 text-danger"></i>
                                         Wishlist</a></li>
-                                <li><a class="dropdown-item" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasCart" aria-controls="offcanvasCart"><i class="bi bi-cart mx-1 "></i>
-                                        cart</a></li>
+                                <li><button class="dropdown-item" data-bs-toggle="offcanvas" class="openCart"
+                                        data-bs-target="#offcanvasCart" aria-controls="offcanvasCart"><i
+                                            class="bi bi-cart mx-1 "></i>
+                                        cart</button></li>
 
                                 <li>
                                     <hr class="dropdown-divider mt-2">
@@ -131,13 +136,14 @@ session_start();
                         <li class="nav-item laptopsearch">
                             <div class="input-group ">
                                 <div class="form-outline">
-                                  <input id="search-inputnav" type="search" id="form1" class="form-control bg-transparent" placeholder="Search" />
-                                  
+                                    <input id="search-inputnav" type="search" id="form1"
+                                        class="form-control bg-transparent" placeholder="Search" />
+
                                 </div>
                                 <button id="search-button" type="button" class="btn btn-dbrown ">
-                                  <i class="bi bi-search fa-lg"></i>
+                                    <i class="bi bi-search fa-lg"></i>
                                 </button>
-                              </div>
+                            </div>
                         </li>
                         <?php
                             if($isloggedin){
@@ -149,9 +155,10 @@ session_start();
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                            <button class="nav-link" data-bs-toggle="offcanvas" class="openCart"
+                                data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                 <i class="bi bi-cart fs-3 mx-3"></i>
-                            </a>
+                            </button>
                         </li>
                         <li class="nav-item dropdown ">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -172,13 +179,16 @@ session_start();
                                 <li>
                                     <hr class="dropdown-divider mb-2">
                                 </li>
-                                <li><a class="dropdown-item" href="profile.php"> <i class="bi bi-person-fill mx-1"></i> My
+                                <li><a class="dropdown-item" href="profile.php"> <i class="bi bi-person-fill mx-1"></i>
+                                        My
                                         Profile</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-bag-heart-fill mx-1"></i>
                                         Orders</a></li>
-                                <li><a class="dropdown-item" href="http://localhost/Bookstore/index.php#about"><i class="bi bi-info-circle-fill mx-1"></i> About
+                                <li><a class="dropdown-item" href="http://localhost/Bookstore/index.php#about"><i
+                                            class="bi bi-info-circle-fill mx-1"></i> About
                                         us</a></li>
-                                <li><a class="dropdown-item" href="http://localhost/Bookstore/index.php#footer"><i class="bi bi-telephone-fill mx-1"></i> Contact
+                                <li><a class="dropdown-item" href="http://localhost/Bookstore/index.php#footer"><i
+                                            class="bi bi-telephone-fill mx-1"></i> Contact
                                         Us</a></li>
 
                                 <li>
@@ -195,9 +205,10 @@ session_start();
                                 ?>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="offcanvas"  data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                            <button class="nav-link" data-bs-toggle="offcanvas" class="openCart"
+                                data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                 <i class="bi bi-cart fs-3 mx-3"></i>
-                            </a>
+                            </button>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/Bookstore/login.php">
@@ -220,88 +231,93 @@ session_start();
         </div>
     </div>
 
-    <!-- <button class="btn btn-primary" type="button" >Toggle right offcanvas</button> -->
 
     <!-- offcanvas cart  here -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasCartLabel">Your Bag</h5>
-          <div class="d-flex justify-content-right">
-              <button  class="text-danger px-2" id="clearcart">Clear Cart</button>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
+            <h5 class="offcanvas-title" id="offcanvasCartLabel">Your Bag</h5>
+            <div class="d-flex justify-content-right">
+                <button class="text-danger px-2" id="clearcart">Clear Cart</button>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
         </div>
         <div class="offcanvas-body">
-          <div class="container h-100 w-100 border cartContainer" id="cartContainer">
-      
-          <div class="d-flex flex-column">
-          
-            <table class="table">
-              
-                <tbody>
+            <div class="container h-100 w-100 border cartContainers" id="cartContainer">
 
-                <?php
+                <div class="d-flex flex-column">
+
+                    <table class="table">
+
+                        <tbody>
+                            <?php
+
+if(!empty($_SESSION["cartProducts"])){
+    foreach($_SESSION["cartProducts"] as $key => $val) {
+      $in =  $in."','".$key;
+   }
+   $in = substr($in,3);
+   $sql = "select books.Book_id , books.Title , pictures.CoverPage , price_detail.Price from books INNER JOIN price_detail on books.Book_id = price_detail.Book_id INNER JOIN pictures on books.Book_id = pictures.Book_id where books.Book_id in('$in')";
+    $items = mysqli_query($conn,$sql);
+    while($item=mysqli_fetch_assoc($items)){
+        echo "
+        <tr > 
+          <td > <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
+        
+          <td class='d-flex flex-column w-75'>
+          
+               <div class='text-truncate'>".$item['Title']."</div>
               
-                    if(isset($_SESSION["cartProducts"])){
-                    //    echo print_r( $_SESSION["cartProducts"]);
-                        foreach($samplearr as $key => $val) {
-                          $in += $key;
-                       }
-                       echo $in;
-                        // $sql = "select books.Book_id , books.Title , pictures.CoverPage , price_detail.Price from books INNER JOIN price_detail on books.Book_id = price_detail.Book_id INNER JOIN pictures on books.Book_id = pictures.Book_id where books.Book_id in('$in')";
-                        // $items = mysqli_query($conn,$sql);
-                        // $item_total = 0;
-                        // while($item=mysqli_fetch_assoc($items)){
-                        //     $item_total += $item['Price'];
-                        //     echo "
-                        //     <tr>
-                        //       <td > <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
-                            
-                        //       <td class='d-flex flex-column w-75'>
-                              
-                        //            <div class='text-truncate'>".$item['Title']."</div>
-                                  
-                        //            <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
-                        //            <button class='btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
-                        //            <input type='text' class='form-control count text-center fs-5 bg-light ' value='1' name='quan".$item['Book_id']."'>
-                        //            <button class='btn  plus' type='button'><i class='bi bi-plus  fa-lg'></i></button>
-                              
-                        //         </div>
-                                
-                        //       </td>
-    
-                        //       <td>".$item['Price']."</td>
-                              
-                        //     </tr>";
-                      //  }     
-                    }
-                  
-                ?> 
-                
-                </tbody>
-                
-              </table>
-                         
+               <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
+               <button class='btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
+               <input type='text' class='form-control count text-center fs-5 bg-light ' value=".$_SESSION["cartProducts"][$item['Book_id']]." name='quan".$item['Book_id']."'>
+               <button class='btn  plus' type='button'><i class='bi bi-plus  fa-lg'></i></button>
+          
             </div>
             
-           
-        </div>
+          </td>
+
+          <td>
+          
+          <div class='d-flex flex-column'>
+        <div> ".$item['Price']."</div>
+          </div>
+
+         
+          
+          </td>
+          
+        </tr>";
+   }     
+}
+                  
+                ?>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            </div>
         </div>
         <div class="offcanvas-footer sticky-bottom  ">
             <div class="d-flex flex-row justify-content-around">
-                    <div>Cart Total:</div>
-                    <div> <?php echo $item_total ?> </div>
+                <div>Cart Total:</div>
+                <div>
+                    <?php echo $item_total ?>
+                </div>
             </div>
             <div class="justify-content-center align-items-center d-flex flex-column">
-              <a class="btn btn-outline-dark w-75 my-2" id="opencart" href="cart.php" >
-                  View Cart
-              </a>
-              <button class="btn  w-75 my-2 mb-4" id="checkoutbtn">
-                  Quick Checkout
-              </button>
+                <a class="btn btn-outline-dark w-75 my-2" id="opencartbtn" href="cart.php">
+                    View Cart
+                </a>
+                <button class="btn  w-75 my-2 mb-4" id="checkoutbtn">
+                    Quick Checkout
+                </button>
             </div>
         </div>
-      </div>
+    </div>
 
     <!-- Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -315,23 +331,28 @@ session_start();
         let increase = document.getElementsByClassName("plus");
         let count = document.getElementsByClassName("count");
         let decrease = document.getElementsByClassName("minus");
-        for(let $itr = 0;$itr < increase.length;$itr++){
-            increase[$itr].addEventListener("click",()=>{
-              val = count[$itr].value;
-              count[$itr].value = ++val;
-            });
-        }
-
-        for(let $itr = 0;$itr < decrease.length;$itr++){
-            decrease[$itr].addEventListener("click",()=>{
+        for (let $itr = 0; $itr < increase.length; $itr++) {
+            increase[$itr].addEventListener("click", () => {
                 val = count[$itr].value;
-                count[$itr].value = --val; 
+                count[$itr].value = ++val;
             });
         }
 
-        document.getElementById("clearcart").addEventListener("click",()=>{
-            document.getElementById("cartContainer").innerText="";
+        for (let $itr = 0; $itr < decrease.length; $itr++) {
+            decrease[$itr].addEventListener("click", () => {
+                val = count[$itr].value;
+                count[$itr].value = --val;
+
+                
+            });
+        }
+
+        document.getElementById("clearcart").addEventListener("click", () => {
+            document.getElementById("cartContainer").innerText = "";
         });
+
+
+
 
     </script>
 

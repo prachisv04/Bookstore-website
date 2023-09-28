@@ -6,6 +6,11 @@
     if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
         $isloggedin = true;
     }
+    
+    if(!isset($_SESSION['cartProducts'])){
+      $_SESSION['cartProducts'] = array();
+    }
+  
     // get categories as array
     $category = array();
     $sql = "SELECT DISTINCT Category FROM books ";
@@ -477,7 +482,6 @@
     <script src="JS/customs.js"></script>
     <script src="JS/filter.js"></script>
     <script>
-
       document.getElementById("shop").classList.add("active");
 
       let coll = document.getElementsByClassName("collapsible");
@@ -562,6 +566,7 @@
             setTimeout(() => {
               $('.toast').toast('hide');
             }, 2000);
+
         }
       });
 
@@ -584,7 +589,7 @@
               action : "update"
               },
               success: function(response){
-                alert("quantity increased");
+              
             }
          });
             });
@@ -597,7 +602,6 @@
         minus[itrm].addEventListener("click", function () {
               val = counts[itrm].value;
               counts[itrm].value = --val;
-              console.log("product quantity descreased  with id ",counters[itrm].id);
                 if (val <= 0) {
                   counts[itrm].value = 1;
                       carts[itrm].style.display = "flex";
@@ -613,7 +617,7 @@
                             action : "remove"
                             },
                             success: function(response){
-                               
+                           
                           }
                        });
                 }
@@ -626,6 +630,7 @@
               quantity :val,
               bookid : counters[itrm].id,
               action : "update"
+              
               },
               success: function(response){
                

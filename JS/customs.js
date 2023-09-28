@@ -46,4 +46,3 @@ leftBtn[itr].addEventListener("click", function(event) {
   event.preventDefault();
 });
 }
-

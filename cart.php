@@ -1,5 +1,4 @@
 <?php
-    error_reporting (E_ALL ^ E_NOTICE);
     session_start();
     require '__dbconnect.php';
     $isloggedin = false;
@@ -7,34 +6,7 @@
         $isloggedin = true;
     }
 
-    // get categories as array
-    $category = array();
-    $sql = "SELECT DISTINCT Category FROM book ";
-    $categories = mysqli_query($conn,$sql);
-
-    while($cat=mysqli_fetch_assoc($categories)){
-      array_push($category,$cat['Category']);
-    }    
-  
-   // get languages as array
-   $languages = array();
-   $sql = "SELECT Language_name FROM languages ";
-   $language = mysqli_query($conn,$sql);
-
-   while($lang=mysqli_fetch_assoc($language)){
-     array_push($languages,$lang['Language_name']);
-  }   
    
-    //get authors as array
-    $authors_name = array();
-    $authors_id = array();
-    $sql = "SELECT Author_id ,Author_name FROM author";
-    $writers = mysqli_query($conn,$sql);
-    while($author=mysqli_fetch_assoc($writers)){
-      array_push($authors_name,$author['Author_name']);
-      array_push($authors_id,$author['Author_id']);
-    }
-    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,19 +40,264 @@
   <!--  style sheets -->
   <link rel="stylesheet" href="CSS/shop.css">
   <link rel="stylesheet" href="CSS/style.css">
-
+    <link rel="stylesheet" href="CSS/custom.css">
 </head>
 
 <body class="bg">
 
+
   <!-- navbar -->
   <?php
-         require '__navbar.php';
+        //  require '__navbar.php';
 
   ?>
 
+
+<div class="container" id="navbar_top">
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid ">
+                <div class="leftmenu">
+                    <ul>
+                        <li class="nav-item dropdown menu-item" id="lmenu">
+
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="bi bi-list fs-3 mx-1"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item mx-2" href="/Bookstore/index.php"><i
+                                            class="bi bi-house mx-2 "></i> Home</a>
+                                </li>
+                                <li><a class="dropdown-item mx-2" href="/Bookstore/shop.php"><i
+                                            class="bi bi-shop-window mx-2"></i>
+                                        Shop</a></li>
+                                <li><a class="dropdown-item mx-2" href="#"><i class="bi bi-file-earmark-post mx-2"></i>
+                                        Blogs</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div id="leftnav">
+                    <ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row">
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" id="home" aria-current="page" href="/Bookstore/index.php">Home</a>
+                        </li>
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" id="shop" href="/Bookstore/shop.php">Shop</a>
+                        </li>
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" id="blog" href="#">Blogs</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- brand in middle -->
+                <div class="d-flex nav-brand nav-item align-items-center ">
+                    <a class="nav-link text-center"> <img src="img/logo.png" alt="LOGO" class="logo"> </a>
+                </div>
+
+                <!-- right navbar -->
+                <div class="rightmenu">
+                    <ul class="d-flex flex-row">
+                        <li class="nav-item menu-item laptopsearch">
+                            <div class="input-group">
+                                <div class="form-outline">
+                                    <input id="search-inputmenu" type="search" id="form1" class="form-control" />
+
+                                </div>
+                                <button id="search-button" type="button" class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown menu-item  dropleft" id="menu">
+
+                            <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical  fs-3 mx-2"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="profile.php"> <i class="bi bi-person-fill mx-1"></i>
+                                        My
+                                        Profile</a>
+                                </li>
+                                <li><a class="dropdown-item" href="wishlist.php"><i
+                                            class="bi bi-heart-fill mx-1 text-danger"></i>
+                                        Wishlist</a></li>
+                                <li> <button class="nav-link active" aria-controls="offcanvasCart">
+                                <i class="bi bi-cart fs-3 mx-3"></i>
+                            </button></li>
+
+                                <li>
+                                    <hr class="dropdown-divider mt-2">
+                                </li>
+                                <li><a class="dropdown-item" href="/Bookstore/logout.php"><i
+                                            class="bi bi-box-arrow-right"></i> Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!--  -->
+
+                <div id="rightnav" class="rightnavmenu">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+
+                        <li class="nav-item laptopsearch">
+                            <div class="input-group ">
+                                <div class="form-outline">
+                                    <input id="search-inputnav" type="search" id="form1"
+                                        class="form-control bg-transparent" placeholder="Search" />
+
+                                </div>
+                                <button id="search-button" type="button" class="btn btn-dbrown ">
+                                    <i class="bi bi-search fa-lg"></i>
+                                </button>
+                            </div>
+                        </li>
+                        <?php
+                            if($isloggedin){
+                                ?>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-bookmark fs-3 mx-3"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                        <button class="nav-link active" aria-controls="offcanvasCart">
+                                <i class="bi bi-cart fs-3 mx-3"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="bi bi-person-circle fs-3 mx-3"></i>
+                            </a>
+                            <ul class="dropdown-menu ">
+
+                                <li>
+                                    <a class="dropdown-item text-primary fs-5 lh-1" href="#">
+                                        <?php echo $_SESSION['user'] ?>
+                                    </a>
+                                    <a class="dropdown-item text-dark lh-1" href="#">
+                                        <?php echo $_SESSION['usermail'] ?>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <hr class="dropdown-divider mb-2">
+                                </li>
+                                <li><a class="dropdown-item" href="profile.php"> <i class="bi bi-person-fill mx-1"></i>
+                                        My
+                                        Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-bag-heart-fill mx-1"></i>
+                                        Orders</a></li>
+                                <li><a class="dropdown-item" href="http://localhost/Bookstore/index.php#about"><i
+                                            class="bi bi-info-circle-fill mx-1"></i> About
+                                        us</a></li>
+                                <li><a class="dropdown-item" href="http://localhost/Bookstore/index.php#footer"><i
+                                            class="bi bi-telephone-fill mx-1"></i> Contact
+                                        Us</a></li>
+
+                                <li>
+                                    <hr class="dropdown-divider mt-2">
+                                </li>
+                                <li><a class="dropdown-item" href="/Bookstore/logout.php"><i
+                                            class="bi bi-box-arrow-right"></i> Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <?php
+                            }
+                            else{
+                                ?>
+
+                        <li class="nav-item">
+                            <button class="nav-link active" aria-controls="offcanvasCart">
+                                <i class="bi bi-cart fs-3 mx-3"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Bookstore/login.php">
+                                <i class="bi bi-person-check fs-2 mx-3"></i>
+                            </a>
+                        </li>
+                        <?php        
+                            }
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="input-group mb-1 m-auto mobilesearch">
+            <input type="search" class="form-control py-2" placeholder="Search" aria-label="Search"
+                aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <span class="input-group-text h-100 fs-5 btn btn-dbrown py-2" id="basic-addon2">Search</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+    
+    <div class="col-6">
+    <table class="table">
+              
+              <tbody>
+              <?php
+                  if(!empty($_SESSION["cartProducts"])){
+                      foreach($_SESSION["cartProducts"] as $key => $val) {
+                        $in =  $in."','".$key;
+                     }
+                     $in = substr($in,3);
+                     $sql = "select books.Book_id , books.Title , pictures.CoverPage , price_detail.Price from books INNER JOIN price_detail on books.Book_id = price_detail.Book_id INNER JOIN pictures on books.Book_id = pictures.Book_id where books.Book_id in('$in')";
+                      $items = mysqli_query($conn,$sql);
+                      $item_total = 0;
+                      while($item=mysqli_fetch_assoc($items)){
+                          $item_total += $item['Price'];
+                          echo "
+                          <tr > 
+                            <td class='w-25 m-auto'> <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
+                          
+                            <td class='d-flex flex-column w-75 '>
+                            
+                                 <div class='text-truncate'>".$item['Title']."</div>
+                                
+                                 <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
+                                 <button class='btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
+                                 <input type='text' class='form-control count text-center fs-5 bg-light ' value=".$_SESSION["cartProducts"][$item['Book_id']]." name='quan".$item['Book_id']."'>
+                                 <button class='btn  plus' type='button'><i class='bi bi-plus  fa-lg'></i></button>
+                            
+                              </div>
+                              
+                            </td>
+  
+                            <td class='w-25'>
+                            
+                            <div class='d-flex flex-column'>
+                          <div> ".$item['Price']."</div>
+                            </div>
+
+                           
+                            
+                            </td>
+                            
+                          </tr>";
+                     }     
+                  }
+                
+              ?> 
+              
+              </tbody>
+              
+            </table>
+    </div>
+    </div>
     <!-- offcanvas cart -->
   
+    
 
 
 <!-- full body cart -->
@@ -98,7 +315,24 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="JS/customs.js"></script>
-    <script src="JS/filter.js"></script>
   
+    <script>
+  let increase = document.getElementsByClassName("plus");
+        let count = document.getElementsByClassName("count");
+        let decrease = document.getElementsByClassName("minus");
+        for(let $itr = 0;$itr < increase.length;$itr++){
+            increase[$itr].addEventListener("click",()=>{
+              val = count[$itr].value;
+              count[$itr].value = ++val;
+            });
+        }
+
+        for(let $itr = 0;$itr < decrease.length;$itr++){
+            decrease[$itr].addEventListener("click",()=>{
+                val = count[$itr].value;
+                count[$itr].value = --val; 
+            });
+        }
+      </script>
 </body>
 </html>
