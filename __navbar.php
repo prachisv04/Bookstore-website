@@ -237,7 +237,7 @@ session_start();
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasCartLabel">Your Bag</h5>
             <div class="d-flex justify-content-right">
-                <button class="text-danger px-2" id="clearcart">Clear Cart</button>
+                <button class="border-0 bg-transparent text-danger px-2" id="clearcart"><u>Clear Cart</u></button>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
         </div>
@@ -250,17 +250,28 @@ session_start();
 
                         <tbody>
                             <?php
+                            if($isloggedin){
+                                  echo $_SESSION['userid'];
+                            }
+                            else{
 
+                            
+ if (count($_SESSION['cartProducts'])==0) {
+    echo "<img src='img/empty_cart.png' alt='empty cart' class='offcanvasemptycart'> ";
+  }
+  else
 if(!empty($_SESSION["cartProducts"])){
     foreach($_SESSION["cartProducts"] as $key => $val) {
       $in =  $in."','".$key;
    }
    $in = substr($in,3);
+   $item_total =0;
    $sql = "select books.Book_id , books.Title , pictures.CoverPage , price_detail.Price from books INNER JOIN price_detail on books.Book_id = price_detail.Book_id INNER JOIN pictures on books.Book_id = pictures.Book_id where books.Book_id in('$in')";
     $items = mysqli_query($conn,$sql);
     while($item=mysqli_fetch_assoc($items)){
+        $item_total += $_SESSION["cartProducts"][$item['Book_id']]*$item['Price'];
         echo "
-        <tr > 
+        <tr id=".$item['Book_id']."=".$_SESSION["cartProducts"][$item['Book_id']]." > 
           <td > <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
         
           <td class='d-flex flex-column w-75'>
@@ -269,7 +280,7 @@ if(!empty($_SESSION["cartProducts"])){
               
                <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
                <button class='btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
-               <input type='text' class='form-control count text-center fs-5 bg-light ' value=".$_SESSION["cartProducts"][$item['Book_id']]." name='quan".$item['Book_id']."'>
+               <input readonly type='text' class='form-control count text-center fs-5 bg-light ' value=".$_SESSION["cartProducts"][$item['Book_id']]." name=".$item['Book_id'].">
                <button class='btn  plus' type='button'><i class='bi bi-plus  fa-lg'></i></button>
           
             </div>
@@ -288,12 +299,10 @@ if(!empty($_SESSION["cartProducts"])){
           
         </tr>";
    }     
-}
-                  
+}    
+                            }
                 ?>
-
                         </tbody>
-
                     </table>
 
                 </div>
@@ -304,7 +313,7 @@ if(!empty($_SESSION["cartProducts"])){
         <div class="offcanvas-footer sticky-bottom  ">
             <div class="d-flex flex-row justify-content-around">
                 <div>Cart Total:</div>
-                <div>
+                <div id="offcanvascartTotal">
                     <?php echo $item_total ?>
                 </div>
             </div>
@@ -331,29 +340,79 @@ if(!empty($_SESSION["cartProducts"])){
         let increase = document.getElementsByClassName("plus");
         let count = document.getElementsByClassName("count");
         let decrease = document.getElementsByClassName("minus");
+
         for (let $itr = 0; $itr < increase.length; $itr++) {
             increase[$itr].addEventListener("click", () => {
                 val = count[$itr].value;
                 count[$itr].value = ++val;
-            });
-        }
+        $.ajax({
+              url: 'http://localhost/Bookstore/addtocart.php',
+              type: 'POST',
+              data: {
+              quantity :val,
+              bookid : count[$itr].name,
+              action : "update"
+              },
+              success: function(response){
+               $("#offcanvascartTotal").html(response.split(" ")[0]);
+            }
+         });
+    });
+}
 
         for (let $itr = 0; $itr < decrease.length; $itr++) {
             decrease[$itr].addEventListener("click", () => {
                 val = count[$itr].value;
                 count[$itr].value = --val;
 
-                
+                if(val<=0){
+                    $.ajax({
+                            url: 'http://localhost/Bookstore/addtocart.php',
+                            type: 'POST',
+                            data: {
+                            quantity :0,
+                            bookid : count[$itr].name,
+                            action : "remove"
+                            },
+                            success: function(response){
+                                $("#offcanvascartTotal").html(response.split(" ")[0]);
+                          }     
+                       });
+                }
+                else{
+                    $.ajax({
+              url: 'http://localhost/Bookstore/addtocart.php',
+              type: 'POST',
+              data: {
+              quantity :val,
+              bookid : count[$itr].name,
+              action : "update"
+              },
+              success: function(response){
+                $("#offcanvascartTotal").html(response.split(" ")[0]);
+            }
+         });
+                }
+         
+           
             });
         }
 
         document.getElementById("clearcart").addEventListener("click", () => {
-            document.getElementById("cartContainer").innerText = "";
+            $.ajax({
+              url: 'http://localhost/Bookstore/addtocart.php',
+              type: 'POST',
+              data: {
+             action : "removeall"
+              },
+              success: function(response){
+                document.getElementById("cartContainer").innerHTML = "<img src='img/empty_cart.png' alt='empty cart' class='offcanvasemptycart'> ";
+                $("#offcanvascartTotal").html(response.split(" ")[0]);
+            }
+      });
         });
 
-
-
-
+   
     </script>
 
 </body>

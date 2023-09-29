@@ -246,41 +246,79 @@
 
     <div class="row">
         
-    <div class="col-7">
-    <table class="table">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
+    <table class="table px-5">
               
-              <tbody>
+              <tbody >
               <?php
+
+                if($isloggedin){
+
+                    $sql = "select books.Book_id , books.Title , pictures.CoverPage ,carts.Quantity, price_detail.Price from books INNER JOIN price_detail on books.Book_id = price_detail.Book_id INNER JOIN pictures on books.Book_id = pictures.Book_id INNER JOIN carts on books.Book_id = carts.book_id  where books.Book_id in (SELECT book_id FROM carts where User_id = ".$_SESSION['userid'].")";
+                    $items = mysqli_query($conn,$sql);
+
+                    while($item=mysqli_fetch_assoc($items)){
+                        $item_total += $item['Price'] * $item['Quantity'] ;
+                        echo "
+                        <tr class='bg-light'> 
+                          <td class='w-25 m-auto bg-light'> <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
+                        
+                          <td class='  d-flex flex-column bg-light '>
+                          
+                               <div class='bookids text-truncate' id=".$item['Book_id'].">".$item['Title']."</div>
+                              
+                               <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
+                               <button class='w-25 btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
+                               <input readonly type='text' class='w-50 form-control count text-center fs-5 bg-light border-0' value=".$item['Quantity']." name='quan".$item['Book_id']."'>
+                               <button class='w-25 btn  plus ' type='button'><i class='bi bi-plus  fa-lg'></i></button>
+                          
+                            </div>
+                            
+                          </td>
+
+                          <td class=' fs-5 bg-light'>
+                          
+                          <div class='d-flex flex-column align-items-center'>
+                          <div> ".$item['Price']."</div>
+                          </div>
+                          </td>
+                        </tr>";
+
+                    }
+
+                }
+                else{
                   if(!empty($_SESSION["cartProducts"])){
                       foreach($_SESSION["cartProducts"] as $key => $val) {
                         $in =  $in."','".$key;
                      }
                      $in = substr($in,3);
                      $sql = "select books.Book_id , books.Title , pictures.CoverPage , price_detail.Price from books INNER JOIN price_detail on books.Book_id = price_detail.Book_id INNER JOIN pictures on books.Book_id = pictures.Book_id where books.Book_id in('$in')";
-                      $items = mysqli_query($conn,$sql);
+                   
+                    $items = mysqli_query($conn,$sql);
                       $item_total = 0;
                       while($item=mysqli_fetch_assoc($items)){
                           $item_total += $item['Price'] * $_SESSION["cartProducts"][$item['Book_id']] ;
                           echo "
-                          <tr > 
-                            <td class='w-25 m-auto'> <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
+                          <tr class='bg-light'> 
+                            <td class='w-25 m-auto bg-light'> <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
                           
-                            <td class='d-flex flex-column w-75 '>
+                            <td class='  d-flex flex-column bg-light '>
                             
                                  <div class='bookids text-truncate' id=".$item['Book_id'].">".$item['Title']."</div>
                                 
                                  <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
-                                 <button class='btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
-                                 <input type='text' class='form-control count text-center fs-5 bg-light ' value=".$_SESSION["cartProducts"][$item['Book_id']]." name='quan".$item['Book_id']."'>
-                                 <button class='btn  plus' type='button'><i class='bi bi-plus  fa-lg'></i></button>
+                                 <button class='w-25 btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
+                                 <input readonly type='text' class='w-50 form-control count text-center fs-5 bg-light border-0' value=".$_SESSION["cartProducts"][$item['Book_id']]." name='quan".$item['Book_id']."'>
+                                 <button class='w-25 btn  plus ' type='button'><i class='bi bi-plus  fa-lg'></i></button>
                             
                               </div>
                               
                             </td>
   
-                            <td class='w-25 fs-5'>
+                            <td class=' fs-5 bg-light'>
                             
-                            <div class='d-flex flex-column'>
+                            <div class='d-flex flex-column align-items-center'>
                           <div> ".$item['Price']."</div>
                             </div>
 
@@ -290,8 +328,8 @@
                             
                           </tr>";
                      }     
-                  }
-                
+                    }
+                }
               ?> 
               
               </tbody>
@@ -299,10 +337,26 @@
             </table>
     </div>
 
-    <div class="col-4 border " id="OrderSummary">
-        Order Summary
-    
-        
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 border lh-lg m-auto px-5" id="OrderSummary">
+            <div class="boxtitle fs-6 mb-2" >Order Summary</div>
+            <div class='d-flex flex-row justify-content-between fs-6'>
+            <div >Cart Total:</div>
+            <div id="itemtotalsummary"><?php echo $item_total ?></div>
+            </div>
+            <div class='d-flex flex-row justify-content-between'>
+            <div>Discount:</div>
+            <div id="discountsummary"><?php echo $discount ?></div>
+            </div>
+            <hr>
+            <div class='d-flex flex-row justify-content-between'>
+            <div>Total :</div>
+            <div id="totalafterdiscountsummary"><?php echo $item_total-$discount ?></div>
+            </div>
+            <div class='d-flex flex-column '>
+            <button class="btn  w-100 my-2  mt-4" id="checkoutbtn">
+                     Checkout
+                </button>
+            </div>
 
     </div>
     
@@ -331,7 +385,7 @@
   
     <script>
         let bookids = document.getElementsByClassName("bookids");
-  let increase = document.getElementsByClassName("plus");
+        let increase = document.getElementsByClassName("plus");
         let count = document.getElementsByClassName("count");
         let decrease = document.getElementsByClassName("minus");
         for(let $itr = 0;$itr < increase.length;$itr++){
@@ -339,19 +393,23 @@
               val = count[$itr].value;
               count[$itr].value = ++val;
 
-              $.ajax({
-              url: 'http://localhost/Bookstore/addtocart.php',
-              type: 'POST',
-              data: {
-              quantity :val,
-              bookid : bookids[$itr].id,
-              action : "ordersummary"
-              },
-              success: function(response){
-                alert(response);
-              $("#OrderSummary").html(response);
-            }
-      });
+
+            $.ajax({
+                url: 'http://localhost/Bookstore/addtocart.php',
+                type: 'POST',
+                data: {
+                quantity :val,
+                bookid : bookids[$itr].id,
+                action : "ordersummary"
+                },
+                success: function(response){
+                    vals = response.split(" ");
+                    document.getElementById("itemtotalsummary").innerText = vals[0];
+                    document.getElementById("discountsummary").innerText = vals[1];
+                    document.getElementById("totalafterdiscountsummary").innerText = vals[0]-vals[1];
+                }
+            });
+           
             });
         }
 
@@ -359,21 +417,29 @@
             decrease[$itr].addEventListener("click",()=>{
                 val = count[$itr].value;
                 count[$itr].value = --val; 
+                if(val==0){
+                    val=1;
+                    count[$itr].value = val;
+                }
 
-                $.ajax({
-              url: 'http://localhost/Bookstore/addtocart.php',
-              type: 'POST',
-              data: {
-              quantity :val,
-              bookid : bookids[$itr].id,
-              action : "ordersummary"
-              
-              },
-              success: function(response){
-                alert(response);
-              $("#OrderSummary").html(response);
-            }
-      });
+            $.ajax({
+                url: 'http://localhost/Bookstore/addtocart.php',
+                type: 'POST',
+                data: {
+                quantity :val,
+                bookid : bookids[$itr].id,
+                action : "ordersummary"
+                
+                },
+                success: function(response){
+                    vals = response.split(" ");
+                    document.getElementById("itemtotalsummary").innerText = vals[0];
+                    document.getElementById("discountsummary").innerText = vals[1];
+                    document.getElementById("totalafterdiscountsummary").innerText = vals[0]-vals[1];
+                    }
+            });
+
+          
             });
         }
 

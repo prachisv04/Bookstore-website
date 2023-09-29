@@ -5,10 +5,20 @@
 }
 
 #checkoutbtn{
-    background-color: blueviolet;
+    background-color: #9C7F5B;
     color: white;
 }
 
+.boxtitle{
+    color: #9C7F5B;
+    text-align: center;
+    font-weight: bold;
+}
+#OrderSummary{
+    background-color: white;
+    box-sizing: border-box;
+   
+}
 .counter{
     width: 100%;
 }
@@ -28,3 +38,11 @@
     border-bottom-right-radius: 10px;
     border-top-left-radius: 15px;
 }
+#cartContainer .offcanvasemptycart{
+    width: 100%;
+    height: 100%;
+}
+.quant{
+    width: 150px;
+}
+

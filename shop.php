@@ -270,9 +270,9 @@
                             <button name='tocart'  class='addToCart btn btn-dbrown p-2'>Add to Cart <i class='bi bi-bag fa-lg mx-2'></i></button>
                         
                             <div class='counter input-group d-none' id=".$book['Book_id'].">
-                              <button class='btn  minus w-25' type='button'><i class='bi bi-dash text-light fa-lg'></i></button>
-                              <input readonly type='text' class='form-control count text-center fs-5 bg-light w-50' value='1' aria-label='Example text with two button addons'>
-                              <button class='btn  plus w-25' type='button'><i class='bi bi-plus text-light fa-lg'></i></button>
+                              <button class='btn  minusshop w-25' type='button'><i class='bi bi-dash text-light fa-lg'></i></button>
+                              <input readonly type='text' class='form-control countshop text-center fs-5 bg-light w-50' value='1' aria-label='Example text with two button addons'>
+                              <button class='btn  plusshop w-25' type='button'><i class='bi bi-plus text-light fa-lg'></i></button>
                             </div>
                       </div>
                       </div>
@@ -539,9 +539,9 @@
 
       let carts = document.getElementsByClassName("addToCart");
       let counters = document.getElementsByClassName("counter");
-      let plus = document.getElementsByClassName("plus");
-      let counts = document.getElementsByClassName("count");
-      let minus = document.getElementsByClassName("minus");
+      let plus = document.getElementsByClassName("plusshop");
+      let counts = document.getElementsByClassName("countshop");
+      let minus = document.getElementsByClassName("minusshop");
 
       for (let itrc = 0; itrc < carts.length; itrc++) {
 
@@ -557,6 +557,7 @@
           action : "add"
           },
           success: function(response){
+            $("#offcanvascartTotal").html(response.split(" ")[0]);
             carts[itrc].style.display = "none";
             counters[itrc].classList.remove("d-none");
             counters[itrc].classList.add("d-flex");
@@ -567,6 +568,7 @@
               $('.toast').toast('hide');
             }, 2000);
 
+           
         }
       });
 
@@ -589,7 +591,7 @@
               action : "update"
               },
               success: function(response){
-              
+                $("#offcanvascartTotal").html(response.split(" ")[0]);
             }
          });
             });
@@ -617,7 +619,7 @@
                             action : "remove"
                             },
                             success: function(response){
-                           
+                              $("#offcanvascartTotal").html(response.split(" ")[0]);
                           }
                        });
                 }
@@ -633,7 +635,7 @@
               
               },
               success: function(response){
-               
+                $("#offcanvascartTotal").html(response.split(" ")[0]);
             }
       });
                 }
