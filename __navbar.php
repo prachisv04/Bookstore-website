@@ -1,12 +1,18 @@
 <?php
 session_start();
     require '__dbconnect.php';
-    // error_reporting (E_ALL ^ E_NOTICE);
+    error_reporting (E_ALL ^ E_NOTICE);
+
+    // check is user is logged in 
     $isloggedin = false;
     if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
         $isloggedin = true;    
     }
-   
+
+    // If not looged in and cart is not initialized.
+    if(!$isloggedin  and  !isset($_SESSION['cartProducts'])){
+        $_SESSION['cartProducts'] = array();
+    }
    
 ?>
 <!DOCTYPE html>
@@ -44,7 +50,8 @@ session_start();
     <!-- navbar -->
     <div class="container" id="navbar_top">
         <nav class="navbar navbar-expand-lg ">
-            <div class="container-fluid ">
+            <div class="container-fluid ">  
+                <!-- menu on smaller screen -->
                 <div class="leftmenu">
                     <ul>
                         <li class="nav-item dropdown menu-item" id="lmenu">
@@ -66,6 +73,8 @@ session_start();
                         </li>
                     </ul>
                 </div>
+
+                <!-- left navigation bar on large screens -->
                 <div id="leftnav">
                     <ul class="navbar-nav mb-2 mb-lg-0 d-flex flex-row">
                         <li class="nav-item mx-3">
@@ -78,14 +87,14 @@ session_start();
                             <a class="nav-link" id="blog" href="#">Blogs</a>
                         </li>
                     </ul>
-
                 </div>
+
                 <!-- brand in middle -->
                 <div class="d-flex nav-brand nav-item align-items-center ">
                     <a class="nav-link text-center"> <img src="img/logo.png" alt="LOGO" class="logo"> </a>
                 </div>
 
-                <!-- right navbar -->
+                <!-- right navbar on small screen -->
                 <div class="rightmenu">
                     <ul class="d-flex flex-row">
                         <li class="nav-item menu-item laptopsearch">
@@ -107,8 +116,7 @@ session_start();
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="profile.php"> <i class="bi bi-person-fill mx-1"></i>
-                                        My
-                                        Profile</a>
+                                        My Profile</a>
                                 </li>
                                 <li><a class="dropdown-item" href="wishlist.php"><i
                                             class="bi bi-heart-fill mx-1 text-danger"></i>
@@ -128,11 +136,12 @@ session_start();
                         </li>
                     </ul>
                 </div>
-                <!--  -->
 
+
+                <!-- right navbar on large screen  -->
                 <div id="rightnav" class="rightnavmenu">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
-
+                   
                         <li class="nav-item laptopsearch">
                             <div class="input-group ">
                                 <div class="form-outline">
@@ -145,9 +154,12 @@ session_start();
                                 </button>
                             </div>
                         </li>
-                        <?php
-                            if($isloggedin){
-                                ?>
+                
+                <?php
+                    
+                    if($isloggedin){
+                        
+                ?>
 
                         <li class="nav-item">
                             <a class="nav-link" href="#">
@@ -199,11 +211,12 @@ session_start();
                                 </li>
                             </ul>
                         </li>
-                        <?php
-                            }
-                            else{
-                                ?>
 
+                <?php
+                    }
+                    else
+                    {
+                ?>
                         <li class="nav-item">
                             <button class="nav-link" data-bs-toggle="offcanvas" class="openCart"
                                 data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
@@ -215,13 +228,15 @@ session_start();
                                 <i class="bi bi-person-check fs-2 mx-3"></i>
                             </a>
                         </li>
-                        <?php        
-                            }
-                        ?>
+                <?php        
+                    }
+                ?>
                     </ul>
                 </div>
             </div>
         </nav>
+
+
         <div class="input-group mb-1 m-auto mobilesearch">
             <input type="search" class="form-control py-2" placeholder="Search" aria-label="Search"
                 aria-describedby="basic-addon2">
@@ -229,6 +244,7 @@ session_start();
                 <span class="input-group-text h-100 fs-5 btn btn-dbrown py-2" id="basic-addon2">Search</span>
             </div>
         </div>
+
     </div>
 
 
@@ -243,73 +259,110 @@ session_start();
         </div>
         <div class="offcanvas-body">
             <div class="container h-100 w-100 border cartContainers" id="cartContainer">
-
                 <div class="d-flex flex-column">
-
                     <table class="table">
-
                         <tbody>
-                            <?php
-                            if($isloggedin){
-                                  echo $_SESSION['userid'];
-                            }
-                            else{
+        <?php
+                if($isloggedin){
+                    
+                    $sql = "select books.Book_id , books.Title , pictures.CoverPage ,carts.Quantity, price_detail.Price from books INNER JOIN price_detail on books.Book_id = price_detail.Book_id INNER JOIN pictures on books.Book_id = pictures.Book_id INNER JOIN carts on books.Book_id = carts.book_id  where books.Book_id in (SELECT book_id FROM carts where User_id = ".$_SESSION['userid'].")";
+                    $item_total =0;
+                    if($items = mysqli_query($conn,$sql)){
 
-                            
- if (count($_SESSION['cartProducts'])==0) {
-    echo "<img src='img/empty_cart.png' alt='empty cart' class='offcanvasemptycart'> ";
-  }
-  else
-if(!empty($_SESSION["cartProducts"])){
-    foreach($_SESSION["cartProducts"] as $key => $val) {
-      $in =  $in."','".$key;
-   }
-   $in = substr($in,3);
-   $item_total =0;
-   $sql = "select books.Book_id , books.Title , pictures.CoverPage , price_detail.Price from books INNER JOIN price_detail on books.Book_id = price_detail.Book_id INNER JOIN pictures on books.Book_id = pictures.Book_id where books.Book_id in('$in')";
-    $items = mysqli_query($conn,$sql);
-    while($item=mysqli_fetch_assoc($items)){
-        $item_total += $_SESSION["cartProducts"][$item['Book_id']]*$item['Price'];
-        echo "
-        <tr id=".$item['Book_id']."=".$_SESSION["cartProducts"][$item['Book_id']]." > 
-          <td > <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
+                        if(mysqli_num_rows($items) == 0){
+                            echo "<img src='img/empty_cart.png' alt='empty cart' class='offcanvasemptycart'> ";
+                        }
+                        else{
+                            while($item=mysqli_fetch_assoc($items)){
+                                $item_total += $item['Quantity']*$item['Price'];
+                                echo "
+                                <tr> 
+                                <td > <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
+                                
+                                <td class='d-flex flex-column w-75'>
+                                
+                                <div class='bookids text-truncate' name=".$item['Book_id'].">".$item['Title']."</div>
+                             
+                                    <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
+                                    <button class='btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
+                                    <input readonly type='text' class='form-control count text-center fs-5 bg-light ' value=".$item['Quantity']." name=".$item['Book_id'].">
+                                    <button class='btn  plus' type='button'><i class='bi bi-plus  fa-lg'></i></button>
+                                
+                                    </div>
+                                    
+                                </td>
         
-          <td class='d-flex flex-column w-75'>
-          
-               <div class='text-truncate'>".$item['Title']."</div>
-              
-               <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
-               <button class='btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
-               <input readonly type='text' class='form-control count text-center fs-5 bg-light ' value=".$_SESSION["cartProducts"][$item['Book_id']]." name=".$item['Book_id'].">
-               <button class='btn  plus' type='button'><i class='bi bi-plus  fa-lg'></i></button>
-          
-            </div>
-            
-          </td>
-
-          <td>
-          
-          <div class='d-flex flex-column'>
-        <div> ".$item['Price']."</div>
-          </div>
-
-         
-          
-          </td>
-          
-        </tr>";
-   }     
-}    
+                                <td>
+                                
+                                <div class='d-flex flex-column'>
+                                <div> ".$item['Price']."</div>
+                                </div>
+        
+                                
+                                
+                                </td>
+                                
+                                </tr>";
                             }
-                ?>
+                        }
+                    }
+                }                    
+                else{                            
+                    if (count($_SESSION['cartProducts'])==0) {
+                        echo "<img src='img/empty_cart.png' alt='empty cart' class='offcanvasemptycart'> ";
+                    }
+                    else{
+                        if(!empty($_SESSION["cartProducts"])){
+                            
+                            foreach($_SESSION["cartProducts"] as $key => $val) {
+                                $in =  $in."','".$key;
+                            }
+                            $in = substr($in,3);
+                            $item_total =0;
+                            $sql = "select books.Book_id , books.Title , pictures.CoverPage , price_detail.Price from books INNER JOIN price_detail on books.Book_id = price_detail.Book_id INNER JOIN pictures on books.Book_id = pictures.Book_id where books.Book_id in('$in')";
+                                $items = mysqli_query($conn,$sql);
+                                while($item=mysqli_fetch_assoc($items)){
+                                    $item_total += $_SESSION["cartProducts"][$item['Book_id']]*$item['Price'];
+                                    echo "
+                                    <tr > 
+                                    <td > <img src='data:image/jpeg;charset=utf8;base64,".base64_encode($item['CoverPage'])."' class='cartimg' /> </td>
+                                    
+                                    <td class='d-flex flex-column w-75'>
+                                    
+                                        <div class='bookids text-truncate' name=".$item['Book_id'].">".$item['Title']."</div>
+                                        
+                                        <div class='quant d-flex flex-row align-items-end justify-content-end mt-4'> 
+                                        <button class='btn  minus' type='button'><i class='bi bi-dash fa-lg'></i></button>
+                                        <input readonly type='text' class='form-control count text-center fs-5 bg-light ' value=".$_SESSION["cartProducts"][$item['Book_id']]." name=".$item['Book_id'].">
+                                        <button class='btn  plus' type='button'><i class='bi bi-plus  fa-lg'></i></button>
+                                    
+                                        </div>
+                                        
+                                    </td>
+        
+                                    <td>
+                                    
+                                    <div class='d-flex flex-column'>
+                                    <div> ".$item['Price']."</div>
+                                    </div>
+        
+                                    
+                                    
+                                    </td>
+                                    
+                                    </tr>";
+                                }
+                        }     
+                    }    
+                }
+        ?>
                         </tbody>
                     </table>
-
                 </div>
-
-
             </div>
         </div>
+
+        <!-- show cart total -->
         <div class="offcanvas-footer sticky-bottom  ">
             <div class="d-flex flex-row justify-content-around">
                 <div>Cart Total:</div>
@@ -326,6 +379,7 @@ if(!empty($_SESSION["cartProducts"])){
                 </button>
             </div>
         </div>
+
     </div>
 
     <!-- Javascript -->
@@ -337,6 +391,7 @@ if(!empty($_SESSION["cartProducts"])){
         crossorigin="anonymous"></script>
 
     <script>
+        let bookids = document.getElementsByClassName("bookids");
         let increase = document.getElementsByClassName("plus");
         let count = document.getElementsByClassName("count");
         let decrease = document.getElementsByClassName("minus");
@@ -345,20 +400,20 @@ if(!empty($_SESSION["cartProducts"])){
             increase[$itr].addEventListener("click", () => {
                 val = count[$itr].value;
                 count[$itr].value = ++val;
-        $.ajax({
-              url: 'http://localhost/Bookstore/addtocart.php',
-              type: 'POST',
-              data: {
-              quantity :val,
-              bookid : count[$itr].name,
-              action : "update"
-              },
-              success: function(response){
-               $("#offcanvascartTotal").html(response.split(" ")[0]);
-            }
-         });
-    });
-}
+                $.ajax({
+                    url: 'http://localhost/Bookstore/addtocart.php',
+                    type: 'POST',
+                    data: {
+                    quantity :val,
+                    bookid : bookids[$itr].getAttribute("name"),
+                    action : "update"
+                    },
+                    success: function(response){
+                    $("#offcanvascartTotal").html(response);
+                    }
+                });
+            });
+        }
 
         for (let $itr = 0; $itr < decrease.length; $itr++) {
             decrease[$itr].addEventListener("click", () => {
@@ -366,53 +421,51 @@ if(!empty($_SESSION["cartProducts"])){
                 count[$itr].value = --val;
 
                 if(val<=0){
+                    count[$itr].value = 0;
                     $.ajax({
                             url: 'http://localhost/Bookstore/addtocart.php',
                             type: 'POST',
                             data: {
                             quantity :0,
-                            bookid : count[$itr].name,
+                            bookid : bookids[$itr].getAttribute("name"),
                             action : "remove"
                             },
                             success: function(response){
-                                $("#offcanvascartTotal").html(response.split(" ")[0]);
+                                $("#offcanvascartTotal").html(response);
+                               
                           }     
                        });
                 }
                 else{
                     $.ajax({
-              url: 'http://localhost/Bookstore/addtocart.php',
-              type: 'POST',
-              data: {
-              quantity :val,
-              bookid : count[$itr].name,
-              action : "update"
-              },
-              success: function(response){
-                $("#offcanvascartTotal").html(response.split(" ")[0]);
-            }
-         });
-                }
-         
-           
+                        url: 'http://localhost/Bookstore/addtocart.php',
+                        type: 'POST',
+                        data: {
+                        quantity :val,
+                        bookid : bookids[$itr].getAttribute("name"),
+                        action : "update"
+                        },
+                        success: function(response){
+                            $("#offcanvascartTotal").html(response);
+                        }
+                    });
+                } 
             });
         }
 
         document.getElementById("clearcart").addEventListener("click", () => {
             $.ajax({
-              url: 'http://localhost/Bookstore/addtocart.php',
-              type: 'POST',
-              data: {
-             action : "removeall"
-              },
-              success: function(response){
-                document.getElementById("cartContainer").innerHTML = "<img src='img/empty_cart.png' alt='empty cart' class='offcanvasemptycart'> ";
-                $("#offcanvascartTotal").html(response.split(" ")[0]);
-            }
-      });
+                url: 'http://localhost/Bookstore/addtocart.php',
+                type: 'POST',
+                data: {
+                    action : "removeall"
+                },
+                success: function(response){
+                    document.getElementsByClassName("cartContainers").innerHTML = "<img src='img/empty_cart.png' alt='empty cart' class='offcanvasemptycart'> ";
+                    $("#offcanvascartTotal").html(response);
+                }
+            });
         });
-
-   
     </script>
 
 </body>
