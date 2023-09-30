@@ -14,6 +14,7 @@ session_start();
         $_SESSION['cartProducts'] = array();
     }
    
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -162,7 +163,7 @@ session_start();
                 ?>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="wishlist.php">
                                 <i class="bi bi-bookmark fs-3 mx-3"></i>
                             </a>
                         </li>
@@ -194,6 +195,8 @@ session_start();
                                 <li><a class="dropdown-item" href="profile.php"> <i class="bi bi-person-fill mx-1"></i>
                                         My
                                         Profile</a></li>
+                                        <li><a class="dropdown-item" href="#"><i class="bi bi-heart-fill mx-1"></i>
+                                        Wishlists</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-bag-heart-fill mx-1"></i>
                                         Orders</a></li>
                                 <li><a class="dropdown-item" href="http://localhost/Bookstore/index.php#about"><i
@@ -313,7 +316,7 @@ session_start();
                     }
                     else{
                         if(!empty($_SESSION["cartProducts"])){
-                            
+                            $in = "";
                             foreach($_SESSION["cartProducts"] as $key => $val) {
                                 $in =  $in."','".$key;
                             }
@@ -367,7 +370,7 @@ session_start();
             <div class="d-flex flex-row justify-content-around">
                 <div>Cart Total:</div>
                 <div id="offcanvascartTotal">
-                    <?php echo $item_total ?>
+                    <?php   if(isset($item_total)) echo $item_total ?>
                 </div>
             </div>
             <div class="justify-content-center align-items-center d-flex flex-column">
@@ -466,6 +469,10 @@ session_start();
                 }
             });
         });
+
+
+        
+
     </script>
 
 </body>

@@ -79,10 +79,11 @@
 <body class="bg">
 
   <!-- navbar -->
+  <div id="shopnavbar">
   <?php
          require '__navbar.php';
     ?>
-
+</div>
 
   <!-- Modal to open when person tries to wishlist item before login. -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -546,34 +547,29 @@
       for (let itrc = 0; itrc < carts.length; itrc++) {
 
           carts[itrc].addEventListener("click", function () {    
-          
-     
-        $.ajax({
-          url: 'http://localhost/Bookstore/addtocart.php',
-          type: 'POST',
-          data: {
-          quantity :1,
-          bookid : counters[itrc].id,
-          action : "add"
-          },
-          success: function(response){
-            $("#offcanvascartTotal").html(response.split(" ")[0]);
-            carts[itrc].style.display = "none";
-            counters[itrc].classList.remove("d-none");
-            counters[itrc].classList.add("d-flex");
+              $.ajax({
+                url: 'http://localhost/Bookstore/addtocart.php',
+                type: 'POST',
+                data: {
+                quantity :1,
+                bookid : counters[itrc].id,
+                action : "add"
+                },
+                success: function(response){
+                  $("#offcanvascartTotal").html(response);
+                  carts[itrc].style.display = "none";
+                  counters[itrc].classList.remove("d-none");
+                  counters[itrc].classList.add("d-flex");
 
-            $('.toast').toast('show');
-            
-            setTimeout(() => {
-              $('.toast').toast('hide');
-            }, 2000);
-        }
-      });
-
-
+                  $('.toast').toast('show');
+                  
+                  setTimeout(() => {
+                    $('.toast').toast('hide');
+                  }, 2000);
+                  $( "#cartContainer" ).load(window.location.href + " #cartContainer" );
+              }
+            });
         });
-
-
       }
           for (let itrp = 0; itrp < plus.length; itrp++) {
            plus[itrp].addEventListener("click", function () {
@@ -590,6 +586,7 @@
               },
               success: function(response){
                 $("#offcanvascartTotal").html(response);
+                $( "#cartContainer" ).load(window.location.href + " #cartContainer" );
             }
          });
             });
@@ -618,6 +615,7 @@
                             },
                             success: function(response){
                               $("#offcanvascartTotal").html(response);
+                              $( "#cartContainer" ).load(window.location.href + " #cartContainer" );
                           }
                        });
                 }
@@ -634,6 +632,7 @@
               },
               success: function(response){
                 $("#offcanvascartTotal").html(response);
+                $("#cartContainer").load(window.location.href + "#cartContainer");
             }
       });
                 }
